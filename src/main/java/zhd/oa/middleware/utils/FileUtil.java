@@ -19,7 +19,8 @@ public class FileUtil {
 
 	public void initFileConfig(String filePath) throws Exception {
 		if (filePath != null) {
-			String folderURL = filePath.replace(".", "/");
+			String os = System.getProperty("os.name").toLowerCase();
+			String folderURL = filePath.replace(".", os.startsWith("win") ? "\\" : "/");
 			String path = this.getClass().getResource("/").getPath();
 			String fileFullPath = path + folderURL;
 			File ctrlFolder = new File(fileFullPath);
@@ -28,7 +29,7 @@ public class FileUtil {
 				for (File f : files) {
 					if (f.getName().endsWith(".class")) {
 						String classname = (f.getPath().substring(f.getPath().indexOf("classes") + 8,
-								f.getPath().length() - 6)).replace("/", ".");
+								f.getPath().length() - 6)).replace(os.startsWith("win") ? "\\" : "/", ".");
 						Object o = null;
 						Class<?> c = Class.forName(classname);
 						o = BeanFactory.getBean(c);
