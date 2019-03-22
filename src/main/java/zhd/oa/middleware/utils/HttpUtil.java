@@ -12,11 +12,7 @@ import java.net.URLDecoder;
 
 public class HttpUtil {
 	public static String ERPPROXYURL = "";
-	// public static String ERPPROXYURL = "http://172.16.120.232:8980/eep";
-	// 测试地址
-	// public static String ERPPROXYURL = "http://192.168.80.147:8980/eep";
-	// 正式环境
-	// public static String ERPPROXYURL = "http://192.168.20.53/eep";
+
 	private static HttpUtil obj = null;
 
 	private HttpUtil() {
@@ -33,7 +29,7 @@ public class HttpUtil {
 		return doGet(url, "utf-8");
 	}
 
-	public String doGet(String url, String charset) {
+	private String doGet(String url, String charset) {
 		String result = "";
 		HttpURLConnection conn = null;
 		InputStream inputStream = null;
@@ -92,20 +88,20 @@ public class HttpUtil {
 	}
 
 	@SuppressWarnings("deprecation")
-	public String doErpPost(String url, String params) {
+	public String doErpPost(String url, String params) throws Exception{
 		String resp = doPost(url, params, "utf-8", "gbk");
-		return URLDecoder.decode(resp);
+		return URLDecoder.decode(resp, "gbk");
 	}
 
 	public String doPost(String url, String params) {
 		return doPost(url, params, "utf-8");
 	}
 
-	public String doPost(String url, String params, String charset) {
+    private String doPost(String url, String params, String charset) {
 		return doPost(url, params, charset, charset);
 	}
 
-	public String doPost(String url, String params, String inset, String outset) {
+	private String doPost(String url, String params, String inset, String outset) {
 		StringBuffer strBuff = new StringBuffer();
 		String result = "";
 		HttpURLConnection conn = null;

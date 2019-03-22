@@ -1,14 +1,14 @@
 package zhd.oa.middleware.config;
 
-import static spark.Spark.port;
-import static spark.Spark.stop;
-
-import java.util.Properties;
-
 import zhd.oa.middleware.enums.DefaultProps;
 import zhd.oa.middleware.utils.FileUtil;
 import zhd.oa.middleware.utils.HttpUtil;
 import zhd.oa.middleware.utils.PropertyUtil;
+
+import java.util.Properties;
+
+import static spark.Spark.*;
+
 
 public class AutoWebConfig {
 
@@ -23,6 +23,7 @@ public class AutoWebConfig {
 			GlobalVariable.CURRENTPROFILE = globalProperties.getProperty(DefaultProps.PROFILE.getName(), "default");
 			// 端口启动
 			String defaultPort = globalProperties.getProperty(DefaultProps.PORT.getName(), "4567");
+			staticFiles.location("static");
 			port(Integer.parseInt(defaultPort));
 			// 初始化数据库
 			DatabaseConfig.shareInstance().configData();
@@ -30,6 +31,9 @@ public class AutoWebConfig {
 			String controllerPackagePath = globalProperties.getProperty(DefaultProps.CONTROLLER.getName(), null);
 			if (controllerPackagePath != null) {
 				FileUtil.shareInstance().initFileConfig(controllerPackagePath);
+                after((request, response) -> {
+                    response.header("Content-Encoding", "gzip");
+                });
 			} else {
 				System.out.println("服务关闭");
 				stop();
