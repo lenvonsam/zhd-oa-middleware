@@ -1,4 +1,5 @@
-var basicPath = '';
+var basicPath = $("#base_").val();
+console.log("base path:>>>" + basicPath);
 var pageSize = 8;
 var page = 1;
 var pageNum = 5;
@@ -16,9 +17,8 @@ function getPageOfMemo(page) {
     if (startDate != null && startDate != "") startDateStr = String(startDate);
     if (endDate != null && endDate != "") endDateStr = String(endDate);
     console.log('入参：{'+contentStr+','+startDateStr+','+endDateStr+'}');
-    console.log('base path:>>' + $("#base_").val());
     $.ajax({
-        url : $("#base_").val() + "/queryBkLog",
+        url : basicPath + "/queryBkLog",
         type : "POST",
         data:{
             "currentPage":page,
@@ -107,6 +107,8 @@ $(function(){
     }).on('click',function(e){
         $("#end_date").datetimepicker("setStartDate", $("#start_date").val());
     });
+    toastr.options.positionClass = 'toast-top-right';
+    toastr.options.timeOut = '1000';
 });
 
 function onKeyDown(event){
@@ -143,8 +145,8 @@ function resend(content){
             if (data != null) {
                 var returnCode = data.returnCode;
                 var msg = data.msg;
-                if(returnCode = 0) alert(msg);
-                if(returnCode = -1) alert(msg);
+                if(returnCode == 0) toastr.success(msg);
+                if(returnCode == -1) toastr.error(msg);
             }
         },
          error: function(XMLHttpRequest, textStatus, errorThrown){

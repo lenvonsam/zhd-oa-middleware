@@ -56,14 +56,14 @@ public class ErpTransRecordService extends BaseService {
     }
 
 	public String send2Erp(String content){
-        System.out.println(">>>" + content);
+        System.out.println("content>>>" + content);
         String result = "";
         try {
             result = HttpUtil.shareInstance().doErpPost(HttpUtil.ERPPROXYURL + "/interfacesAjax!savePayment.htm" , "body=" + content);
         } catch(Exception e) {
             e.printStackTrace();
         }
-        System.out.println(">>>" + result);
+        System.out.println("result>>>" + result);
         return result;
     }
 }

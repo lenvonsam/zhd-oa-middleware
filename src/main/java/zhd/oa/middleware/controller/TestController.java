@@ -1,7 +1,5 @@
 package zhd.oa.middleware.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import spark.ModelAndView;
 import spark.template.jade.JadeTemplateEngine;
 import zhd.oa.middleware.innotation.Autowired;
@@ -13,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
-import static spark.Spark.post;
 
 public class TestController extends BaseController {
 

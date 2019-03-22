@@ -1,18 +1,17 @@
 package zhd.oa.middleware.controller;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-
 import spark.ModelAndView;
 import spark.template.jade.JadeTemplateEngine;
 import zhd.oa.middleware.innotation.Autowired;
 import zhd.oa.middleware.service.ErpTransRecordService;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class QueryController {
 	@Autowired
@@ -28,7 +27,7 @@ public class QueryController {
 		});
 
 		// 查询银行数据
-		post("/queryBkLog", "application/json", (req, res) -> {
+		post("/queryBkLog", (req, res) -> {
 			HashMap<String, Object> result = new HashMap<>();
 			String currentPage = req.queryParams("currentPage");
 			String pageSize = req.queryParams("pageSize");
@@ -61,9 +60,14 @@ public class QueryController {
 				msg = "重发内容为空";
 			} else {
 				String json = transService.send2Erp(content);
-				Map map = JSON.parseObject(json, Map.class);
-				returnCode = Integer.valueOf(map.get("success").toString());
-				msg = map.get("msg").toString();
+				if (json.isEmpty()) {
+                    returnCode = -1;
+                    msg = "ERP服务异常";
+                } else {
+                    Map map = JSON.parseObject(json, Map.class);
+                    returnCode = Integer.valueOf(map.get("success").toString());
+                    msg = map.get("msg").toString();
+                }
 			}
 			result.put("returnCode", returnCode);
 			result.put("msg", msg);
