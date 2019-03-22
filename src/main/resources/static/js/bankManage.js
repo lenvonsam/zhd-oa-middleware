@@ -4,7 +4,6 @@ var page = 1;
 var pageNum = 5;
 
 getPageOfMemo(page);
-
 // 分页函数
 function getPageOfMemo(page) {
     var content = $('#search_content').val();
@@ -17,8 +16,9 @@ function getPageOfMemo(page) {
     if (startDate != null && startDate != "") startDateStr = String(startDate);
     if (endDate != null && endDate != "") endDateStr = String(endDate);
     console.log('入参：{'+contentStr+','+startDateStr+','+endDateStr+'}');
+    console.log('base path:>>' + $("#base_").val());
     $.ajax({
-        url : basicPath + "/queryBkLog",
+        url : $("#base_").val() + "/queryBkLog",
         type : "POST",
         data:{
             "currentPage":page,
@@ -42,8 +42,8 @@ function getPageOfMemo(page) {
                     htm += "<td width='10%'><button class='btn btn-primary' id='btn_resend' onclick='onClick()'>重发</button></td>";
                     htm += "</tr>";
                 });
-                $('.panel-body table tbody').html(htm); //覆盖tbody部分
-                var pages = Math.ceil(total/pageSize); //计算总页数
+                $('#myTable tbody').html(htm); // 覆盖tbody部分
+                var pages = Math.ceil(total/pageSize); // 计算总页数
                 console.log("总数:"+total+",总页数:"+pages);
                 if (pages != 0) {
                     var element = $('#pageButton');
@@ -86,10 +86,10 @@ $(function(){
         getPageOfMemo(page);
     });
     $('#start_date').datetimepicker({
-        language:"zh-CN", //汉化
-        todayBtn : "true",  //显示今天按钮
-        autoclose : true,   //选择日期后自动关闭日期选择框
-        todayHighlight : true,   //当天高亮显示
+        language:"zh-CN", // 汉化
+        todayBtn : "true",  // 显示今天按钮
+        autoclose : true,   // 选择日期后自动关闭日期选择框
+        todayHighlight : true,   // 当天高亮显示
         minView: 0,
         format: 'yyyy-mm-dd hh:ii',
         pickerPosition: "bottom-left"
@@ -151,4 +151,4 @@ function resend(content){
             console.log(errorThrown);
         }
     });
-};
+}

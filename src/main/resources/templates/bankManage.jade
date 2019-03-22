@@ -1,41 +1,50 @@
 html
-    head
-        meta(charset='utf-8')
-        title ERP银行信息管理
-        script(src='/files/jquery-3.3.1.min.js')
-        link(rel='stylesheet',href='/files/bootstrap/bootstrap.css')
-        script(src='/files/bootstrap/bootstrap.js')
-        script(src='/files/bootstrap/bootstrap-paginator.js')
-        link(href='/files/bootstrap/bootstrap-datetimepicker.min.css',rel='stylesheet')
-        script(src='/files/bootstrap/bootstrap-datetimepicker.min.js')
-        script(src='/files/bootstrap/bootstrap-datetimepicker.zh-CN.js')
-        script(src='/js/bankManage.js')
-    body
-        #bank-log.tab-pane
-            .panel.panel-default
-                .panel-heading 查询条件
-                .panel-body.form-group
-                    label.col-sm-1.control-label(style='text-align:right;margin-top:5px') 日志内容：
-                    .col-sm-2
-                        input.form-control#search_content(type='text',name='Name',onkeydown='onKeyDown(event)')
-                    label.col-sm-1.control-label(style='text-align:right;margin-top:5px') 开始日期：
-                    .col-sm-2
+  head
+    meta(charset='utf-8')
+    title OA通知ERP查询与重发
+    script(src='#{projectPath}/files/jquery-3.3.1.min.js')
+    link(href='#{projectPath}/files/bootstrap/bootstrap.css',rel='stylesheet')
+    script(src='#{projectPath}/files/bootstrap/bootstrap.js')
+    script(src='#{projectPath}/files/bootstrap/bootstrap-paginator.js')
+    link(href='#{projectPath}/files/bootstrap/bootstrap-datetimepicker.min.css',rel='stylesheet')
+    script(src='#{projectPath}/files/bootstrap/bootstrap-datetimepicker.min.js')
+    script(src='#{projectPath}/files/bootstrap/bootstrap-datetimepicker.zh-CN.js')
+  body
+    input(id="base_", type="hidden", value="#{projectPath}")
+    .container(style="max-width: 1366px;")
+      h3.text-center OA通知ERP查询与重发
+      #bank-log.tab-pane(style="margin-top: 15px")
+          .panel.panel-default
+            .panel-heading 查询条件
+            .panel-body.form-group
+              .row
+                .col-sm-10
+                  .row
+                    .col-sm-6
+                      label.col-sm-4.control-label(style='text-align:right;margin-top:5px') 日志内容：
+                      .col-sm-8
+                        input.form-control#search_content(name='Name',type='text',onkeydown='onKeyDown(event)')
+                    .col-sm-6
+                      label.col-sm-4.control-label(style='text-align:right;margin-top:5px') 开始日期：
+                      .col-sm-8
                         input.form-control#start_date(type='text',value='')
-                    label.col-sm-1.control-label(style='text-align:right;margin-top:5px') 结束日期：
-                    .col-sm-2
+                  .row(style="margin-top: 10px")
+                    .col-sm-6
+                      label.col-sm-4.control-label(style='text-align:right;margin-top:5px') 结束日期：
+                      .col-sm-8
                         input.form-control#end_date(type='text',value='')
-                    .col-sm-1
-                        button.btn.btn-primary#btn_query 查询
-            .panel.panel-default
-                .panel-heading ERP银行记录
-                .panel-body
-                    table.table.table-bordered.table-striped#myTable
-                        thead
-                            tr
-                                th 编号
-                                th 时间
-                                th 内容
-                                th 操作
-                        tbody
-                .col-lg-12(align='center')
-                    ul#pageButton
+                    .col-sm-6
+                .col-sm-2
+                  button.btn.btn-primary#btn_query 查询
+        
+          table.table.table-bordered.table-striped#myTable
+            thead
+                tr
+                    th 编号
+                    th 时间
+                    th 内容
+                    th 操作
+            tbody
+          .col-lg-12(align='center')
+            ul#pageButton
+    script(src='#{projectPath}/js/bankManage.js')

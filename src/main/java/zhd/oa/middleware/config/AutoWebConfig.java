@@ -9,7 +9,6 @@ import java.util.Properties;
 
 import static spark.Spark.*;
 
-
 public class AutoWebConfig {
 
 	// 初始化web application config
@@ -27,13 +26,14 @@ public class AutoWebConfig {
 			port(Integer.parseInt(defaultPort));
 			// 初始化数据库
 			DatabaseConfig.shareInstance().configData();
+			String projectPath = globalProperties.getProperty("zhd.oa.projectPath", "/");
 			// 配置controller路径
 			String controllerPackagePath = globalProperties.getProperty(DefaultProps.CONTROLLER.getName(), null);
 			if (controllerPackagePath != null) {
 				FileUtil.shareInstance().initFileConfig(controllerPackagePath);
-                after((request, response) -> {
-                    response.header("Content-Encoding", "gzip");
-                });
+				after((request, response) -> {
+					response.header("Content-Encoding", "gzip");
+				});
 			} else {
 				System.out.println("服务关闭");
 				stop();
