@@ -1,4 +1,4 @@
-package zhd.oa.middleware.service;
+package zhd.oa.middleware.mapper;
 
 import java.io.Serializable;
 

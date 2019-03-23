@@ -1,12 +1,5 @@
 package zhd.oa.middleware.config;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -18,11 +11,16 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.type.TypeAliasRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import zhd.oa.middleware.enums.DefaultProps;
 import zhd.oa.middleware.mapper.ErpTransRecordMapper;
 import zhd.oa.middleware.model.ErpTransRecord;
 import zhd.oa.middleware.utils.PropertyUtil;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.util.Properties;
 
 public class DatabaseConfig {
 	private Properties dataProps = null;
@@ -71,7 +69,7 @@ public class DatabaseConfig {
 			SqlSession  s = this.sessionFactory.openSession();
 			ErpTransRecordMapper mapper = s.getMapper(ErpTransRecordMapper.class);
 			ErpTransRecord r = mapper.findOne(25);
-			System.out.println("r.name:>>" + r.getFlow_name());
+            log.info("r.name:>>" + r.getFlow_name());
 			s.commit();
 			s.close();
 		} catch (Exception e) {
@@ -85,13 +83,13 @@ public class DatabaseConfig {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@192.168.80.180:1521:ecology", "ecology",
 					"ecology");
-			System.out.println("连接成功");
+            log.info("连接成功");
 			java.sql.PreparedStatement psts = con.prepareStatement(
 					"select id, flow_name, insert_date, trans_content from uf_erp_sale_record where id = ?");
 			psts.setInt(1, 25);
 			ResultSet rs = psts.executeQuery();
 			while (rs.next()) {
-				System.out.println("sys name:>>" + rs.getString("flow_name"));
+				log.info("sys name:>>" + rs.getString("flow_name"));
 			}
 			con.close();
 		} catch (Exception e) {

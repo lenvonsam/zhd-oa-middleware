@@ -16,7 +16,7 @@ public class ErpTransRecordService extends BaseService {
 			session = openSession();
 			mapper = session.getMapper(ErpTransRecordMapper.class);
 			ErpTransRecord m = mapper.findOne(25);
-			System.out.println("m name:>>" + m.getFlow_name());
+			log.info("m name:>>" + m.getFlow_name());
 			return m;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -27,7 +27,7 @@ public class ErpTransRecordService extends BaseService {
 	}
 
     public void findRecordList(HashMap<String, Object> result, Integer firstIndex, Integer lastIndex, String content, String startDate, String endDate) {
-        System.out.println("firstIndex:" + firstIndex + ",lastIndex:" + lastIndex + ",content:" + content + ",startDate:" + startDate + ",endDate:" + endDate);
+        log.info("firstIndex:" + firstIndex + ",lastIndex:" + lastIndex + ",content:" + content + ",startDate:" + startDate + ",endDate:" + endDate);
 	    try {
             session = openSession();
             mapper = session.getMapper(ErpTransRecordMapper.class);
@@ -44,26 +44,26 @@ public class ErpTransRecordService extends BaseService {
 
     public String send2Erp(){
         String str = "{\"org_name\":\"江苏智恒达投资集团有限公司\",\"bank_name\":\"徽商银行\",\"company_name\":\"鑫盛彩钢结构\",\"pay_type\":\"电汇\",\"money\":25000.0,\"pay_time\":\"2019-03-07\",\"bank_account\":\"1561101021000212317\",\"originator\":\"\"}";
-        System.out.println(">>>" + str);
+        log.info(">>>" + str);
         String result = "";
         try {
             result = HttpUtil.shareInstance().doErpPost(HttpUtil.ERPPROXYURL + "/interfacesAjax!savePayment.htm" , "body=" + str);
         } catch(Exception e) {
             e.printStackTrace();
         }
-        System.out.println(">>>" + result);
+        log.info(">>>" + result);
         return result;
     }
 
 	public String send2Erp(String content){
-        System.out.println("content>>>" + content);
+        log.info("content>>>" + content);
         String result = "";
         try {
             result = HttpUtil.shareInstance().doErpPost(HttpUtil.ERPPROXYURL + "/interfacesAjax!savePayment.htm" , "body=" + content);
         } catch(Exception e) {
             e.printStackTrace();
         }
-        System.out.println("result>>>" + result);
+        log.info("result>>>" + result);
         return result;
     }
 }
