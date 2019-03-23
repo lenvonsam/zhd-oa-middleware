@@ -16,6 +16,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.type.TypeAliasRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import zhd.oa.middleware.enums.DefaultProps;
 import zhd.oa.middleware.mapper.ErpTransRecordMapper;
@@ -26,7 +28,7 @@ public class DatabaseConfig {
 	private Properties dataProps = null;
 	private static DatabaseConfig instance = null;
 	public SqlSessionFactory sessionFactory = null;
-
+	private Logger log = LoggerFactory.getLogger(DatabaseConfig.class);
 	private DatabaseConfig() {
 	}
 
@@ -44,12 +46,13 @@ public class DatabaseConfig {
 		TypeAliasRegistry aliases = config.getTypeAliasRegistry();
 		// 遍历返回值类型
 		aliases.registerAliases(dataProps.getProperty(DefaultProps.MODEL.getName()));
-		System.out.println("model path:>>." + dataProps.getProperty(DefaultProps.MODEL.getName()));
+//		System.out.println("model path:>>." + dataProps.getProperty(DefaultProps.MODEL.getName()));
 		// 遍历mapper类型
 		config.addMappers(dataProps.getProperty(DefaultProps.MAPPER.getName()));
-		System.out.println("mapper path:>>" + dataProps.getProperty(DefaultProps.MAPPER.getName()));
+//		System.out.println("mapper path:>>" + dataProps.getProperty(DefaultProps.MAPPER.getName()));
 		if (this.sessionFactory == null)
 			sessionFactory = new SqlSessionFactoryBuilder().build(config);
+		log.info("database init config finish");
 	}
 
 	private DataSource getLocalDataSource() throws Exception {

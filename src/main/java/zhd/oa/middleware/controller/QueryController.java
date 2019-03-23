@@ -13,7 +13,7 @@ import java.util.Map;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-public class QueryController {
+public class QueryController  extends BaseController {
 	@Autowired
 	private ErpTransRecordService transService;
 

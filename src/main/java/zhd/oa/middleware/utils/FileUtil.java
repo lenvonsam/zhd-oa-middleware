@@ -27,13 +27,13 @@ public class FileUtil {
 			if (ctrlFolder.isDirectory()) {
 				File[] files = ctrlFolder.listFiles();
 				for (File f : files) {
-					if (f.getName().endsWith(".class")) {
+					if (f.getName().endsWith(".class") && f.getName().indexOf("BaseController") < 0) {
 						String classname = (f.getPath().substring(f.getPath().indexOf("classes") + 8,
 								f.getPath().length() - 6)).replace(os.startsWith("win") ? "\\" : "/", ".");
 						Object o = null;
 						Class<?> c = Class.forName(classname);
 						o = BeanFactory.getBean(c);
-						System.out.println("classname:>>" + classname);
+//						System.out.println("classname:>>" + classname);
 						// = c.newInstance();
 						for (Method m : c.getMethods()) {
 							if (m.getName().equals("router"))
@@ -47,7 +47,7 @@ public class FileUtil {
 						// }
 						// }
 					} else if (f.isDirectory()) {
-						System.out.println("sub direction:>>" + f.getName());
+//						System.out.println("sub direction:>>" + f.getName());
 						initFileConfig(filePath + "." + f.getName());
 					}
 				}

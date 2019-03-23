@@ -1,5 +1,6 @@
 package zhd.oa.middleware.config;
 
+import zhd.oa.middleware.controller.ExceptionController;
 import zhd.oa.middleware.enums.DefaultProps;
 import zhd.oa.middleware.utils.FileUtil;
 import zhd.oa.middleware.utils.HttpUtil;
@@ -7,9 +8,13 @@ import zhd.oa.middleware.utils.PropertyUtil;
 
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static spark.Spark.*;
 
 public class AutoWebConfig {
+	private static Logger log = LoggerFactory.getLogger(AutoWebConfig.class);
 
 	// 初始化web application config
 	public static void autoInit() {
@@ -22,20 +27,25 @@ public class AutoWebConfig {
 			GlobalVariable.CURRENTPROFILE = globalProperties.getProperty(DefaultProps.PROFILE.getName(), "default");
 			// 端口启动
 			String defaultPort = globalProperties.getProperty(DefaultProps.PORT.getName(), "4567");
+			// 静态资源配置
 			staticFiles.location("static");
+			staticFiles.expireTime(600);
 			port(Integer.parseInt(defaultPort));
 			// 初始化数据库
 			DatabaseConfig.shareInstance().configData();
-			String projectPath = globalProperties.getProperty("zhd.oa.projectPath", "/");
 			// 配置controller路径
 			String controllerPackagePath = globalProperties.getProperty(DefaultProps.CONTROLLER.getName(), null);
 			if (controllerPackagePath != null) {
+				exception(Exception.class, (exception, request, response) -> {
+					ExceptionController.handle(exception, request, response);
+				});
 				FileUtil.shareInstance().initFileConfig(controllerPackagePath);
 				after((request, response) -> {
 					response.header("Content-Encoding", "gzip");
 				});
+				log.info("controller init config finish");
 			} else {
-				System.out.println("服务关闭");
+				log.info("server close");
 				stop();
 			}
 		} catch (Exception e) {
