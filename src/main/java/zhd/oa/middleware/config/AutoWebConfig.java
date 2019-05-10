@@ -44,6 +44,10 @@ public class AutoWebConfig {
 					response.header("Content-Encoding", "gzip");
 				});
 				log.info("controller init config finish");
+				// 初始化定时任务
+				String quartzPath = globalProperties.getProperty(DefaultProps.QUARTZ.getName(), null);
+				FileUtil.shareInstance().initFileConfig(quartzPath);
+				log.info("quartz init finish");
 			} else {
 				log.info("server close");
 				stop();

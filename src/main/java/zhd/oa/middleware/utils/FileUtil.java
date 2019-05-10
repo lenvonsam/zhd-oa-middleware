@@ -2,8 +2,19 @@ package zhd.oa.middleware.utils;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.Properties;
+
+import org.quartz.CronScheduleBuilder;
+import org.quartz.Job;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
 
 import zhd.oa.middleware.config.BeanFactory;
+import zhd.oa.middleware.enums.DefaultProps;
 
 public class FileUtil {
 	private static FileUtil instance = null;
@@ -26,18 +37,43 @@ public class FileUtil {
 			File ctrlFolder = new File(fileFullPath);
 			if (ctrlFolder.isDirectory()) {
 				File[] files = ctrlFolder.listFiles();
-				for (File f : files) {
-					if (f.getName().endsWith(".class") && f.getName().indexOf("BaseController") < 0) {
+				for (int i = 0; i < files.length; i++) {
+					File f = files[i];
+					if (f.getName().endsWith(".class")) {
+						// controller file scan
 						String classname = (f.getPath().substring(f.getPath().indexOf("classes") + 8,
 								f.getPath().length() - 6)).replace(os.startsWith("win") ? "\\" : "/", ".");
-						Object o = null;
 						Class<?> c = Class.forName(classname);
-						o = BeanFactory.getBean(c);
-//						System.out.println("classname:>>" + classname);
-						// = c.newInstance();
-						for (Method m : c.getMethods()) {
-							if (m.getName().equals("router"))
-								m.invoke(o);
+						if (f.getName().indexOf("BaseController") < 0 && f.getName().indexOf("Controller") > 0) {
+							Object o = null;
+							o = BeanFactory.getBean(c);
+							// System.out.println("classname:>>" + classname);
+							// = c.newInstance();
+							for (Method m : c.getMethods()) {
+								if (m.getName().equals("router"))
+									m.invoke(o);
+							}
+						} else if (f.getName().indexOf("Job") >= 0) {
+							Properties globalProperties = PropertyUtil.shareInstance()
+									.initProperties(DefaultProps.BOOTFILE.getName());
+							@SuppressWarnings("unchecked")
+							JobDetail jobDetail = JobBuilder.newJob((Class<? extends Job>) c)
+									.withIdentity("job_" + i, "oa_job_group").build();
+							// SimpleScheduleBuilder builder = SimpleScheduleBuilder.simpleSchedule()
+							// .withIntervalInSeconds(5) // 设置间隔执行时间
+							// .repeatSecondlyForTotalCount(5);
+							// Trigger trigger = TriggerBuilder.newTrigger().withIdentity("trigger_" + i,
+							// "oa_job_group")
+							// .startNow().withSchedule(builder).build();
+							String cornReg = globalProperties
+									.getProperty(f.getName().substring(0, f.getName().indexOf('.')) + ".corn");
+							Trigger trigger = TriggerBuilder.newTrigger().withIdentity("trigger_" + i, "oa_job_group")
+									.withSchedule(CronScheduleBuilder.cronSchedule(cornReg)).build();
+							// 3、创建Scheduler
+							Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+							// 4、调度执行
+							scheduler.scheduleJob(jobDetail, trigger);
+							scheduler.start();
 						}
 						// for (Method m : c.getMethods()) {
 						// if (!GlobalVariable.COMMETHODS.contains(m.getName())) {
@@ -47,7 +83,7 @@ public class FileUtil {
 						// }
 						// }
 					} else if (f.isDirectory()) {
-//						System.out.println("sub direction:>>" + f.getName());
+						// System.out.println("sub direction:>>" + f.getName());
 						initFileConfig(filePath + "." + f.getName());
 					}
 				}
