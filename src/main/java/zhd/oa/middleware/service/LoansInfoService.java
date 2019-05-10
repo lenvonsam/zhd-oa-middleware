@@ -4,7 +4,11 @@ import java.util.List;
 
 import zhd.oa.middleware.mapper.LoansInfoMapper;
 import zhd.oa.middleware.model.LoansInfo;
-
+/**
+ * 贷款服务
+ * @author conqueror
+ *
+ */
 public class LoansInfoService extends BaseService{
 
 	private LoansInfoMapper loansInfoMapper = null;
