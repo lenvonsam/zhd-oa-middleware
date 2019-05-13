@@ -90,7 +90,7 @@ public class WorkflowUtil {
 
 			WorkflowRequestInfo wri = wsptp.getWorkflowRequest(requestid, uid, 0);
 
-			wsptp.submitWorkflowRequest(wri, requestid, uid, type, type + "签字意见：" + new Date());
+			wsptp.submitWorkflowRequest(wri, requestid, uid, type,"系统定时提交");
 
 		} else {
 

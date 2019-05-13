@@ -33,12 +33,12 @@ public class AcceptanceBillJob implements Job {
 				String docDatet = acceptanceBills.get(i).getDocdatet();
 
 				Date datet = DateUtil.shareInstance().str2Date(docDatet);// 承兑汇票结束日期
-
-				Date currentDate = new Date();// 系统日期
-
-				// TODO 测试使用的系统日期
-				int days = 1;
+				System.out.println(datet+"datet*********");
+				int days = (int)((datet.getTime()-new Date().getTime())/(1000*60*60*24));
+				System.out.println("days-------->"+days);
 				if (days <= 5) {
+					
+					System.out.println(acceptanceBills.get(i));
 					List<String> requestids = WorkflowUtil.shareInstance().getToDoList(124, null);
 					if (requestids.contains(acceptanceBills.get(i).getRequestid())) {
 
@@ -47,6 +47,8 @@ public class AcceptanceBillJob implements Job {
 					}
 				}
 			}
+			
+			System.out.println("one time over!!!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
