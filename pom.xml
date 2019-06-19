@@ -13,10 +13,10 @@
         <java.version>1.8</java.version>
         <spark.version>2.7.2</spark.version>
         <mybatis.version>3.4.6</mybatis.version>
-        <spark-jade.version>2.7.1</spark-jade.version>
+        <spark-template.version>2.7.1</spark-template.version>
         <quartz.version>2.2.1</quartz.version>
         <axis.version>1.4</axis.version>
-        <junit.version>3.8.1</junit.version>
+        <junit.version>4.12</junit.version>
         <oracle.version>12.0.0.2</oracle.version>
         <commons.version>2.5.0</commons.version>
         <fastjson.version>1.2.5</fastjson.version>
@@ -29,6 +29,25 @@
 			<artifactId>spark-core</artifactId>
 			<version>${spark.version}</version>
 		</dependency>
+        <!-- freemarker模板-->
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-template-freemarker</artifactId>
+            <version>${spark-template.version}</version>
+        </dependency>
+        <!-- velocity模板-->
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-template-velocity</artifactId>
+            <version>${spark-template.version}</version>
+        </dependency>
+        <!-- jade模板-->
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-template-jade</artifactId>
+            <version>${spark-template.version}</version>
+        </dependency>
+        <!-- axis-->
         <dependency>
             <groupId>javax.xml.rpc</groupId>
             <artifactId>javax.xml.rpc-api</artifactId>
@@ -43,11 +62,6 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<version>${mybatis.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sparkjava</groupId>
-			<artifactId>spark-template-jade</artifactId>
-			<version>${spark-jade.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>

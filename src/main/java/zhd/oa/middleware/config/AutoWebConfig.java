@@ -1,5 +1,7 @@
 package zhd.oa.middleware.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zhd.oa.middleware.controller.ExceptionController;
 import zhd.oa.middleware.enums.DefaultProps;
 import zhd.oa.middleware.utils.FileUtil;
@@ -7,9 +9,6 @@ import zhd.oa.middleware.utils.HttpUtil;
 import zhd.oa.middleware.utils.PropertyUtil;
 
 import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static spark.Spark.*;
 
