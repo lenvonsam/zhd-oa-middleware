@@ -15,15 +15,15 @@ public interface LoansInterestMapper {
 	 * @param requestid 请求id
 	 * @return
 	 */
-	@Select("select T.ID, T.MAINID, T.PERIODNUM, T.PERIODS, T.INTERESTFROM, T.INTERESTTO, T.INTERESTDAYS, T.INTERESTAMOUNT, T.PAIDAMOUNT, T.PERIODSSTATUS from FORMTABLE_MAIN_431_DT1 t "
-			+ "left join FORMTABLE_MAIN_431 t1 on t.mainid = t1.id  where t1.requestid = #{requestid} order by t.id desc")
+	@Select("select T.ID, T.MAINID, T.PERIODNUM, T.PERIODS, T.INTERESTFROM, T.INTERESTTO, T.INTERESTDAYS, T.INTERESTAMOUNT, T.PAIDAMOUNT, T.PERIODSSTATUS from formtable_main_448_DT1 t "
+			+ "left join formtable_main_448 t1 on t.mainid = t1.id  where t1.requestid = #{requestid} order by t.id desc")
 	public List<LoansInterest> queryLoansInterest(int requestid) ;
 
 	/**
 	 * 插入明细表数据
 	 * @param 
 	 */
-	@Insert("insert into FORMTABLE_MAIN_431_DT1 ( MAINID, PERIODNUM, PERIODS, INTERESTFROM, INTERESTTO, INTERESTDAYS, INTERESTAMOUNT, PERIODSSTATUS ) "
+	@Insert("insert into formtable_main_448_DT1 ( MAINID, PERIODNUM, PERIODS, INTERESTFROM, INTERESTTO, INTERESTDAYS, INTERESTAMOUNT, PERIODSSTATUS ) "
 			+ "values ( #{mainid} , #{periodNum} , #{periods} , #{interestFrom} , #{interestTo} , #{interestDays} , #{interestAmount} , #{periodsStatus} )")
 	public int insertLoansInterest(@Param ("mainid")int mainid,@Param ("periodNum")int periodNum,@Param ("periods")String periods,
 			@Param ("interestFrom")String interestFrom,@Param ("interestTo")String interestTo,@Param ("interestDays")int interestDays,
@@ -34,7 +34,7 @@ public interface LoansInterestMapper {
 	 * @param mainid
 	 * @return
 	 */
-	@Select("select T.ID, T.MAINID, T.PERIODNUM, T.PERIODS, T.INTERESTFROM, T.INTERESTTO, T.INTERESTDAYS, T.INTERESTAMOUNT, T.PAIDAMOUNT, T.PERIODSSTATUS from FORMTABLE_MAIN_431_DT1 t  "
+	@Select("select T.ID, T.MAINID, T.PERIODNUM, T.PERIODS, T.INTERESTFROM, T.INTERESTTO, T.INTERESTDAYS, T.INTERESTAMOUNT, T.PAIDAMOUNT, T.PERIODSSTATUS from formtable_main_448_DT1 t  "
 			+ "where T.mainid =#{mainid} "
 			+ "order by PERIODS desc")
 	public List<LoansInterest> queryLoansInterestByMainid(int mainid) ;
@@ -44,7 +44,7 @@ public interface LoansInterestMapper {
 	 * @param periods
 	 * @return
 	 */
-	@Select("select T.ID, T.MAINID, T.PERIODNUM, T.PERIODS, T.INTERESTFROM, T.INTERESTTO, T.INTERESTDAYS, T.INTERESTAMOUNT, T.PAIDAMOUNT, T.PERIODSSTATUS from FORMTABLE_MAIN_431_DT1 t  "
+	@Select("select T.ID, T.MAINID, T.PERIODNUM, T.PERIODS, T.INTERESTFROM, T.INTERESTTO, T.INTERESTDAYS, T.INTERESTAMOUNT, T.PAIDAMOUNT, T.PERIODSSTATUS from formtable_main_448_DT1 t  "
 			+ "where t.periods =#{periods} and t.mainid = #{mainid}")
 	public LoansInterest queryLoanInterestByPeriod(@Param("periods")String periods ,@Param("mainid")int mainid);
 	
@@ -53,17 +53,17 @@ public interface LoansInterestMapper {
 	 * @param periods
 	 * @return
 	 */
-	@Update("update FORMTABLE_MAIN_431_DT1 set PERIODSSTATUS = '已扣息' where PERIODS = #{periods}")
+	@Update("update formtable_main_448_DT1 set PERIODSSTATUS = '已扣息' where PERIODS = #{periods}")
 	public int updateLoansInterestStautsByPeriod(String periods);
 	
 	/**
 	 * 查询最近的一条扣息记录，生效的和未结束的贷款
 	 * @return
 	 */
-	@Select("select T.ID, T.MAINID, T.PERIODNUM, T.PERIODS, T.INTERESTFROM, T.INTERESTTO, T.INTERESTDAYS, T.INTERESTAMOUNT, T.PAIDAMOUNT, T.PERIODSSTATUS from FORMTABLE_MAIN_431_DT1 t  "
-			+ " left join Formtable_Main_431 t1 on t.mainid = t1.id "
+	@Select("select T.ID, T.MAINID, T.PERIODNUM, T.PERIODS, T.INTERESTFROM, T.INTERESTTO, T.INTERESTDAYS, T.INTERESTAMOUNT, T.PAIDAMOUNT, T.PERIODSSTATUS from formtable_main_448_DT1 t  "
+			+ " left join formtable_main_448 t1 on t.mainid = t1.id "
 			+ " where t1.loanStatus = 1 and ( t1.finished is null or t1.finished <> 1 )"
-			+ " and t.id in ( select max(id) from Formtable_Main_431_Dt1 group by mainid )")
+			+ " and t.id in ( select max(id) from formtable_main_448_Dt1 group by mainid )")
 	public List<LoansInterest> queryLastLoansInterest();
 	
 	

@@ -14,7 +14,7 @@ public interface LoansInfoMapper {
 	@Select("select T.ID, T.REQUESTID, T.FLOWNO, T.APPLICANT, T.APPLYDEPT, T.APPLYDATE, T.APPLYREMK, T.LOANSORG, "
 			+ "T.LOANSACCOUNT, T.LOANSBANK, T.LOANSMONEY, T.LOANSDATEFROM, T.LOANSDATETO, T.LOANRATE, T.DISCOUNTDATE, "
 			+ "T.DISCOUNTACCOUNT, T.SUPERVISIONFEE, T.PREMIUM, T.FINISHED, T.LOANSTATUS "
-			+ "from FORMTABLE_MAIN_431 t where t.loanStatus = 1 and ( t.finished is null or t.finished <> 1 ) ")
+			+ "from  formtable_main_448  t where t.loanStatus = 1 and ( t.finished is null or t.finished <> 1 ) ")
 	public List<LoansInfo> queryLoansInfo();
 	
 	/**
@@ -25,7 +25,7 @@ public interface LoansInfoMapper {
 	@Select("select T.ID, T.REQUESTID, T.FLOWNO, T.APPLICANT, T.APPLYDEPT, T.APPLYDATE, T.APPLYREMK, T.LOANSORG, "
 			+ "T.LOANSACCOUNT, T.LOANSBANK, T.LOANSMONEY, T.LOANSDATEFROM, T.LOANSDATETO, T.LOANRATE, T.DISCOUNTDATE, "
 			+ "T.DISCOUNTACCOUNT, T.SUPERVISIONFEE, T.PREMIUM, T.FINISHED, T.LOANSTATUS "
-			+ " from FORMTABLE_MAIN_431 t where id = #{id}")
+			+ " from  formtable_main_448  t where id = #{id}")
 	public LoansInfo queryLoansInfoById(int id);
 	
 	/**
@@ -35,7 +35,7 @@ public interface LoansInfoMapper {
 	@Select("select T.ID, T.REQUESTID, T.FLOWNO, T.APPLICANT, T.APPLYDEPT, T.APPLYDATE, T.APPLYREMK, T.LOANSORG, "
 			+ "T.LOANSACCOUNT, T.LOANSBANK, T.LOANSMONEY, T.LOANSDATEFROM, T.LOANSDATETO, T.LOANRATE, T.DISCOUNTDATE, "
 			+ "T.DISCOUNTACCOUNT, T.SUPERVISIONFEE, T.PREMIUM, T.FINISHED, T.LOANSTATUS "
-			+ " from FORMTABLE_MAIN_431 t left join Formtable_Main_431_Dt1 t1 on t.id = t1.mainid "
+			+ " from  formtable_main_448  t left join  formtable_main_448_Dt1 t1 on t.id = t1.mainid "
 			+ " where t1.id is null and ( t.finished = 0 or t.finished is null ) and t.loanstatus = 1 ")
 	public List<LoansInfo> queryFirstLoansInfo();
 	
@@ -44,7 +44,7 @@ public interface LoansInfoMapper {
 	 * @param mainid
 	 * @return
 	 */
-	@Select("select t.requestid from FORMTABLE_MAIN_431 t where t.id = #{mainid} ")
+	@Select("select t.requestid from  formtable_main_448  t where t.id = #{mainid} ")
 	public String queryLoansInfoRequestid(int mainid);
 	
 }
