@@ -1,54 +1,53 @@
 package zhd.oa.middleware.controller;
 
-import static spark.Spark.*;
-
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import zhd.oa.middleware.utils.ReadExcelUtil;
 
 import javax.servlet.MultipartConfigElement;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
 
-import zhd.oa.middleware.utils.ReadExcelUtil;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class KpiController extends BaseController {
 
-	@Override
-	public void router() {
-		get("/tes", (req, res) -> {
-			
-			//String[][] result = ReadExcelUtil.shareInstance().getData(file, 1);
-			
-			return "";
-		});
-		
-		post("/yourUploadPath", (req, res) -> {
-			
-			String callback = req.queryParams("jsoncallback");
-			System.out.println(req.queryParams("aaa")+"==="+callback);
-			
-		    req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-		    try (InputStream is = req.raw().getPart("uploaded_file").getInputStream()) {
-		    	BufferedInputStream in = new BufferedInputStream(is);
-		    	String[][] result = ReadExcelUtil.shareInstance().getData(null,in, 1);
-		    	
-		    	int rowLength = result.length;
-						       
-			       for(int i=0;i<rowLength;i++) {
-			    	   String res1 = result[i][1];
-			    	   String res2 = result[i][2];
-			    	   String res3 = result[i][3];
-			    	   System.out.println(res1+"---------"+res2+"-------------"+res3);
-			    	   for(int j=0;j<result[i].length;j++) {
-				              //System.out.print(result[i][j]+"\t\t");
-				           }
-			    	   System.out.println();
-			       }
-			       System.out.println();
-		    }
-		    
-		    return "File uploaded";
-		});
-		
-	}
+    @Override
+    public void router() {
+        get("/tes", (req, res) -> {
+
+            //String[][] result = ReadExcelUtil.shareInstance().getData(file, 1);
+
+            return "";
+        });
+
+        post("/OaUpload", (req, res) -> {
+            String msg = "";
+            int type = 0;
+            String excelType = req.queryParams("excelType");
+            if (excelType == null) {
+                msg = "excel 类型不能为空...";
+            } else {
+                type = Integer.valueOf(excelType);
+            }
+            String callback = req.queryParams("jsoncallback");
+            System.out.println(req.queryParams("aaa") + "===" + callback);
+
+            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+            try (InputStream is = req.raw().getPart("uploaded_file").getInputStream()) {
+                BufferedInputStream in = new BufferedInputStream(is);
+                List<String[]> result = ReadExcelUtil.shareInstance().getData(null, in, 1);
+
+                log.info(">>>{}", JSON.toJSONString(result));
+            }
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("returnCode", 0);
+            return JSONObject.toJSON(result);
+        });
+
+    }
 
 }
