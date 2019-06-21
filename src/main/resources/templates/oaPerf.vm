@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>oa绩效</title>
+    <style>
+        .thead th {
+            text-align: center;
+        }
+    </style>
+    <script src="/files/jquery-3.3.1.min.js"></script>
+    <script src="/files/bootstrap/bootstrap.js"></script>
+    <link href="/files/bootstrap/bootstrap.css" rel="stylesheet" />
+    <script src="/files/bootstrap/bootstrap-paginator.js"></script>
+    <link href="/files/bootstrap/bootstrap-datetimepicker.min.css"
+          rel="stylesheet" />
+    <script src="/files/bootstrap/bootstrap-datetimepicker.min.js"></script>
+    <script src="/files/bootstrap/bootstrap-datetimepicker.zh-CN.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>${projectPath}
+            <small>小标题</small>
+        </h1>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="bank-log">
+        <div class="panel panel-default">
+            <div class="panel-heading">条件</div>
+            <div class="panel-body form-group" style="margin-bottom: 1px;">
+                <label class="col-sm-1 control-label"
+                       style="text-align: right; margin-top: 5px">部门：</label>
+                <div class="col-sm-2">
+                </div>
+                <label class="col-sm-1 control-label"
+                       style="text-align: right; margin-top: 5px">操作：</label>
+                <div class="col-sm-2 date form_date mr10">
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">绩效记录</div>
+            <div class="panel-body">
+                <!--<div class="table-responsive"> -->
+                <table class="table table-bordered table-striped"
+                       style="word-break: break-all; word-wrap: break-word;">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <!--</div> -->
+            </div>
+            <div class="col-lg-12" align="center">
+                <!-- 分页控件，标签必须是<ul> -->
+                <ul id="pageButton"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
