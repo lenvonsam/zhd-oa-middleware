@@ -60,35 +60,38 @@ public class KpiService extends BaseService{
 		List<String> successList = new ArrayList<String>();
 		
 		for (int i = 0; i < datas.length; i++) {
-			
-			String[] datasForOne = datas[i].split("|");
-//			Double mmAvgStore  = Double.parseDouble(datasForOne[12]);//均库存
-			
+			String[] datasForOne = datas[i].split("\\|");
+
 			try {
 
 				String yyyy = datasForOne[0];//年份
 				String kpiTypeDt = datasForOne[1];//月度/季度/年度
 				String kpiEmp = datasForOne[2];//姓名
-				Double erpWeight = Double.parseDouble(datasForOne[3]);//销量
-				Double erpMoney = Double.parseDouble(datasForOne[4]);//吨位
-				Double mmAvgStore = Double.parseDouble(datasForOne[12]);//吨位
 				
 				session = openSession();
 				kpiMapper = session.getMapper(KpiMapper.class);
 				
 				String resStr = null ;
 				if("0".equals(type)){
+					
+					Double erpWeight = Double.parseDouble(datasForOne[3]);//销量
+					Double erpMoney = Double.parseDouble(datasForOne[9]);//吨位
+
 					resStr = kpiMapper.checkXSErpKpiByDt(yyyy, kpiTypeDt, kpiEmp, erpWeight, erpMoney);
+					System.out.println(yyyy+kpiTypeDt+kpiEmp+erpWeight+erpMoney);
+					
 				}if("3".equals(type)){
+					Double erpWeight = Double.parseDouble(datasForOne[3]);//销量
+					Double mmAvgStore = Double.parseDouble(datasForOne[12]);//当月平均库存吨位
 					resStr = kpiMapper.checkCGErpKpiByDt(yyyy, kpiTypeDt, kpiEmp, erpWeight, mmAvgStore);
 				}
 				
 				if(null == resStr){
 					successList.add("1");
-					msg = msg + kpiEmp + "与Erp匹配不上";
+					msg = msg + kpiEmp + "名字与Erp匹配不上";
 				}if("1".equals(resStr)){
 					successList.add("1");
-					msg = msg + kpiEmp + "数据与Erp不一致";
+					msg = msg + kpiEmp + "销量或高卖数据与Erp不一致";
 				}
 				
 			} catch (Exception e) {
@@ -116,16 +119,16 @@ public class KpiService extends BaseService{
 	 */
 	public void insertAndUpdateWorkflowDt(String remk , String data , String type){
 		
-		//插入前需要做删除
-		try {
-			session = openSession();
-			kpiMapper = session.getMapper(KpiMapper.class);
-			kpiMapper.deleteKpiDt(remk);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{	
-			closeSession();	
-		}
+		//插入前需要做删除 -------后面考虑的方案是不走流程申请    所以该步骤不需要了 
+//		try {
+//			session = openSession();
+//			kpiMapper = session.getMapper(KpiMapper.class);
+//			kpiMapper.deleteKpiDt(remk);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}finally{	
+//			closeSession();	
+//		}
 		
 		
 		//插入
@@ -141,14 +144,6 @@ public class KpiService extends BaseService{
 			
 			
 			
-			
-			
-		}
-		
-		
-		
-		
-		if("0".equals(type)){
 			
 			
 		}
@@ -178,6 +173,14 @@ public class KpiService extends BaseService{
 			closeSession();	
 		}
 	}
+	
+	public String createKpiWorkflow(String type,String datas){
+		
+		
+		
+		return null;
+	}
+	
 	
 	
 

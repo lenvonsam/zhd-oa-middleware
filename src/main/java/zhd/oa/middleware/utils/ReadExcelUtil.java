@@ -118,7 +118,7 @@ public class ReadExcelUtil {
 
                                 } else {
 
-                                    value = new DecimalFormat("0").format(cell
+                                    value = new DecimalFormat("0.0000").format(cell
 
                                             .getNumericCellValue());
 

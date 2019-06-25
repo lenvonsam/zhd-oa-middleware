@@ -30,9 +30,9 @@ public interface KpiMapper {
 	 */
 	@Select("select "
 			+ "case when ERPWEIGHT <> #{erpWeight} or ERPMONEY <> #{erpMoney} then 1  "
-			+ " else 0 end res"
+			+ " else 0 end res "
 			+ "from  uf_zhdKpiConsult "
-			+ "where YYYY = #{yyyy} and KPITYPEDT = #{kpiTypeDt} and KPIEMP = #{kpiEmp}")
+			+ "where YYYY = #{yyyy} and KPITYPEDT = #{kpiTypeDt} and KPIEMP = #{kpiEmp} ")
 	public String checkXSErpKpiByDt(@Param ("yyyy")String yyyy,@Param ("kpiTypeDt")String kpiTypeDt,@Param ("kpiEmp")String kpiEmp,@Param ("erpWeight")Double erpWeight,@Param ("erpMoney")Double erpMoney);
 	
 	/**
