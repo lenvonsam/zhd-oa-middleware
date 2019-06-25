@@ -14,6 +14,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class KpiController extends BaseController {
+    private static String staticData = "";
 
     @Override
     public void router() {
@@ -25,29 +26,16 @@ public class KpiController extends BaseController {
         });
 
         post("/OaUpload", (req, res) -> {
-            String msg = "";
-            int type = 0;
-            String excelType = req.queryParams("excelType");
-            if (excelType == null) {
-                msg = "excel 类型不能为空...";
-            } else {
-                type = Integer.valueOf(excelType);
-            }
-            String callback = req.queryParams("jsoncallback");
-            System.out.println(req.queryParams("aaa") + "===" + callback);
-
-            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-            try (InputStream is = req.raw().getPart("uploaded_file").getInputStream()) {
-                BufferedInputStream in = new BufferedInputStream(is);
-                List<String[]> result = ReadExcelUtil.shareInstance().getData(null, in, 1);
-
-                log.info(">>>{}", JSON.toJSONString(result));
-            }
             HashMap<String, Object> result = new HashMap<>();
+            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+            try (InputStream is = req.raw().getPart("file_data").getInputStream()) {
+                BufferedInputStream in = new BufferedInputStream(is);
+                List<String[]> resultData = ReadExcelUtil.shareInstance().getData(null, in, 1);
+                log.info(">>>{}", JSON.toJSONString(resultData));
+                result.put("list", resultData);
+            }
             result.put("returnCode", 0);
             return JSONObject.toJSON(result);
         });
-
     }
-
 }
