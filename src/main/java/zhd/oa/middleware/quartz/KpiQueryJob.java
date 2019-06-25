@@ -21,9 +21,10 @@ public class KpiQueryJob implements Job{
 		
 		List<KpiModel> kpis = kpiService.queryKpi();
 		
+		for (int i = 0; i < kpis.size(); i++) {
+			kpiService.insertKpiConsult(kpis.get(i));
+		}
 		System.out.println(kpis);
-		
-		
 	}
 	
 	
