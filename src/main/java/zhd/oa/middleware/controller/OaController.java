@@ -16,9 +16,9 @@ public class OaController extends BaseController{
     public void router() {
         // 获取绩效页面
         get("/oaPerf", (req, res) -> {
-            String context = req.contextPath();
+            String uid = req.queryParams("uid");
             Map<String, Object> model = new HashMap<>();
-            model.put("projectPath", context == null ? "" : context);
+            model.put("uid", uid == null ? "" : uid);
             return new VelocityTemplateEngine().render(new ModelAndView(model, "templates/oaPerf1.vm"));
         });
 

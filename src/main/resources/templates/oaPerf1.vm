@@ -48,6 +48,9 @@
                 <div class="col-sm-1">
                     <button class="btn btn-primary" id="btn_clear">清空</button>
                 </div>
+                <div class="col-sm-1">
+                    <label class="control-label" id="uid" hidden="hidden">${uid}</label>
+                </div>
             </div>
         </div>
         <div class="panel panel-default">
