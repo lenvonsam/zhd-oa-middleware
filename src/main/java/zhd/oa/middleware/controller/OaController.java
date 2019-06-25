@@ -19,7 +19,7 @@ public class OaController extends BaseController{
             String context = req.contextPath();
             Map<String, Object> model = new HashMap<>();
             model.put("projectPath", context == null ? "" : context);
-            return new VelocityTemplateEngine().render(new ModelAndView(model, "templates/oaPerf.vm"));
+            return new VelocityTemplateEngine().render(new ModelAndView(model, "templates/oaPerf1.vm"));
         });
 
         // 测试freemarker
