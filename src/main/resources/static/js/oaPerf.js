@@ -1,6 +1,7 @@
 $(function() {
     var tableColumn = [];
     var excelType = 0;
+    var uid = $("#uid").html().trim();
     // 初始化数据格式
     var columns_yx = ['年份', '月度/季度/年度', '姓名', '高达销量', '销量变化量', '其他吨位', '实际销量', '销量任务量', '销量得分',
         '高达高卖', '高卖变化量', '应扣费用', '实际高卖', '高卖任务量', '高卖得分', '加分', '加分原因', '减分', '减分原因', '总得分'];
@@ -28,7 +29,8 @@ $(function() {
         showClose: false,
         uploadExtraData:function(){
             return {
-                excelType: excelType
+                excelType: excelType,
+                uid: uid
             };
         },
         layoutTemplates:{
