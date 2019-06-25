@@ -43,10 +43,12 @@ public class KpiController extends BaseController {
             result.put("returnCode", 0);
             return JSONObject.toJSON(result);
         });
+
         post("/doCheckKpi", (req, res) -> {
         	
         	String type = req.queryParams("type");
         	String data = req.queryParams("data");
+        	log.info(">>>type:{},data:{}", type, data);
         	
         	Map<String,String> map = kpiService.compareKpi(type, data);
         	

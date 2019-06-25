@@ -36,31 +36,39 @@ $(function() {
         },
         browseClass: 'btn btn-primary'
     });
-    // ajax请求前的处理
-    upload.on("filepreajax", function (event, previewId, index) {
-        setData();
-        createTableThead();
+    // 选择文件后的处理
+    upload.on("filebatchselected", function (event, previewId, index) {
+        if (setData()) {
+            createTableThead();
+        } else {
+            alert("请选择数据类型");
+            $(".fileinput-remove-button").trigger("click");
+        }
     });
+
     // 点击上传后的处理
     upload.on("fileuploaded", function (event, data, previewId, index) {
-        console.log("返回:" + data.response);
         if (data.response.returnCode === 0) {
             // 处理数据,生成table
             var bodyHtm = "";
             $.each(data.response.list, function (idx, item) {
-                console.log("第%s行数据:%s", idx, item);
                 bodyHtm += "<tr style='text-align: center'>";
                 $.each(item, function (i, v) {
                     var tmpName = 'row-' + idx + '-' +i;
-                    console.log(tmpName);
                     bodyHtm += "<td><input type='text' id='"+ tmpName +"' name='" + tmpName +"' value='" + v + "'></td>";
                 });
                 bodyHtm += "</tr>"
             });
             $('#table-body table tbody').html(bodyHtm); //覆盖tbody部分
         }
+        $('#btn_check').removeAttr("disabled");
         getTableData();
     });
+
+    $('#btn_clear').click(function () {
+        location.reload();
+    });
+
     function getTableData() {
         var table = $('#table-body table').dataTable({
             "bSort" : false, //是否启动各个字段的排序功能
@@ -74,56 +82,75 @@ $(function() {
                 res += "$";
                 $(trItem).find("input").each(function(tdIdx, tdItem){
                     var tdValue = $(tdItem).attr("value");
-                    console.log(typeof tdValue);
-                    if(!(tdValue === undefined || tdValue == null || tdValue=== "")){
+                    if(tdValue === undefined || tdValue == null){
+                        res += "";
+                    } else {
                         res += tdValue;
-                        res += "|";
                     }
+                    res += "|";
                 });
                 res = res.substring(0, res.length - 1);
             });
-            console.log(res.substring(1, res.length));
+            checkData(res.substring(1, res.length));
             return false;
+        });
+    }
+
+    function checkData(reqData) {
+        $.ajax({
+            url : "/doCheckKpi",
+            type : "POST",
+            data:{
+                "type":excelType,
+                "data":reqData
+            },
+            dataType : "json",
+            success : function(data) {
+                alert(data.msg);
+            }
         });
     }
 
     function setData() {
         var selectDept = $('#select_dept').val();
-        console.log("部门：" + selectDept);
-        switch(selectDept) {
-            case '营销中心':
-                excelType = 0;
-                tableColumn = columns_yx;
-                break;
-            case '型云等公司':
-                excelType = 1;
-                tableColumn = columns_xy;
-                break;
-            case '仓储部门':
-                excelType = 2;
-                tableColumn = columns_cc;
-                break;
-            case '采购部门':
-                excelType = 3;
-                tableColumn = columns_cg;
-                break;
-            case '集团常务副总':
-                excelType = 4;
-                tableColumn = columns_jtfz;
-                break;
-            case '产品资源中心总监':
-                excelType = 5;
-                tableColumn = columns_cpzj;
-                break;
-            case '营销中心副总监':
-                excelType = 6;
-                tableColumn = columns_yxfz;
-                break;
-            default:
-                excelType = 0;
-                tableColumn = columns_yx;
+        if (selectDept.indexOf("请选择数据类型") > 0) {
+            return false;
+        } else {
+            switch(selectDept) {
+                case '营销中心':
+                    excelType = 0;
+                    tableColumn = columns_yx;
+                    break;
+                case '型云等公司':
+                    excelType = 1;
+                    tableColumn = columns_xy;
+                    break;
+                case '仓储部门':
+                    excelType = 2;
+                    tableColumn = columns_cc;
+                    break;
+                case '采购部门':
+                    excelType = 3;
+                    tableColumn = columns_cg;
+                    break;
+                case '集团常务副总':
+                    excelType = 4;
+                    tableColumn = columns_jtfz;
+                    break;
+                case '产品资源中心总监':
+                    excelType = 5;
+                    tableColumn = columns_cpzj;
+                    break;
+                case '营销中心副总监':
+                    excelType = 6;
+                    tableColumn = columns_yxfz;
+                    break;
+                default:
+                    excelType = 0;
+                    tableColumn = columns_yx;
+            }
+            return true;
         }
-        console.log("字段：" + tableColumn + ",excel类型:" + excelType);
     }
 
     function createTableThead(){

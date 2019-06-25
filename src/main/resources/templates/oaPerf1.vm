@@ -15,8 +15,8 @@
 <body>
 <div class="container-fluid">
     <div class="page-header">
-        <h1>大标题
-            <small>小标题</small>
+        <h1>OA绩效核对
+            <small>OA绩效核对</small>
         </h1>
     </div>
     <div role="tabpanel" class="tab-pane" id="bank-log">
@@ -42,8 +42,11 @@
                 <div class="col-sm-4">
                     <input id="upload_file" type="file" class="file-loading" data-show-preview="false">
                 </div>
-                <div class="col-sm-1 col-sm-offset-1" style="margin-top:5px">
-                    <button class="btn btn-primary" id="btn_check">校验</button>
+                <div class="col-sm-1 col-sm-offset-1">
+                    <button class="btn btn-primary" id="btn_check" disabled="disabled">校验</button>
+                </div>
+                <div class="col-sm-1">
+                    <button class="btn btn-primary" id="btn_clear">清空</button>
                 </div>
             </div>
         </div>
