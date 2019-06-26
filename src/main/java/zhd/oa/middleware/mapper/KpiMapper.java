@@ -87,13 +87,13 @@ public interface KpiMapper {
 			+ " erpWeight,erpChangeWeight,otherWeight,realWeight,taskWeight,kpiWeight, "
 			+ " erpMoney,erpChangeMoney,otherMoney,realMoney,taskMoney,kpiMoney, "
 			+ " addScore,addRemk,reduceScore,reduceRemk ) values "
-			+ " ( #{yyyy},#{kpiEmp},#{kpiTypeDt},#{erpWeight},#{erpChangeWeight},#{otherWeight},#{realWeight},#{taskWeight},#{kpiWeight}, "
+			+ " ( #{mainid},#{yyyy},#{kpiEmp},#{kpiTypeDt},#{erpWeight},#{erpChangeWeight},#{otherWeight},#{realWeight},#{taskWeight},#{kpiWeight}, "
 			+ " #{erpMoney} ,#{erpChangeMoney},#{otherMoney},#{realMoney},#{taskMoney},#{kpiMoney},"
 			+ " #{addScore},#{addRemk},#{reduceScore},#{reduceRemk} ) ")
-	public int insertKpiDt(@Param ("remk") String remk,@Param ("yyyy") String yyyy,@Param ("kpiEmp") String kpiEmp,@Param ("kpiTypeDt") String kpiTypeDt,
+	public int insertKpiDt(@Param ("mainid") String mainid,@Param ("yyyy") String yyyy,@Param ("kpiEmp") String kpiEmp,@Param ("kpiTypeDt") String kpiTypeDt,
 			@Param ("erpWeight") Double erpWeight,@Param ("erpChangeWeight") Double erpChangeWeight,@Param ("otherWeight") Double otherWeight,@Param ("realWeight") Double realWeight,@Param ("taskWeight") Double taskWeight,@Param ("kpiWeight") Double kpiWeight,
 			@Param ("erpMoney") Double erpMoney,@Param ("erpChangeMoney") Double erpChangeMoney,@Param ("otherMoney") Double otherMoney,@Param ("realMoney") Double realMoney,@Param ("taskMoney") Double taskMoney,@Param ("kpiMoney") Double kpiMoney,
-			@Param ("addScore") Double addScore,@Param ("addRemk") String addRemk,@Param ("reduceScore") Double reduceScore,@Param ("reduceRemk") Double reduceRemk
+			@Param ("addScore") Double addScore,@Param ("addRemk") String addRemk,@Param ("reduceScore") Double reduceScore,@Param ("reduceRemk") String reduceRemk
 			);
 	
 	/**
@@ -111,6 +111,14 @@ public interface KpiMapper {
 	public int insertKpiConsult(@Param ("yyyy") String yyyy,@Param ("kpiTypeDt") String kpiTypeDt,@Param ("kpiEmp") String kpiEmp,
 			@Param ("erpWeight") Double erpWeight,@Param ("erpMoney") Double erpMoney,@Param ("mmAvgStore") Double mmAvgStore);
 	
+	
+	/**
+	 * 根据人员查询部门
+	 * @param uid
+	 * @return
+	 */
+	@Select(" select DEPARTMENTID from hrmresource where id = #{uid} ")
+	public int getDeptIdByUid(String uid);
 	
 	
 }

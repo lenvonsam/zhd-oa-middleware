@@ -49,9 +49,12 @@ public class KpiController extends BaseController {
         	
         	String type = req.queryParams("type");
         	String data = req.queryParams("data");
-        	log.info(">>>type:{},data:{}", type, data);
+        	String uid = req.queryParams("uid");
+        	log.info(">>>type:{},data:{},uid:{}", type, data,uid);
         	
-        	Map<String,String> map = kpiService.compareKpi(type, data);
+        	Map<String,String> map = kpiService.compareKpi(type, data , uid);
+        	
+        	
         	
         	return JSONObject.toJSON(map);
         	
