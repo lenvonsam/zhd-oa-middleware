@@ -2,12 +2,13 @@ package zhd.oa.middleware.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-
+import org.apache.commons.io.IOUtils;
 import zhd.oa.middleware.innotation.Autowired;
 import zhd.oa.middleware.service.KpiService;
 import zhd.oa.middleware.utils.ReadExcelUtil;
 
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.http.Part;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -34,6 +35,9 @@ public class KpiController extends BaseController {
         post("/OaUpload", (req, res) -> {
             HashMap<String, Object> result = new HashMap<>();
             req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+            //multipart/form-data请求获取其他参数需要二进制流转string
+            Part uidPart = req.raw().getPart("uid");
+            String uid = IOUtils.toString(uidPart.getInputStream());
             try (InputStream is = req.raw().getPart("file_data").getInputStream()) {
                 BufferedInputStream in = new BufferedInputStream(is);
                 List<String[]> resultData = ReadExcelUtil.shareInstance().getData(null, in, 1);
@@ -45,7 +49,7 @@ public class KpiController extends BaseController {
         });
 
         post("/doCheckKpi", (req, res) -> {
-        	
+            String uid = req.queryParams("uid");
         	String type = req.queryParams("type");
         	String data = req.queryParams("data");
         	log.info(">>>type:{},data:{}", type, data);
