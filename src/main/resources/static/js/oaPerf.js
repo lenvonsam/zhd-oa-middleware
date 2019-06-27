@@ -104,6 +104,7 @@ $(function() {
             type : "POST",
             data:{
                 "type":excelType,
+                "uid":uid,
                 "data":reqData
             },
             dataType : "json",
