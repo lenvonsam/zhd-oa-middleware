@@ -56,10 +56,11 @@ public class KpiService extends BaseService{
 	 */
 	public Map<String,String> compareKpi(String type , String data , String uid) throws Exception{
 		
-		String[] datas = data.split("$");
+		String[] datas = data.split("\\$");
 		String msg = "" ; 
 		String success = "0" ; 
 		List<String> successList = new ArrayList<String>();
+		System.out.println("datas.length"+datas.length);
 		
 		for (int i = 0; i < datas.length; i++) {
 			String[] datasForOne = datas[i].split("\\|");
@@ -88,10 +89,10 @@ public class KpiService extends BaseService{
 					resStr = kpiMapper.checkCGErpKpiByDt(yyyy, kpiTypeDt, kpiEmp, erpWeight, mmAvgStore);
 				}
 				
-				if(null == resStr){
+				if(null == resStr&&"0".equals(type)){
 					successList.add("1");
 					msg = msg + kpiEmp + "名字与Erp匹配不上";
-				}if("1".equals(resStr)){
+				}if("1".equals(resStr)&&"0".equals(type)){
 					successList.add("1");
 					msg = msg + kpiEmp + "销量或高卖数据与Erp不一致";
 				}
@@ -106,7 +107,6 @@ public class KpiService extends BaseService{
 		
 		String requestid = "";
 		
-		System.out.println("successList===>"+successList);
 		if(successList.contains("1")){
 			success = "1" ;
 		}else{
@@ -138,8 +138,8 @@ public class KpiService extends BaseService{
 			
 			}
 			
-			requestid = WorkflowUtil.shareInstance().createKpiWorkflow(uid, workflowId, "");
-			
+			requestid = WorkflowUtil.shareInstance().createKpiWorkflow("286", workflowId, "");
+			log.info("requestid==>"+requestid);
 		}
 		
 		Map<String,String> map = new HashMap<String,String>();
@@ -155,7 +155,7 @@ public class KpiService extends BaseService{
 	 * 
 	 * 明细表插入数据
 	 */
-	public void insertAndUpdateWorkflowDt(String mainid , String data , String type){
+	public void insertAndUpdateWorkflowDt(String mainid , String[] kpi , String type){
 		
 		//插入前需要做删除 -------后面考虑的方案是不走流程申请    所以该步骤不需要了 
 //		try {
@@ -168,22 +168,27 @@ public class KpiService extends BaseService{
 //			closeSession();	
 //		}
 		
-		//插入
-		String[] datas =  data.split("$");
-		
-		for (int i = 0; i < datas.length; i++) {
-			
-			String[] kpis = datas[i].split("\\|");
+		try {
+			session = openSession();
+			kpiMapper = session.getMapper(KpiMapper.class);
 			
 			if("0".equals(type)){
-//				String 
+				kpiMapper.insertKpiXSDt(mainid, kpi[0], kpi[1], kpi[2],	kpi[3], kpi[4], kpi[5], kpi[6], kpi[7], 
+						kpi[8], kpi[9], kpi[10], kpi[11], kpi[12],kpi[13], kpi[14], kpi[15], kpi[16], kpi[17], kpi[18]);
+			}if("1".equals(type)){
+				kpiMapper.insertKpiXYDt(mainid,  kpi[0],  kpi[1],  kpi[2],  kpi[3],  kpi[4],  kpi[5],  kpi[6],  kpi[7]);
+			}if("2".equals(type)){
+				kpiMapper.insertKpiCCDt(mainid, kpi[0], kpi[1], kpi[2], kpi[3], kpi[4], kpi[5], kpi[6], kpi[7], kpi[8], kpi[9], kpi[10],kpi[11]);
+			}if("3".equals(type)){
+				kpiMapper.insertKpiCGDt(mainid, kpi[0], kpi[1], kpi[2], kpi[3], kpi[4], kpi[5], kpi[6], kpi[7], 
+						kpi[8], kpi[9], kpi[10], kpi[11], kpi[12],kpi[13], kpi[14], kpi[15], kpi[16], kpi[17], kpi[18],kpi[19]);
 			}
-			
-			
-			
-			
-			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{	
+			closeSession();	
 		}
+		
 		
 		
 	}
@@ -235,16 +240,16 @@ public class KpiService extends BaseService{
 	 * @return
 	 */
 	public int insertKpiDt(String mainid,String yyyy,String kpiEmp,String kpiTypeDt,
-			Double erpWeight,Double erpChangeWeight,Double otherWeight,Double realWeight,Double taskWeight,Double kpiWeight,
-			Double erpMoney,Double erpChangeMoney,Double otherMoney,Double realMoney,Double taskMoney,Double kpiMoney,
-			Double addScore,String addRemk,Double reduceScore,String reduceRemk){
+			String erpWeight,String erpChangeWeight,String otherWeight,String realWeight,String taskWeight,String kpiWeight,
+			String erpMoney,String erpChangeMoney,String otherMoney,String realMoney,String taskMoney,String kpiMoney,
+			String addScore,String addRemk,String reduceScore,String reduceRemk){
 		
 		int insertRes = 0;
 		
 		try {
 			session = openSession();
 			kpiMapper = session.getMapper(KpiMapper.class);
-			insertRes = kpiMapper.insertKpiDt(mainid, yyyy, kpiEmp, kpiTypeDt, erpWeight, erpChangeWeight, otherWeight, realWeight, taskWeight, kpiWeight, erpMoney, erpChangeMoney, otherMoney, realMoney, taskMoney, kpiMoney, addScore, addRemk, reduceScore, reduceRemk);
+			insertRes = kpiMapper.insertKpiXSDt(mainid, yyyy, kpiEmp, kpiTypeDt , erpWeight, erpChangeWeight, otherWeight, realWeight, taskWeight, kpiWeight, erpMoney, erpChangeMoney, otherMoney, realMoney, taskMoney, kpiMoney, addScore, addRemk, reduceScore, reduceRemk);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -256,6 +261,24 @@ public class KpiService extends BaseService{
 
 	}
  
+	public String getMainid(String requestid){
+		
+		String mainid = "";
+		
+		try {
+			session = openSession();
+			kpiMapper = session.getMapper(KpiMapper.class);
+			mainid = kpiMapper.getMainid(requestid);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{	
+			closeSession();	
+		}
+		
+		return mainid;
+		
+	}
 	
 
 }

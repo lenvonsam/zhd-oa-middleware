@@ -54,7 +54,15 @@ public class KpiController extends BaseController {
         	
         	Map<String,String> map = kpiService.compareKpi(type, data , uid);
         	
+        	String mainid = kpiService.getMainid(map.get("requestid"));
         	
+        	String[] datas = data.split("\\$");
+        	
+        	for (int i = 0; i < datas.length; i++) {
+				String[] kpis = datas[i].split("\\|");
+				System.out.println("kpis.length==>"+kpis.length);
+				kpiService.insertAndUpdateWorkflowDt(mainid, kpis, type);
+			}
         	
         	return JSONObject.toJSON(map);
         	

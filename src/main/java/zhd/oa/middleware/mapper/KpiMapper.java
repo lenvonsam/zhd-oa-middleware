@@ -60,7 +60,7 @@ public interface KpiMapper {
 	public int deleteKpiDt(String remk);
 	
 	/**
-	 * 插入绩效流程明细
+	 * 写入销售绩效流程明细
 	 * @param remk
 	 * @param yyyy
 	 * @param kpiEmp
@@ -90,11 +90,92 @@ public interface KpiMapper {
 			+ " ( #{mainid},#{yyyy},#{kpiEmp},#{kpiTypeDt},#{erpWeight},#{erpChangeWeight},#{otherWeight},#{realWeight},#{taskWeight},#{kpiWeight}, "
 			+ " #{erpMoney} ,#{erpChangeMoney},#{otherMoney},#{realMoney},#{taskMoney},#{kpiMoney},"
 			+ " #{addScore},#{addRemk},#{reduceScore},#{reduceRemk} ) ")
-	public int insertKpiDt(@Param ("mainid") String mainid,@Param ("yyyy") String yyyy,@Param ("kpiEmp") String kpiEmp,@Param ("kpiTypeDt") String kpiTypeDt,
-			@Param ("erpWeight") Double erpWeight,@Param ("erpChangeWeight") Double erpChangeWeight,@Param ("otherWeight") Double otherWeight,@Param ("realWeight") Double realWeight,@Param ("taskWeight") Double taskWeight,@Param ("kpiWeight") Double kpiWeight,
-			@Param ("erpMoney") Double erpMoney,@Param ("erpChangeMoney") Double erpChangeMoney,@Param ("otherMoney") Double otherMoney,@Param ("realMoney") Double realMoney,@Param ("taskMoney") Double taskMoney,@Param ("kpiMoney") Double kpiMoney,
-			@Param ("addScore") Double addScore,@Param ("addRemk") String addRemk,@Param ("reduceScore") Double reduceScore,@Param ("reduceRemk") String reduceRemk
+	public int insertKpiXSDt(@Param ("mainid") String mainid,@Param ("yyyy") String yyyy,@Param ("kpiEmp") String kpiEmp,@Param ("kpiTypeDt") String kpiTypeDt,
+			@Param ("erpWeight") String erpWeight,@Param ("erpChangeWeight") String erpChangeWeight,@Param ("otherWeight") String otherWeight,@Param ("realWeight") String realWeight,@Param ("taskWeight") String taskWeight,@Param ("kpiWeight") String kpiWeight,
+			@Param ("erpMoney") String erpMoney,@Param ("erpChangeMoney") String erpChangeMoney,@Param ("otherMoney") String otherMoney,@Param ("realMoney") String realMoney,@Param ("taskMoney") String taskMoney,@Param ("kpiMoney") String kpiMoney,
+			@Param ("addScore") String addScore,@Param ("addRemk") String addRemk,@Param ("reduceScore") String reduceScore,@Param ("reduceRemk") String reduceRemk
 			);
+	
+	/**
+	 * 写入采购数据明细
+	 * @param mainid
+	 * @param yyyy
+	 * @param kpiEmp
+	 * @param kpiTypeDt
+	 * @param erpWeight
+	 * @param erpChangeWeight
+	 * @param otherWeight
+	 * @param realWeight
+	 * @param taskWeight
+	 * @param kpiWeight
+	 * @param avgPrice
+	 * @param mmAssessPrice
+	 * @param mmAvgStore
+	 * @param storeRange
+	 * @param AssessWeight
+	 * @param kpiStore
+	 * @param addScore
+	 * @param addRemk
+	 * @param reduceScore
+	 * @param reduceRemk
+	 * @param kpitotal
+	 * @return
+	 */
+	@Insert("insert into FORMTABLE_MAIN_451_dt1 ( mainid,yyyy,kpiEmp,kpiTypeDt, "
+			+ " erpWeight,erpChangeWeight,otherWeight,realWeight,taskWeight,kpiWeight, "
+			+ " avgPrice,mmAssessPrice,mmAvgStore,storeRange,AssessWeight,kpiStore, "
+			+ " addScore,addRemk,reduceScore,reduceRemk,kpitotal ) values "
+			+ " (#{avgPrice},#{yyyy},#{kpiEmp},#{kpiTypeDt},#{erpWeight},#{erpChangeWeight},#{otherWeight},#{realWeight},#{taskWeight},#{kpiWeight}, "
+			+ "  #{avgPrice},#{mmAssessPrice},#{mmAvgStore},#{storeRange},#{AssessWeight},#{kpiStore},#{addScore},#{addRemk},#{reduceScore},#{reduceRemk},#{kpitotal}) ")
+	public int insertKpiCGDt(@Param ("mainid") String mainid,@Param ("yyyy") String yyyy,@Param ("kpiEmp") String kpiEmp,@Param ("kpiTypeDt") String kpiTypeDt,
+			@Param ("erpWeight") String erpWeight,@Param ("erpChangeWeight") String erpChangeWeight,@Param ("otherWeight") String otherWeight,@Param ("realWeight") String realWeight,@Param ("taskWeight") String taskWeight,@Param ("kpiWeight") String kpiWeight,
+			@Param ("avgPrice") String avgPrice,@Param ("mmAssessPrice") String mmAssessPrice,@Param ("mmAvgStore") String mmAvgStore,@Param ("storeRange") String storeRange,@Param ("AssessWeight") String AssessWeight,@Param ("kpiStore") String kpiStore,
+			@Param ("addScore") String addScore,@Param ("addRemk") String addRemk,@Param ("reduceScore") String reduceScore,@Param ("reduceRemk") String reduceRemk,@Param ("kpitotal") String kpitotal);
+	
+	/**
+	 * 写入仓储数据
+	 * @param mainid
+	 * @param yyyy
+	 * @param kpiEmp
+	 * @param kpiTypeDt
+	 * @param addScore
+	 * @param addRemk
+	 * @param reduceScore
+	 * @param reduceRemk
+	 * @param basicScore
+	 * @param otherScore
+	 * @param otherRemk
+	 * @param kpitotal
+	 * @return
+	 */
+	@Insert("insert into FORMTABLE_MAIN_451_dt1 (mainid,yyyy,kpiEmp,kpiTypeDt,kpiArea, "
+			+ " addScore,addRemk,reduceScore,reduceRemk,"
+			+ " basicScore,otherScore,otherRemk,kpitotal ) values "
+			+ " ( #{mainid},#{yyyy},#{kpiEmp},#{kpiTypeDt},#{kpiArea},#{addScore},#{addRemk},#{reduceScore},#{reduceRemk},"
+			+ " #{basicScore},#{otherScore},#{otherRemk},#{kpitotal} ) ")
+	public int insertKpiCCDt(@Param ("mainid") String mainid,@Param ("yyyy") String yyyy,@Param ("kpiEmp") String kpiEmp,@Param ("kpiTypeDt") String kpiTypeDt,@Param ("kpiArea") String kpiArea,
+			@Param ("addScore") String addScore,@Param ("addRemk") String addRemk,@Param ("reduceScore") String reduceScore,@Param ("reduceRemk") String reduceRemk,
+			@Param ("basicScore") String basicScore,@Param ("otherScore") String otherScore,@Param ("otherRemk") String otherRemk,@Param ("kpitotal") String kpitotal);
+	
+	/**
+	 * 写入型云数据
+	 * @param mainid
+	 * @param yyyy
+	 * @param kpiEmp
+	 * @param kpiTypeDt
+	 * @param addScore
+	 * @param addRemk
+	 * @param reduceScore
+	 * @param reduceRemk
+	 * @param kpitotal
+	 * @return
+	 */
+	@Insert("insert into FORMTABLE_MAIN_451_dt1 ( mainid,yyyy,kpiEmp,kpiTypeDt, "
+			+ " addScore,addRemk,reduceScore,reduceRemk,kpitotal ) values "
+			+ " (#{mainid},#{yyyy},#{kpiEmp},#{kpiTypeDt},#{addScore},#{addRemk},#{reduceScore},#{reduceRemk},#{kpitotal})  ")
+	public int insertKpiXYDt(@Param ("mainid") String mainid,@Param ("yyyy") String yyyy,@Param ("kpiEmp") String kpiEmp,@Param ("kpiTypeDt") String kpiTypeDt,
+			@Param ("addScore") String addScore,@Param ("addRemk") String addRemk,@Param ("reduceScore") String reduceScore,@Param ("reduceRemk") String reduceRemk,@Param ("kpitotal") String kpitotal);
+	
 	
 	/**
 	 * 插入临时的绩效数据（数据对比表）
@@ -119,6 +200,10 @@ public interface KpiMapper {
 	 */
 	@Select(" select DEPARTMENTID from hrmresource where id = #{uid} ")
 	public int getDeptIdByUid(String uid);
+	
+	
+	@Select(" select id from FORMTABLE_MAIN_451 where requestid = #{requestid} ")
+	public String getMainid(String requestid);
 	
 	
 }
