@@ -7,7 +7,12 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import zhd.oa.middleware.model.EmpOA;
+import zhd.oa.middleware.model.Kpi;
+import zhd.oa.middleware.model.KpiData;
 import zhd.oa.middleware.model.KpiModel;
+import zhd.oa.middleware.model.KpiTotalChange;
+import zhd.oa.middleware.model.KpiTotalChangeOne;
 
 public interface KpiMapper {
 	
@@ -15,9 +20,34 @@ public interface KpiMapper {
 	 * 查询erp上的销量和高卖
 	 * @return
 	 */
-	@Select("select to_char(sysDate,'yyyy') yyyy, substr(YF,6,8) kpiTypeDt, EMP_NAME kpiEmp, ZXL erpWeight, GM erpMoney from V_ZHDERPKPI "
+	@Select("select to_char(sysDate,'yyyy') yyyy, substr(YF,6,8) kpiTypeDt,case when EMP_NAME is null then employee_name else emp_name end  kpiEmp,"
+			+ " ZXL erpWeight, GM erpMoney from V_ZHDERPKPI "
 			+ " where YF = to_char(add_months(trunc(sysdate),-1),'yyyy-MM') ")
 	public List<KpiModel> queryErpKpi();
+	
+	/**
+	 * 每月初2号查询系统的销量 ，以计算变化量
+	 * @return
+	 */
+	@Select("select case when emp_name is null then employee_name else emp_name end oneName,"
+			+ "EMPLOYEE_NAME oneAccount,yf oneMM,sum(zxl) oneWeight,sum(gm) oneMoney ,to_char(sysdate,'yyyy-MM-dd') oneGetDate  "
+			+ "from v_zhderpkpi where yf<to_char(trunc(sysdate,'MM'),'yyyy-MM')group by emp_name,EMPLOYEE_NAME,yf"
+			)
+	public List<KpiTotalChangeOne> queryChangeOne();
+	
+	/**
+	 * 
+	 * 写入销量合计 ，计算变化量
+	 * @param oneName
+	 * @param oneWeight
+	 * @param oneMoney
+	 * @return
+	 */
+	@Insert("insert into uf_oneTotal ( oneName,oneAccount,oneMM,oneWeight,oneMoney,oneGetDate )  values ("
+			+ " #{oneName},#{oneAccount},#{oneMM},#{oneWeight},#{oneMoney},#{oneGetDate} )  ")
+	public int insertChangeOne(@Param ("oneName")String oneName,@Param ("oneAccount")String oneAccount,
+			@Param ("oneMM")String oneMM,@Param ("oneWeight")Double oneWeight,
+			@Param ("oneMoney")Double oneMoney,@Param ("oneGetDate")String oneGetDate);
 	
 	/**
 	 * 对比下载下来的营销数据
@@ -83,14 +113,14 @@ public interface KpiMapper {
 	 * @param reduceRemk
 	 * @return
 	 */
-	@Insert("insert into FORMTABLE_MAIN_451_dt1 ( mainid,yyyy,kpiEmp,kpiTypeDt, "
+	@Insert("insert into FORMTABLE_MAIN_451_dt1 ( mainid,yyyy,kpiTypeDt,kpiEmp, "
 			+ " erpWeight,erpChangeWeight,otherWeight,realWeight,taskWeight,kpiWeight, "
 			+ " erpMoney,erpChangeMoney,otherMoney,realMoney,taskMoney,kpiMoney, "
 			+ " addScore,addRemk,reduceScore,reduceRemk ) values "
-			+ " ( #{mainid},#{yyyy},#{kpiEmp},#{kpiTypeDt},#{erpWeight},#{erpChangeWeight},#{otherWeight},#{realWeight},#{taskWeight},#{kpiWeight}, "
+			+ " ( #{mainid},#{yyyy},#{kpiTypeDt},#{kpiEmp},#{erpWeight},#{erpChangeWeight},#{otherWeight},#{realWeight},#{taskWeight},#{kpiWeight}, "
 			+ " #{erpMoney} ,#{erpChangeMoney},#{otherMoney},#{realMoney},#{taskMoney},#{kpiMoney},"
 			+ " #{addScore},#{addRemk},#{reduceScore},#{reduceRemk} ) ")
-	public int insertKpiXSDt(@Param ("mainid") String mainid,@Param ("yyyy") String yyyy,@Param ("kpiEmp") String kpiEmp,@Param ("kpiTypeDt") String kpiTypeDt,
+	public int insertKpiXSDt(@Param ("mainid") String mainid,@Param ("yyyy") String yyyy,@Param ("kpiTypeDt") String kpiTypeDt,@Param ("kpiEmp") String kpiEmp,
 			@Param ("erpWeight") String erpWeight,@Param ("erpChangeWeight") String erpChangeWeight,@Param ("otherWeight") String otherWeight,@Param ("realWeight") String realWeight,@Param ("taskWeight") String taskWeight,@Param ("kpiWeight") String kpiWeight,
 			@Param ("erpMoney") String erpMoney,@Param ("erpChangeMoney") String erpChangeMoney,@Param ("otherMoney") String otherMoney,@Param ("realMoney") String realMoney,@Param ("taskMoney") String taskMoney,@Param ("kpiMoney") String kpiMoney,
 			@Param ("addScore") String addScore,@Param ("addRemk") String addRemk,@Param ("reduceScore") String reduceScore,@Param ("reduceRemk") String reduceRemk
@@ -148,12 +178,12 @@ public interface KpiMapper {
 	 * @param kpitotal
 	 * @return
 	 */
-	@Insert("insert into FORMTABLE_MAIN_451_dt1 (mainid,yyyy,kpiEmp,kpiTypeDt,kpiArea, "
+	@Insert("insert into FORMTABLE_MAIN_451_dt1 (mainid,yyyy,kpiTypeDt,kpiEmp,kpiArea, "
 			+ " addScore,addRemk,reduceScore,reduceRemk,"
 			+ " basicScore,otherScore,otherRemk,kpitotal ) values "
-			+ " ( #{mainid},#{yyyy},#{kpiEmp},#{kpiTypeDt},#{kpiArea},#{addScore},#{addRemk},#{reduceScore},#{reduceRemk},"
+			+ " ( #{mainid},#{yyyy},#{kpiTypeDt},#{kpiEmp},#{kpiArea},#{addScore},#{addRemk},#{reduceScore},#{reduceRemk},"
 			+ " #{basicScore},#{otherScore},#{otherRemk},#{kpitotal} ) ")
-	public int insertKpiCCDt(@Param ("mainid") String mainid,@Param ("yyyy") String yyyy,@Param ("kpiEmp") String kpiEmp,@Param ("kpiTypeDt") String kpiTypeDt,@Param ("kpiArea") String kpiArea,
+	public int insertKpiCCDt(@Param ("mainid") String mainid,@Param ("yyyy") String yyyy,@Param ("kpiTypeDt") String kpiTypeDt,@Param ("kpiEmp") String kpiEmp,@Param ("kpiArea") String kpiArea,
 			@Param ("addScore") String addScore,@Param ("addRemk") String addRemk,@Param ("reduceScore") String reduceScore,@Param ("reduceRemk") String reduceRemk,
 			@Param ("basicScore") String basicScore,@Param ("otherScore") String otherScore,@Param ("otherRemk") String otherRemk,@Param ("kpitotal") String kpitotal);
 	
@@ -170,10 +200,10 @@ public interface KpiMapper {
 	 * @param kpitotal
 	 * @return
 	 */
-	@Insert("insert into FORMTABLE_MAIN_451_dt1 ( mainid,yyyy,kpiEmp,kpiTypeDt, "
+	@Insert("insert into FORMTABLE_MAIN_451_dt1 ( mainid,yyyy,kpiTypeDt,kpiEmp, "
 			+ " addScore,addRemk,reduceScore,reduceRemk,kpitotal ) values "
-			+ " (#{mainid},#{yyyy},#{kpiEmp},#{kpiTypeDt},#{addScore},#{addRemk},#{reduceScore},#{reduceRemk},#{kpitotal})  ")
-	public int insertKpiXYDt(@Param ("mainid") String mainid,@Param ("yyyy") String yyyy,@Param ("kpiEmp") String kpiEmp,@Param ("kpiTypeDt") String kpiTypeDt,
+			+ " (#{mainid},#{yyyy},#{kpiTypeDt},#{kpiEmp},#{addScore},#{addRemk},#{reduceScore},#{reduceRemk},#{kpitotal})  ")
+	public int insertKpiXYDt(@Param ("mainid") String mainid,@Param ("yyyy") String yyyy,@Param ("kpiTypeDt") String kpiTypeDt,@Param ("kpiEmp") String kpiEmp,
 			@Param ("addScore") String addScore,@Param ("addRemk") String addRemk,@Param ("reduceScore") String reduceScore,@Param ("reduceRemk") String reduceRemk,@Param ("kpitotal") String kpitotal);
 	
 	
@@ -205,5 +235,65 @@ public interface KpiMapper {
 	@Select(" select id from FORMTABLE_MAIN_451 where requestid = #{requestid} ")
 	public String getMainid(String requestid);
 	
+	/**
+	 * 需要校验导入的名字是否正确
+	 * @param lastname
+	 * @return
+	 */
+	@Select(" select count(1) from hrmresource where lastname = #{lastname}")
+	public int checkLastname(String lastname);
+
+	/**
+	 * 查询所有人员   ，以便在程序里面做转换
+	 * @return
+	 */
+	@Select("select id,lastname,jobtitle job,departmentid dept from hrmresource where lastname = #{lastname} ")
+	public List<EmpOA> queryEmp(String lastname);
+	
+	/**
+	 * 查询变化量
+	 * @return
+	 */
+	@Select("select NAME1 uname, sum( WEIGHTCHANGE) weightChange , sum(MONEYCHANGE) moneyChange from V_ERPCHANGE t group by NAME1 ")
+	public List<KpiTotalChange> queryChange();
+	
+	/**
+	 * 
+	 * 查询营销中心绩效
+	 */
+	@Select("select ONENAME, MM, ONEWEIGHT, WEIGHTCHANGE, ONEMONEY, MONEYCHANGE from  V_GETKPIDATAS t")
+	public List<KpiData> getKpiData();
+	
+	/**
+	 * 将计算或得出的结果插入报表中
+	 * @param kpiTypeDt
+	 * @param kpiEmp
+	 * @param erpWeight
+	 * @param changeWeight
+	 * @param erpMoney
+	 * @param changeMoney
+	 */
+	@Insert("insert into uf_zhdKpiTable  ( yyyy,kpitypedt,kpiemp,erpweight,erpchangeweight,erpmoney,erpchangemoney,empname ) "
+			+ " values ( #{yyyy} ,#{kpitypedt} , #{kpiemp} , #{erpweight} , #{erpchangeweight} , #{erpmoney} , #{erpchangemoney}, #{empname}  ) ")
+	public int insertKpiData(@Param ("yyyy") String yyyy,@Param ("kpitypedt") String kpitypedt,@Param ("kpiemp") String kpiemp,
+			@Param ("erpweight") String erpweight,@Param ("erpchangeweight") String erpchangeweight,
+			@Param ("erpmoney") String erpmoney,@Param ("erpchangemoney") String erpchangemoney,@Param ("empname") String empname);
+	
+	/**
+	 * 数据对比
+	 * @param yyyy
+	 * @param kpitypedt
+	 * @param empname
+	 * @return
+	 */
+	@Select("select yyyy, kpitypedt, kpiemp, kpijob, emparea,empname, "
+			+ "to_char(erpweight,'fm999999999.0000') erpweight, to_char(erpchangeweight,'fm999999999.0000') erpchangeweight, to_char(otherweight,'fm999999999.0000') otherweight, "
+			+ "to_char(realweight,'fm999999999.0000') realweight, to_char(taskweight,'fm999999999.0000') taskweight, to_char(kpiweight,'fm999999999.0000') kpiweight, "
+			+ "to_char(erpmoney,'fm999999999.0000') erpmoney, to_char(erpchangemoney,'fm999999999.0000') erpchangemoney, to_char(othermoney,'fm999999999.0000') othermoney, "
+			+ " to_char(realmoney,'fm999999999.0000') realmoney, to_char(taskmoney,'fm999999999.0000') taskmoney, to_char(kpimoney,'fm999999999.0000') kpimoney, "
+			+ "to_char(avgprice,'fm999999999.0000') avgprice,to_char( mmassessprice,'fm999999999.0000') mmassessprice, to_char(mmavgstore,'fm999999999.0000') mmavgstore,"
+			+ " to_char(storerange,'fm999999999.0000') storerange, to_char(assessweight,'fm999999999.0000') assessweight, to_char(kpistore,'fm999999999.0000') kpistore "
+			+ "from uf_zhdkpitable t where yyyy = #{yyyy} and kpitypedt = #{kpitypedt} and empname = #{empname} ")
+	public List<Kpi> getKpi(@Param ("yyyy") String yyyy,@Param ("kpitypedt") String kpitypedt,@Param ("empname") String empname);
 	
 }

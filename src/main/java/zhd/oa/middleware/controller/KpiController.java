@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.IOUtils;
 import zhd.oa.middleware.innotation.Autowired;
+import zhd.oa.middleware.model.EmpOA;
 import zhd.oa.middleware.service.KpiService;
+import zhd.oa.middleware.utils.FormaChecktUtil;
 import zhd.oa.middleware.utils.ReadExcelUtil;
 
 import javax.servlet.MultipartConfigElement;
@@ -53,21 +55,34 @@ public class KpiController extends BaseController {
             String uid = req.queryParams("uid");
         	String type = req.queryParams("type");
         	String data = req.queryParams("data");
-        	String uid = req.queryParams("uid");
         	log.info(">>>type:{},data:{},uid:{}", type, data,uid);
         	
-        	Map<String,String> map = kpiService.compareKpi(type, data , uid);
+        	Map<String,String> map = new HashMap<String,String>();
         	
-        	String mainid = kpiService.getMainid(map.get("requestid"));
+        	int checkRes = FormaChecktUtil.shareInstance().checkDatas(data, type);
+        	if(checkRes==0){
+        		String dept = kpiService.getDeptIdByUid(uid)+"";
+        		map = kpiService.compareKpi(type, data , uid,dept);
+        		
+        		String mainid = kpiService.getMainid(map.get("requestid"));
+        		
+        		if("0".equals(map.get("success"))){
+        			String[] datas = data.split("\\$");
+        			
+        			for (int i = 0; i < datas.length; i++) {
+        				String[] kpis = datas[i].split("\\|");
+        				List<EmpOA> list = kpiService.getEmpsOA(kpis[2]);
+        				kpis[2] = list.get(0).getUid()+"";
+        				kpiService.insertAndUpdateWorkflowDt(mainid, kpis, type);
+        			}
+        		}
+        		
+        	}else{
+        		map.put("success", "1");
+				map.put("msg", "数据格式不正确！调整后请重新上传");
+        	}
         	
-        	String[] datas = data.split("\\$");
-        	
-        	for (int i = 0; i < datas.length; i++) {
-				String[] kpis = datas[i].split("\\|");
-				System.out.println("kpis.length==>"+kpis.length);
-				kpiService.insertAndUpdateWorkflowDt(mainid, kpis, type);
-			}
-        	
+        	log.info("map.toString()==>"+map.toString());
         	return JSONObject.toJSON(map);
         	
         });
