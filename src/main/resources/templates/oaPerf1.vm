@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>oa绩效</title>
+    <script src="/js/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.js"></script>
+    <link href="/css/bootstrap/bootstrap.css" rel="stylesheet"/>
+    <script src="/js/datatable/jquery.dataTables.min.js"></script>
+    <link href="/css/datatable/jquery.dataTables.min.css" rel="stylesheet"/>
+    <script src="/js/bootstrap/fileinput.min.js"></script>
+    <script src="/js/bootstrap/zh.js"></script>
+    <link href="/css/bootstrap/fileinput.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>OA绩效核对
+            <small>OA绩效核对</small>
+        </h1>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="bank-log">
+        <div class="panel panel-default">
+            <div class="panel-heading">操作</div>
+            <div class="panel-body form-group" style="margin-bottom: 1px;">
+                <label class="col-sm-1 control-label"
+                       style="text-align: right; margin-top: 5px">部门：</label>
+                <div class="col-sm-2">
+                    <select class="form-control" id="select_dept">
+                        <option>--请选择数据类型--</option>
+                        <option>营销中心</option>
+                        <option>型云等公司</option>
+                        <option>仓储部门</option>
+                        <option>采购部门</option>
+                        <option>集团常务副总</option>
+                        <option>产品资源中心总监</option>
+                        <option>营销中心副总监</option>
+                    </select>
+                </div>
+                <label class="col-sm-1 control-label"
+                       style="text-align: right; margin-top: 5px">上传：</label>
+                <div class="col-sm-4">
+                    <input id="upload_file" type="file" class="file-loading" data-show-preview="false">
+                </div>
+                <div class="col-sm-1 col-sm-offset-1">
+                    <button class="btn btn-primary" id="btn_check" disabled="disabled">校验</button>
+                </div>
+                <div class="col-sm-1">
+                    <button class="btn btn-primary" id="btn_clear">清空</button>
+                </div>
+                <div class="col-sm-1">
+                    <label class="control-label" id="uid" hidden="hidden">${uid}</label>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">绩效记录</div>
+            <div class="panel-body" id="table-body">
+                <table class="table table-bordered table-striped display"
+                       style="word-break: break-all; word-wrap: break-word;">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <!--</div> -->
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/oaPerf.js"></script>
+</body>
+</html>

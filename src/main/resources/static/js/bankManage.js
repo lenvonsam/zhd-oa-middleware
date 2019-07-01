@@ -13,9 +13,9 @@ function getPageOfMemo(page) {
     var contentStr = "";
     var startDateStr = "";
     var endDateStr = "";
-    if (content != null && content != "") contentStr = String(content);
-    if (startDate != null && startDate != "") startDateStr = String(startDate);
-    if (endDate != null && endDate != "") endDateStr = String(endDate);
+    if (content != null && content !== "") contentStr = String(content);
+    if (startDate != null && startDate !== "") startDateStr = String(startDate);
+    if (endDate != null && endDate !== "") endDateStr = String(endDate);
     console.log('入参：{'+contentStr+','+startDateStr+','+endDateStr+'}');
     $.ajax({
         url : basicPath + "/queryBkLog",

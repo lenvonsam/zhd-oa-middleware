@@ -36,7 +36,7 @@ public class AcceptanceBillJob implements Job {
 				System.out.println(datet+"datet*********");
 				int days = (int)((datet.getTime()-new Date().getTime())/(1000*60*60*24));
 				System.out.println("days-------->"+days);
-				if (days <= 5) {
+				if (days <= 3) {
 					
 					System.out.println(acceptanceBills.get(i));
 					List<String> requestids = WorkflowUtil.shareInstance().getToDoList(124, null);

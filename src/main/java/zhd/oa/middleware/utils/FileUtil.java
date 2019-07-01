@@ -67,13 +67,16 @@ public class FileUtil {
 							// .startNow().withSchedule(builder).build();
 							String cornReg = globalProperties
 									.getProperty(f.getName().substring(0, f.getName().indexOf('.')) + ".corn");
-							Trigger trigger = TriggerBuilder.newTrigger().withIdentity("trigger_" + i, "oa_job_group")
+							if(cornReg != null) {
+								Trigger trigger = TriggerBuilder.newTrigger().withIdentity("trigger_" + i, "oa_job_group")
 									.withSchedule(CronScheduleBuilder.cronSchedule(cornReg)).build();
-							// 3、创建Scheduler
-							Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-							// 4、调度执行
-							scheduler.scheduleJob(jobDetail, trigger);
-							scheduler.start();
+							
+								// 3、创建Scheduler
+								Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+								// 4、调度执行
+								scheduler.scheduleJob(jobDetail, trigger);
+								scheduler.start();
+							}
 						}
 						// for (Method m : c.getMethods()) {
 						// if (!GlobalVariable.COMMETHODS.contains(m.getName())) {

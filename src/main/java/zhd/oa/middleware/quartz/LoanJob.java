@@ -10,6 +10,8 @@ import java.util.List;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import zhd.oa.middleware.model.LoansInfo;
 import zhd.oa.middleware.model.LoansInterest;
@@ -25,16 +27,30 @@ import zhd.oa.middleware.utils.WorkflowUtil;
 public class LoanJob implements Job {
 	private LoansInfoService loansInfoService = new LoansInfoService();
 	private LoansInterestService loansInterestService = new LoansInterestService();
+	private static final Logger logger = LoggerFactory.getLogger(LoanJob.class);  
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		// 按最后一期做判断
-		try {
-			System.out.println("LoanJob start1");
-			
+		try{
 			checkFirstInterest();
 			checkLoanInterest();
+			submitLoanJob();
+			System.out.println(new Date().toString());
+		}catch(Exception e){
 			
+			e.printStackTrace();
+		}
+				
+		
+	}
+	/**
+	 *定时提交流程
+	 */
+	public void submitLoanJob(){
+		
+		try {
+		
 			List<LoansInterest> loansInterestList = loansInterestService.queryLastLoansInterest();
 
 			for (int i = 0; i < loansInterestList.size(); i++) {
@@ -43,11 +59,10 @@ public class LoanJob implements Job {
 				
 				Date datet = DateUtil.shareInstance().str2Date(interestTo);
 				
-				int lastDays = (int)(datet.getTime()-new Date().getTime())/(1000*60*60*24);
-
+				long lastDays = ((datet.getTime()-new Date().getTime())/(1000*60*60*24));
+				
 				String status = loansInterestList.get(i).getPeriodsStatus();
-
-				if (lastDays <= 5 && "待扣息".equals(status)) {
+				if ((lastDays == 3 ||lastDays == 0)&& "待扣息".equals(status)) {
 
 					List<String> requestids = WorkflowUtil.shareInstance().getToDoList(124, null);
 
@@ -58,7 +73,7 @@ public class LoanJob implements Job {
 
 						String res = WorkflowUtil.shareInstance().operateRequest(Integer.parseInt(requestid), 124,
 								"submit");
-						System.out.println("是时候提交了" + res + loansInterestList.get(i));
+						logger.info("流程提交"+loansInterestList.get(i));
 					}
 				}
 			}
@@ -75,12 +90,10 @@ public class LoanJob implements Job {
 	 */
 	public void checkFirstInterest() {
 		try {
-			System.out.println("LoanJob start2");
 			List<LoansInfo> loansInfos = loansInfoService.queryFirstLoansInfo();
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			if (loansInfos.size() > 0) {
 				for (int i = 0; i < loansInfos.size(); i++) {
-					System.out.println("需要插入明细的-->" + loansInfos.get(i));
 					String loansDateFrom = loansInfos.get(i).getLoansDateFrom();
 					
 					Date loansDateF = DateUtil.shareInstance().str2Date(loansDateFrom);
@@ -88,10 +101,12 @@ public class LoanJob implements Job {
 					Calendar calendarT = Calendar.getInstance();
 					calendarT.setTime(loansDateF);
 					calendarT.set(Calendar.DAY_OF_MONTH, loansInfos.get(i).getDiscountDate().intValue());
+					
+					logger.info(calendarT.getTime().toString());
+					
+					long days = (new Date().getTime()-calendarT.getTime().getTime())/(1000*60*60*24);
 
-					int days = (int)(new Date().getTime()-calendarT.getTime().getTime())/(1000*60*60*24);
-
-					if (days >= 0) {
+					if (days > 0) {
 						calendarT.add(Calendar.MONTH, 1);
 					}
 					if (calendarT.getTime().getTime() == loansDateF.getTime()) {
@@ -99,7 +114,7 @@ public class LoanJob implements Job {
 					}
 
 					int interestDays = (int) ((calendarT.getTimeInMillis() - loansDateF.getTime())
-							/ (1000 * 60 * 60 * 24));
+							/ (1000 * 60 * 60 * 24)+1);
 
 					BigDecimal rate = loansInfos.get(i).getLoanRate().multiply(new BigDecimal(0.01));
 					BigDecimal interestAmount = rate.divide(new BigDecimal(360), 10, BigDecimal.ROUND_DOWN)
@@ -114,10 +129,10 @@ public class LoanJob implements Job {
 					firstLoansInterest.setInterestTo(simpleDateFormat.format(calendarT.getTime()));
 					firstLoansInterest.setInterestDays(new BigDecimal(interestDays));
 					firstLoansInterest.setInterestAmount(interestAmount);
-					firstLoansInterest.setPeriodsStatus("待扣息");
-
-					System.out.println("插入首次扣息：" + firstLoansInterest);
-
+					firstLoansInterest.setPeriodsStatus("待扣息");				
+					
+					logger.info("首次插入明细"+firstLoansInterest);
+					
 					loansInterestService.insertLoansInterest(firstLoansInterest);
 				}
 			}
@@ -126,45 +141,55 @@ public class LoanJob implements Job {
 		}
 	}
 
+	/**
+	 * 检查是否有需要添加的明细
+	 * 
+	 * @throws ParseException
+	 */
 	public void checkLoanInterest() throws ParseException {
 
 		try{
-			System.out.println("LoanJob start3");
 			List<LoansInterest> loansInterestList = loansInterestService.queryLastLoansInterest();
 	
-			System.out.println("贷款有[" + loansInterestList.size() + "]条记录需要继续！");
-	
+			logger.info("贷款有[" + loansInterestList.size() + "]条记录需要继续！");
+			
 			if (loansInterestList.size() > 0) {
 				for (int i = 0; i < loansInterestList.size(); i++) {
-	
+					
 					String interestTo = loansInterestList.get(i).getInterestTo();
-	
+					
 					Date dateTo = DateUtil.shareInstance().str2Date(interestTo);
 					
-					int dateToMonth = dateTo.getMonth() + 1;
-					int dateToYear = dateTo.getYear() + 1;
-	
-					int currentMonth = new Date().getMonth() + 1;
-					int currentYear = new Date().getYear() + 1;
+					
+					
+//					int dateToMonth = dateTo.getMonth() + 1;
+//					int dateToYear = dateTo.getYear() + 1;
+//	
+//					int currentMonth = new Date().getMonth() + 1;
+//					int currentYear = new Date().getYear() + 1;
 
-					if (dateToMonth < currentMonth && dateToYear <= currentYear) {
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					String s = sdf.format(new Date());
+					Date nowDate =  sdf.parse(s);
+					
+					LoansInfo loan = loansInfoService.queryLoansInfo(loansInterestList.get(i).getMainid().intValue());
+					Date loanDateTo = DateUtil.shareInstance().str2Date(loan.getLoansDateTo());
+					
+					if (nowDate.getTime()-dateTo.getTime()>0&&new Date().getTime()-loanDateTo.getTime()<0) {
 						// 扣息明细月份小于当前日期月份的需要添加明细
 						newInterest(loansInterestList.get(i));
-						System.out.println(loansInterestList.get(i));
-						System.out.println("生成下个月的应扣数据。。。");
-					} else {
-						System.out.println(loansInterestList.get(i));
-						System.out.println("时间未到未生成明细");
-					}
+						logger.info("插入明细"+loansInterestList.get(i));
+					} 
 				}
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**
-	 * 创建明细数据并插入(非首次情况下)
+	 * 根据最近的一条扣息创建明细数据并插入(非首次情况下)
 	 * 
 	 * @param mainid
 	 * @param loansInterest
@@ -186,18 +211,39 @@ public class LoanJob implements Job {
 			newLoansInterest.setPeriods("第" + period + "期");
 	
 			// 开始日期
-			newLoansInterest.setInterestFrom(loansInterest.getInterestTo());
+			Date interestFrom = DateUtil.shareInstance().str2Date(loansInterest.getInterestTo()); 
+			Calendar interestF = Calendar.getInstance();
+			interestF.setTime(interestFrom);
+			interestF.add(Calendar.DATE, 1);
+			
+			newLoansInterest.setInterestFrom(simpleDateFormat.format(interestF.getTime()));
 	
 			Date newLoansInterestDatet = DateUtil.shareInstance().str2Date(loansInterest.getInterestTo());
 			Calendar newDatet = Calendar.getInstance();
 			newDatet.setTime(newLoansInterestDatet);
 			newDatet.add(Calendar.MONTH, 1);
 			newDatet.set(Calendar.DAY_OF_MONTH, loansInfo.getDiscountDate().intValue());
-			newLoansInterest.setInterestTo(simpleDateFormat.format(newDatet.getTime()));
+			
+			//处理下次扣息超过了贷款的结束日期
+			LoansInfo loan = loansInfoService.queryLoansInfo(loansInterest.getMainid().intValue());
+			Date loanDateTo = DateUtil.shareInstance().str2Date(loan.getLoansDateTo());
+			String  interestTo = simpleDateFormat.format(newDatet.getTime());
+			if(newDatet.getTimeInMillis()-loanDateTo.getTime()>0){
+				interestTo = loan.getLoansDateTo();
+				System.out.println(interestTo+"<----->"+newDatet);
+			}
+			
+			newLoansInterest.setInterestTo(interestTo);
 	
-			// 扣息计算的天数
-			Date newDatef = DateUtil.shareInstance().str2Date(loansInterest.getInterestTo()); 
-			int days = (int) ((newDatet.getTimeInMillis() - newDatef.getTime()) / (1000 * 60 * 60 * 24));
+			// 扣息计算的天数,计算第二天的
+//			Date newDatef = DateUtil.shareInstance().str2Date(loansInterest.getInterestTo()); 
+			int days = (int) ((newDatet.getTimeInMillis() - interestFrom.getTime()) / (1000 * 60 * 60 * 24)-1);
+			
+			//long转成int出现了负数的情况
+			if(days<0){
+				days = days*-1;
+			}
+
 			newLoansInterest.setInterestDays(new BigDecimal(days));
 	
 			// 计算出的扣息金额
@@ -208,10 +254,13 @@ public class LoanJob implements Job {
 	
 			// 扣息状态
 			newLoansInterest.setPeriodsStatus("待扣息");
-	
-			System.out.println(newLoansInterest);
-	
-			loansInterestService.insertLoansInterest(newLoansInterest);
+			
+			if(loanDateTo.getTime()-new Date().getTime()>0){
+				
+				loansInterestService.insertLoansInterest(newLoansInterest);
+				logger.info("插入明细"+newLoansInterest);
+			}
+			
 		
 		}catch(Exception e){
 			e.printStackTrace();

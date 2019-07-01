@@ -7,7 +7,7 @@ import zhd.oa.middleware.model.AcceptanceBill;
 
 public class AcceptanceBillService extends BaseService{
 
-	private AcceptanceBillMapper acceptanceBillMapper;
+	private AcceptanceBillMapper acceptanceBillMapper = null;
 	
 	public List<AcceptanceBill> queryAcceptanceBill(){
 		
