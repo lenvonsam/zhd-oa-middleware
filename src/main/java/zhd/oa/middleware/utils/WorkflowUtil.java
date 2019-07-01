@@ -1,5 +1,6 @@
 package zhd.oa.middleware.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.TreeMap;
 import org.apache.ibatis.javassist.tools.rmi.RemoteException;
 
 import cn.com.weaver.services.webservices.WorkflowServicePortTypeProxy;
+import freemarker.template.SimpleDate;
 import weaver.workflow.webservices.WorkflowBaseInfo;
 import weaver.workflow.webservices.WorkflowDetailTableInfo;
 import weaver.workflow.webservices.WorkflowMainTableInfo;
@@ -131,4 +133,61 @@ public class WorkflowUtil {
 		return toDoList;
 
 	}
+	
+	/**
+	 * 
+	 * 创建绩效流程
+	 * @param uid
+	 * @param workflowId
+	 * @param deptId
+	 * @return
+	 * @throws Exception
+	 */
+	public String createKpiWorkflow(String uid,String workflowId,String deptId) throws Exception{
+		
+		WorkflowRequestTableField[] workflowRequestTableField = new WorkflowRequestTableField[3]; 
+		
+		workflowRequestTableField[0] = new WorkflowRequestTableField();        
+		workflowRequestTableField[0].setFieldName("applicant");//        
+		workflowRequestTableField[0].setFieldValue(uid);//        
+		workflowRequestTableField[0].setView(true);//字段是否可见    
+		workflowRequestTableField[0].setEdit(true);//字段是否可编辑
+		
+		workflowRequestTableField[1] = new WorkflowRequestTableField();        
+		workflowRequestTableField[1].setFieldName("applyDept");//        
+		workflowRequestTableField[1].setFieldValue(deptId);//        
+		workflowRequestTableField[1].setView(true);//字段是否可见    
+		workflowRequestTableField[1].setEdit(true);//字段是否可编辑
+		
+		workflowRequestTableField[2] = new WorkflowRequestTableField();        
+		workflowRequestTableField[2].setFieldName("applyDate");//        
+		workflowRequestTableField[2].setFieldValue(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));//        
+		workflowRequestTableField[2].setView(true);//字段是否可见    
+		workflowRequestTableField[2].setEdit(true);//字段是否可编辑
+		
+		WorkflowRequestTableRecord[] workflowRequestTableRecord = new WorkflowRequestTableRecord[1];//主字段只有一行数据       
+		workflowRequestTableRecord[0] = new WorkflowRequestTableRecord();        
+		workflowRequestTableRecord[0].setWorkflowRequestTableFields(workflowRequestTableField);           
+		WorkflowMainTableInfo workflowMainTableInfo = new WorkflowMainTableInfo();        
+		workflowMainTableInfo.setRequestRecords(workflowRequestTableRecord);
+		
+    
+		WorkflowBaseInfo wbi = new WorkflowBaseInfo();
+		wbi.setWorkflowId(workflowId);//workflowid 流程接口演示流程2016==38    
+		 
+		WorkflowRequestInfo wri = new WorkflowRequestInfo();//流程基本信息           
+		wri.setCreatorId(uid);//创建人id        
+		wri.setRequestLevel("1");//0 正常，1重要，2紧急       
+		wri.setRequestName("绩效流程");//流程标题        
+		wri.setWorkflowMainTableInfo(workflowMainTableInfo);//添加主字段数据
+		 
+		wri.setWorkflowBaseInfo(wbi);        
+		WorkflowServicePortTypeProxy WorkflowServicePortTypeProxy = new WorkflowServicePortTypeProxy(url);        
+		String requestid = WorkflowServicePortTypeProxy.doCreateWorkflowRequest(wri, Integer.parseInt(uid));
+		 
+		return requestid;
+	}
+	
+	
+	
 }

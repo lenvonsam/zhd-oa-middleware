@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.IOUtils;
 import zhd.oa.middleware.innotation.Autowired;
+import zhd.oa.middleware.model.EmpOA;
 import zhd.oa.middleware.service.KpiService;
+import zhd.oa.middleware.utils.FormaChecktUtil;
 import zhd.oa.middleware.utils.ReadExcelUtil;
 
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.Part;
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -52,10 +55,34 @@ public class KpiController extends BaseController {
             String uid = req.queryParams("uid");
         	String type = req.queryParams("type");
         	String data = req.queryParams("data");
-        	log.info(">>>type:{},data:{}", type, data);
+        	log.info(">>>type:{},data:{},uid:{}", type, data,uid);
         	
-        	Map<String,String> map = kpiService.compareKpi(type, data);
+        	Map<String,String> map = new HashMap<String,String>();
         	
+        	int checkRes = FormaChecktUtil.shareInstance().checkDatas(data, type);
+        	if(checkRes==0){
+        		String dept = kpiService.getDeptIdByUid(uid)+"";
+        		map = kpiService.compareKpi(type, data , uid,dept);
+        		
+        		String mainid = kpiService.getMainid(map.get("requestid"));
+        		
+        		if("0".equals(map.get("success"))){
+        			String[] datas = data.split("\\$");
+        			
+        			for (int i = 0; i < datas.length; i++) {
+        				String[] kpis = datas[i].split("\\|");
+        				List<EmpOA> list = kpiService.getEmpsOA(kpis[2]);
+        				kpis[2] = list.get(0).getUid()+"";
+        				kpiService.insertAndUpdateWorkflowDt(mainid, kpis, type);
+        			}
+        		}
+        		
+        	}else{
+        		map.put("success", "1");
+				map.put("msg", "数据格式不正确！调整后请重新上传");
+        	}
+        	
+        	log.info("map.toString()==>"+map.toString());
         	return JSONObject.toJSON(map);
         	
         });

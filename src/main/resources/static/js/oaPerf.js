@@ -109,7 +109,12 @@ $(function() {
             },
             dataType : "json",
             success : function(data) {
-                alert(data.msg);
+            	var code = data.success;
+                if (code == "0") {
+                    alert("校验成功");
+                } else {
+                    alert(data.msg);
+                }
             }
         });
     }
