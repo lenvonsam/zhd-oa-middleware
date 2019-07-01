@@ -60,12 +60,13 @@ public class KpiController extends BaseController {
         	Map<String,String> map = new HashMap<String,String>();
         	
         	int checkRes = FormaChecktUtil.shareInstance().checkDatas(data, type);
+        	log.info(checkRes+"<===checkRes");
         	if(checkRes==0){
         		String dept = kpiService.getDeptIdByUid(uid)+"";
         		map = kpiService.compareKpi(type, data , uid,dept);
-        		
+        		log.info("map.toString()"+map.toString());
         		String mainid = kpiService.getMainid(map.get("requestid"));
-        		
+        		log.info("mainid"+mainid);
         		if("0".equals(map.get("success"))){
         			String[] datas = data.split("\\$");
         			

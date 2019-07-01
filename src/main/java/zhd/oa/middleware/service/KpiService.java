@@ -97,6 +97,8 @@ public class KpiService extends BaseService{
 				if(listKpis.size()>0){
 					Kpi kpi = listKpis.get(0);
 					
+					log.info(kpi.toString());
+					
 					String erpWeight = kpi.getErpWeight()==null||kpi.getErpWeight().startsWith(".")?"":kpi.getErpWeight();//高达销量
 					String weightChange = kpi.getErpChangeWeight()==null||kpi.getErpChangeWeight().startsWith(".")?"":kpi.getErpChangeWeight();//高达销量变化量
 					String otherWeight = kpi.getOtherWeight()==null||kpi.getOtherWeight().startsWith(".")?"":kpi.getOtherWeight();//其他吨位
@@ -244,6 +246,7 @@ public class KpiService extends BaseService{
 		
 		map.put("success", success);
 		map.put("requestid", requestid);
+		map.put("msg", msg);
 		log.info("map==>"+map);
 		
 		return map;
