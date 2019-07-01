@@ -22,7 +22,7 @@ public class FormaChecktUtil {
 		String[] datas = data.split("\\$");
 		for (int i = 0; i < datas.length; i++) {
 			String[] kpi = datas[i].split("\\|");
-			if("0".equals(type)&&kpi.length!=19){
+			if("0".equals(type)&&kpi.length!=20){
 				checkRes  =  checkRes + 1;
 			}if("1".equals(type)&&kpi.length!=8){
 				checkRes  =  checkRes + 1;

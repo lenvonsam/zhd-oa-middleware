@@ -135,25 +135,25 @@ public class ReadExcelUtil {
                             case HSSFCell.CELL_TYPE_FORMULA:
 
                                 // 导入时如果为公式生成的数据则无值
-//
-//                                if (!cell.getStringCellValue().equals("")) {
-//
-//                                    value = cell.getStringCellValue();
-//
-//                                } else {
-//
-//                                    value = cell.getNumericCellValue() + "";
-//
-//                                }
-                                //需要公式算出来的值
-                                try {
-                                	value = new DecimalFormat("0.0000").
-                                			format(cell.getNumericCellValue());
-                                } catch (IllegalStateException e) {
-                                	
-                                	value = new DecimalFormat("0.0000").
-                                			format(cell.getRichStringCellValue());
+
+                                if (!cell.getStringCellValue().equals("")) {
+
+                                    value = cell.getStringCellValue();
+
+                                } else {
+
+                                    value = cell.getNumericCellValue() + "";
+
                                 }
+//                                //需要公式算出来的值
+//                                try {
+//                                	value = new DecimalFormat("0.0000").
+//                                			format(cell.getNumericCellValue());
+//                                } catch (IllegalStateException e) {
+//                                	
+//                                	value = new DecimalFormat("0.0000").
+//                                			format(cell.getRichStringCellValue());
+//                                }
 
                                 break;
 
