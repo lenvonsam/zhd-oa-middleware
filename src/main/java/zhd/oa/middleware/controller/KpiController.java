@@ -56,7 +56,7 @@ public class KpiController extends BaseController {
         	
         	
         	Map<String,String> map = new HashMap<String,String>();
-        	
+        	log.info("is Coming!");
         	int checkRes = FormaChecktUtil.shareInstance().checkDatas(data, type);
         	//checkRes ==0 未正常   大于0是异常的条数
         	log.info("checkRes"+checkRes);
@@ -78,7 +78,7 @@ public class KpiController extends BaseController {
         		
         	}else{
         		map.put("success", "1");
-				map.put("msg", "数据格式不正确！调整后请重新上传");
+				map.put("msg", "数据格式不正确！请上传正确的模板数据");
 			}
 			log.info("map.toString()==>" + map.toString());
 			return JSONObject.toJSON(map);
