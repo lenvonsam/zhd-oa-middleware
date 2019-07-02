@@ -14,6 +14,7 @@ import javax.servlet.http.Part;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,9 +54,11 @@ public class KpiController extends BaseController {
 
         post("/doCheckKpi", (req, res) -> {
             String uid = req.queryParams("uid");
-        	String type = req.queryParams("type");
+//        	String type = req.queryParams("type");
+        	String type = kpiService.getTypeByUid(uid);
         	String data = req.queryParams("data");
         	log.info(">>>type:{},data:{},uid:{}", type, data,uid);
+        	
         	
         	Map<String,String> map = new HashMap<String,String>();
         	

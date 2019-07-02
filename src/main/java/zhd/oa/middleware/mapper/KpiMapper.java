@@ -231,6 +231,20 @@ public interface KpiMapper {
 	@Select(" select DEPARTMENTID from hrmresource where id = #{uid} ")
 	public int getDeptIdByUid(String uid);
 	
+	/**
+	 * 根据uid查询操作类型
+	 * @param uid
+	 * @return
+	 */
+	@Select(" select  case   "
+			+ " when a.id in (25,26,27,123,121) then '0'   "
+			+ " when a.id in (22,23,30,41) then '1'  "
+			+ " when a.id in (31,201) then '2'  "
+			+ " when a.id = 24 then '3'    "
+			+ " else '无' end as datatype "
+			+ " from hrmdepartment a left join hrmresource b on a.id = b.departmentid   where b.id = #{uid}  " )
+	public String getTypeByUid(String uid);
+	
 	
 	@Select(" select id from FORMTABLE_MAIN_451 where requestid = #{requestid} ")
 	public String getMainid(String requestid);

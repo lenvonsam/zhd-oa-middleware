@@ -62,10 +62,10 @@ public class KpiService extends BaseService{
 	 */
 	public Map<String,String> compareKpi(String type , String data , String uid,String dept) throws Exception{
 		
+		log.info(data);
 		String[] datas = data.split("\\$");
 		String msg = "" ; 
 		String success = "0" ; 
-		
 		
 		for (int i = 0; i < datas.length; i++) {
 			String[] datasForOne = datas[i].split("\\|");
@@ -501,6 +501,22 @@ public class KpiService extends BaseService{
 			closeSession();	
 		}
 		
+	}
+	
+	public String getTypeByUid(String uid){
+		
+		String datatype = "无";
+		try{
+			session = openSession();
+			kpiMapper = session.getMapper(KpiMapper.class);
+			datatype = kpiMapper.getTypeByUid(uid);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally{	
+			closeSession();	
+		}
+		return datatype;
 	}
 	
 

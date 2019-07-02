@@ -27,7 +27,7 @@ public class KpiQueryJob implements Job{
 		List<KpiModel> kpis = kpiService.queryKpi();
 		logger.info(kpis.toString());
 		for (int i = 0; i < kpis.size(); i++) {
-//			kpiService.insertKpiConsult(kpis.get(i));
+			kpiService.insertKpiConsult(kpis.get(i));
 			
 		}
 		
@@ -37,9 +37,9 @@ public class KpiQueryJob implements Job{
 		List<KpiTotalChangeOne> ChangeOne = kpiService.queryChangeOne();
 		logger.info(ChangeOne.toString());
 		for (int i = 0; i < ChangeOne.size(); i++) {
-//			kpiService.insertChangeOne(ChangeOne.get(i).getOneName(),ChangeOne.get(i).getOneAccount(),
-//					ChangeOne.get(i).getOneMM(), ChangeOne.get(i).getOneWeight(),
-//					ChangeOne.get(i).getOneMoney(),ChangeOne.get(i).getOneGetDate());
+			kpiService.insertChangeOne(ChangeOne.get(i).getOneName(),ChangeOne.get(i).getOneAccount(),
+					ChangeOne.get(i).getOneMM(), ChangeOne.get(i).getOneWeight(),
+					ChangeOne.get(i).getOneMoney(),ChangeOne.get(i).getOneGetDate());
 		}
 		
 		/**
@@ -48,9 +48,9 @@ public class KpiQueryJob implements Job{
 		List<KpiData> list = kpiService.getKpiData();
 		logger.info(list.toString());
 		for (int i = 0; i < list.size(); i++) {
-//			kpiService.insertKpiData(list.get(i).getMM(), list.get(i).getOneName(), 
-//					list.get(i).getOneWeight(), list.get(i).getWeightChange(),
-//					list.get(i).getOneMoney(), list.get(i).getMoneyChange());
+			kpiService.insertKpiData(list.get(i).getMM(), list.get(i).getOneName(), 
+					list.get(i).getOneWeight(), list.get(i).getWeightChange(),
+					list.get(i).getOneMoney(), list.get(i).getMoneyChange());
 		}
 		
 		
