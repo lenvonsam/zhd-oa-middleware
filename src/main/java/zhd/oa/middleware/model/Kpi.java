@@ -9,24 +9,24 @@ public class Kpi {
 	private String empArea;
 	private String empName;
 	
-	private String erpWeight;
-	private String erpChangeWeight;
-	private String otherWeight;
-	private String realWeight;
-	private String taskWeight;
-	private String kpiWeight;
-	private String erpMoney;
-	private String erpChangeMoney;
-	private String otherMoney;
-	private String realMoney;
-	private String taskMoney;
-	private String kpiMoney;
-	private String avgPrice;
-	private String mmAssessPrice;
-	private String mmAvgStore;
-	private String storeRange;
-	private String AssessWeight;
-	private String kpiStore;
+	private double erpWeight;
+	private double erpChangeWeight;
+	private double otherWeight;
+	private double realWeight;
+	private double taskWeight;
+	private double kpiWeight;
+	private double erpMoney;
+	private double erpChangeMoney;
+	private double otherMoney;
+	private double realMoney;
+	private double taskMoney;
+	private double kpiMoney;
+	private double avgPrice;
+	private double mmAssessPrice;
+	private double mmAvgStore;
+	private double storeRange;
+	private double AssessWeight;
+	private double kpiStore;
 	public String getYyyy() {
 		return yyyy;
 	}
@@ -63,112 +63,112 @@ public class Kpi {
 	public void setEmpName(String empName) {
 		this.empName = empName;
 	}
-	public String getErpWeight() {
+	public double getErpWeight() {
 		return erpWeight;
 	}
-	public void setErpWeight(String erpWeight) {
+	public void setErpWeight(double erpWeight) {
 		this.erpWeight = erpWeight;
 	}
-	public String getErpChangeWeight() {
+	public double getErpChangeWeight() {
 		return erpChangeWeight;
 	}
-	public void setErpChangeWeight(String erpChangeWeight) {
+	public void setErpChangeWeight(double erpChangeWeight) {
 		this.erpChangeWeight = erpChangeWeight;
 	}
-	public String getOtherWeight() {
+	public double getOtherWeight() {
 		return otherWeight;
 	}
-	public void setOtherWeight(String otherWeight) {
+	public void setOtherWeight(double otherWeight) {
 		this.otherWeight = otherWeight;
 	}
-	public String getRealWeight() {
+	public double getRealWeight() {
 		return realWeight;
 	}
-	public void setRealWeight(String realWeight) {
+	public void setRealWeight(double realWeight) {
 		this.realWeight = realWeight;
 	}
-	public String getTaskWeight() {
+	public double getTaskWeight() {
 		return taskWeight;
 	}
-	public void setTaskWeight(String taskWeight) {
+	public void setTaskWeight(double taskWeight) {
 		this.taskWeight = taskWeight;
 	}
-	public String getKpiWeight() {
+	public double getKpiWeight() {
 		return kpiWeight;
 	}
-	public void setKpiWeight(String kpiWeight) {
+	public void setKpiWeight(double kpiWeight) {
 		this.kpiWeight = kpiWeight;
 	}
-	public String getErpMoney() {
+	public double getErpMoney() {
 		return erpMoney;
 	}
-	public void setErpMoney(String erpMoney) {
+	public void setErpMoney(double erpMoney) {
 		this.erpMoney = erpMoney;
 	}
-	public String getErpChangeMoney() {
+	public double getErpChangeMoney() {
 		return erpChangeMoney;
 	}
-	public void setErpChangeMoney(String erpChangeMoney) {
+	public void setErpChangeMoney(double erpChangeMoney) {
 		this.erpChangeMoney = erpChangeMoney;
 	}
-	public String getOtherMoney() {
+	public double getOtherMoney() {
 		return otherMoney;
 	}
-	public void setOtherMoney(String otherMoney) {
+	public void setOtherMoney(double otherMoney) {
 		this.otherMoney = otherMoney;
 	}
-	public String getRealMoney() {
+	public double getRealMoney() {
 		return realMoney;
 	}
-	public void setRealMoney(String realMoney) {
+	public void setRealMoney(double realMoney) {
 		this.realMoney = realMoney;
 	}
-	public String getTaskMoney() {
+	public double getTaskMoney() {
 		return taskMoney;
 	}
-	public void setTaskMoney(String taskMoney) {
+	public void setTaskMoney(double taskMoney) {
 		this.taskMoney = taskMoney;
 	}
-	public String getKpiMoney() {
+	public double getKpiMoney() {
 		return kpiMoney;
 	}
-	public void setKpiMoney(String kpiMoney) {
+	public void setKpiMoney(double kpiMoney) {
 		this.kpiMoney = kpiMoney;
 	}
-	public String getAvgPrice() {
+	public double getAvgPrice() {
 		return avgPrice;
 	}
-	public void setAvgPrice(String avgPrice) {
+	public void setAvgPrice(double avgPrice) {
 		this.avgPrice = avgPrice;
 	}
-	public String getMmAssessPrice() {
+	public double getMmAssessPrice() {
 		return mmAssessPrice;
 	}
-	public void setMmAssessPrice(String mmAssessPrice) {
+	public void setMmAssessPrice(double mmAssessPrice) {
 		this.mmAssessPrice = mmAssessPrice;
 	}
-	public String getMmAvgStore() {
+	public double getMmAvgStore() {
 		return mmAvgStore;
 	}
-	public void setMmAvgStore(String mmAvgStore) {
+	public void setMmAvgStore(double mmAvgStore) {
 		this.mmAvgStore = mmAvgStore;
 	}
-	public String getStoreRange() {
+	public double getStoreRange() {
 		return storeRange;
 	}
-	public void setStoreRange(String storeRange) {
+	public void setStoreRange(double storeRange) {
 		this.storeRange = storeRange;
 	}
-	public String getAssessWeight() {
+	public double getAssessWeight() {
 		return AssessWeight;
 	}
-	public void setAssessWeight(String assessWeight) {
+	public void setAssessWeight(double assessWeight) {
 		AssessWeight = assessWeight;
 	}
-	public String getKpiStore() {
+	public double getKpiStore() {
 		return kpiStore;
 	}
-	public void setKpiStore(String kpiStore) {
+	public void setKpiStore(double kpiStore) {
 		this.kpiStore = kpiStore;
 	}
 	@Override
@@ -182,6 +182,8 @@ public class Kpi {
 				+ ", mmAvgStore=" + mmAvgStore + ", storeRange=" + storeRange + ", AssessWeight=" + AssessWeight
 				+ ", kpiStore=" + kpiStore + "]";
 	}
+	
+	
 	
 	
 	

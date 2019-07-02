@@ -31,7 +31,7 @@ public interface KpiMapper {
 	 */
 	@Select("select case when emp_name is null then employee_name else emp_name end oneName,"
 			+ "EMPLOYEE_NAME oneAccount,yf oneMM,sum(zxl) oneWeight,sum(gm) oneMoney ,to_char(sysdate,'yyyy-MM-dd') oneGetDate  "
-			+ "from v_zhderpkpi where yf<to_char(trunc(sysdate,'MM'),'yyyy-MM')group by emp_name,EMPLOYEE_NAME,yf"
+			+ "from uf_zhdKpiTable where yf<to_char(trunc(sysdate,'MM'),'yyyy-MM')group by emp_name,EMPLOYEE_NAME,yf"
 			)
 	public List<KpiTotalChangeOne> queryChangeOne();
 	
@@ -293,6 +293,23 @@ public interface KpiMapper {
 			@Param ("erpweight") String erpweight,@Param ("erpchangeweight") String erpchangeweight,
 			@Param ("erpmoney") String erpmoney,@Param ("erpchangemoney") String erpchangemoney,@Param ("empname") String empname);
 	
+//	/**
+//	 * 数据对比
+//	 * @param yyyy
+//	 * @param kpitypedt
+//	 * @param empname
+//	 * @return
+//	 */
+//	@Select("select yyyy, kpitypedt, kpiemp, kpijob, emparea,empname, "
+//			+ "to_char(erpweight,'fm999999999.0000') erpweight, to_char(erpchangeweight,'fm999999999.0000') erpchangeweight, to_char(otherweight,'fm999999999.0000') otherweight, "
+//			+ "to_char(realweight,'fm999999999.0000') realweight, to_char(taskweight,'fm999999999.0000') taskweight, to_char(kpiweight,'fm999999999.0000') kpiweight, "
+//			+ "to_char(erpmoney,'fm999999999.0000') erpmoney, to_char(erpchangemoney,'fm999999999.0000') erpchangemoney, to_char(othermoney,'fm999999999.0000') othermoney, "
+//			+ " to_char(realmoney,'fm999999999.0000') realmoney, to_char(taskmoney,'fm999999999.0000') taskmoney, to_char(kpimoney,'fm999999999.0000') kpimoney, "
+//			+ "to_char(avgprice,'fm999999999.0000') avgprice,to_char( mmassessprice,'fm999999999.0000') mmassessprice, to_char(mmavgstore,'fm999999999.0000') mmavgstore,"
+//			+ " to_char(storerange,'fm999999999.0000') storerange, to_char(assessweight,'fm999999999.0000') assessweight, to_char(kpistore,'fm999999999.0000') kpistore "
+//			+ "from uf_zhdkpitable t where yyyy = #{yyyy} and kpitypedt = #{kpitypedt} and empname = #{empname} ")
+//	public List<Kpi> getKpi(@Param ("yyyy") String yyyy,@Param ("kpitypedt") String kpitypedt,@Param ("empname") String empname);
+	
 	/**
 	 * 数据对比
 	 * @param yyyy
@@ -301,13 +318,12 @@ public interface KpiMapper {
 	 * @return
 	 */
 	@Select("select yyyy, kpitypedt, kpiemp, kpijob, emparea,empname, "
-			+ "to_char(erpweight,'fm999999999.0000') erpweight, to_char(erpchangeweight,'fm999999999.0000') erpchangeweight, to_char(otherweight,'fm999999999.0000') otherweight, "
-			+ "to_char(realweight,'fm999999999.0000') realweight, to_char(taskweight,'fm999999999.0000') taskweight, to_char(kpiweight,'fm999999999.0000') kpiweight, "
-			+ "to_char(erpmoney,'fm999999999.0000') erpmoney, to_char(erpchangemoney,'fm999999999.0000') erpchangemoney, to_char(othermoney,'fm999999999.0000') othermoney, "
-			+ " to_char(realmoney,'fm999999999.0000') realmoney, to_char(taskmoney,'fm999999999.0000') taskmoney, to_char(kpimoney,'fm999999999.0000') kpimoney, "
-			+ "to_char(avgprice,'fm999999999.0000') avgprice,to_char( mmassessprice,'fm999999999.0000') mmassessprice, to_char(mmavgstore,'fm999999999.0000') mmavgstore,"
-			+ " to_char(storerange,'fm999999999.0000') storerange, to_char(assessweight,'fm999999999.0000') assessweight, to_char(kpistore,'fm999999999.0000') kpistore "
+			+ "erpweight erpweight, erpchangeweight erpchangeweight, otherweight otherweight, "
+			+ "realweight realweight, taskweight taskweight, kpiweight kpiweight, "
+			+ "erpmoney erpmoney, erpchangemoney erpchangemoney, othermoney othermoney, "
+			+ " realmoney realmoney, taskmoney taskmoney, kpimoney kpimoney, "
+			+ "avgprice avgprice, mmassessprice mmassessprice, mmavgstore mmavgstore,"
+			+ " storerange storerange, assessweight assessweight, kpistore kpistore "
 			+ "from uf_zhdkpitable t where yyyy = #{yyyy} and kpitypedt = #{kpitypedt} and empname = #{empname} ")
 	public List<Kpi> getKpi(@Param ("yyyy") String yyyy,@Param ("kpitypedt") String kpitypedt,@Param ("empname") String empname);
-	
 }

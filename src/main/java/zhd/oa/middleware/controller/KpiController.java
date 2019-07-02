@@ -56,10 +56,8 @@ public class KpiController extends BaseController {
         	
         	
         	Map<String,String> map = new HashMap<String,String>();
-        	log.info("is Coming!");
         	int checkRes = FormaChecktUtil.shareInstance().checkDatas(data, type);
         	//checkRes ==0 未正常   大于0是异常的条数
-        	log.info("checkRes"+checkRes);
         	if(checkRes==0){
         		String dept = kpiService.getDeptIdByUid(uid)+"";
         		map = kpiService.compareKpi(type, data , uid,dept);

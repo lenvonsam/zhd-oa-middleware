@@ -99,100 +99,128 @@ public class KpiService extends BaseService{
 					
 					log.info(kpi.toString());
 					
-					String erpWeight = kpi.getErpWeight()==null||kpi.getErpWeight().startsWith(".")?"":kpi.getErpWeight();//高达销量
-					String weightChange = kpi.getErpChangeWeight()==null||kpi.getErpChangeWeight().startsWith(".")?"":kpi.getErpChangeWeight();//高达销量变化量
-					String otherWeight = kpi.getOtherWeight()==null||kpi.getOtherWeight().startsWith(".")?"":kpi.getOtherWeight();//其他吨位
-					String realWeight = kpi.getRealWeight()==null||kpi.getRealWeight().startsWith(".")?"":kpi.getRealWeight();//实际销量
-					String taskWeight =kpi.getTaskWeight()==null||kpi.getTaskWeight().startsWith(".")?"":kpi.getTaskWeight();//销量任务量
-					String kpiWeight = kpi.getKpiWeight()==null||kpi.getKpiWeight().startsWith(".")?"":kpi.getKpiWeight();//销量得分
-					String erpMoney = kpi.getErpMoney()==null||kpi.getErpMoney().startsWith(".")?"":kpi.getErpMoney();//高达高卖
-					String moneyChange = kpi.getErpChangeMoney()==null||kpi.getErpChangeMoney().startsWith(".")?"":kpi.getErpChangeMoney();//高卖变化量
-					String otherMoney = kpi.getOtherMoney()==null||kpi.getOtherMoney().startsWith(".")?"":kpi.getOtherMoney();//应扣费用
-					String realMoney = kpi.getRealMoney()==null||kpi.getRealMoney().startsWith(".")?"":kpi.getRealMoney();//实际高卖
-					String taskMoney = kpi.getTaskMoney()==null||kpi.getTaskMoney().startsWith(".")?"":kpi.getTaskMoney();//高卖任务量
-					String kpiMoney = kpi.getKpiMoney()==null||kpi.getKpiMoney().startsWith(".")?"":kpi.getKpiMoney();//高卖得分
+					double erpWeight = kpi.getErpWeight();//高达销量
+					double weightChange = kpi.getErpChangeWeight();//高达销量变化量
+					double otherWeight = kpi.getOtherWeight();//其他吨位
+					double realWeight = kpi.getRealWeight();//实际销量
+					double taskWeight =kpi.getTaskWeight();//销量任务量
+					double kpiWeight = kpi.getKpiWeight();//销量得分
+					double erpMoney = kpi.getErpMoney();//高达高卖
+					double moneyChange = kpi.getErpChangeMoney();//高卖变化量
+					double otherMoney = kpi.getOtherMoney();//应扣费用
+					double realMoney = kpi.getRealMoney();//实际高卖
+					double taskMoney = kpi.getTaskMoney();//高卖任务量
+					double kpiMoney = kpi.getKpiMoney();//高卖得分
 					
-					String avgPrice = kpi.getAvgPrice()==null||kpi.getAvgPrice().startsWith(".")?"":kpi.getAvgPrice();//高卖得分
-					String mmAssessPrice = kpi.getMmAssessPrice()==null||kpi.getMmAssessPrice().startsWith(".")?"":kpi.getMmAssessPrice();//高卖得分
-					String mmAvgStore = kpi.getMmAvgStore()==null||kpi.getMmAvgStore().startsWith(".")?"":kpi.getMmAvgStore();//高卖得分
-					String storeRange = kpi.getStoreRange()==null||kpi.getStoreRange().startsWith(".")?"":kpi.getStoreRange();//高卖得分
-					String AssessWeight = kpi.getAssessWeight()==null||kpi.getAssessWeight().startsWith(".")?"":kpi.getAssessWeight();//高卖得分
-					String kpiStore = kpi.getKpiStore()==null||kpi.getKpiStore().startsWith(".")?"":kpi.getKpiStore();//高卖得分
+					double avgPrice = kpi.getAvgPrice();//高卖得分
+					double mmAssessPrice = kpi.getMmAssessPrice();//高卖得分
+					double mmAvgStore = kpi.getMmAvgStore();//高卖得分
+					double storeRange = kpi.getStoreRange();//高卖得分
+					double AssessWeight = kpi.getAssessWeight();//高卖得分
+					double kpiStore = kpi.getKpiStore();//高卖得分
 					
 					
 					if("0".equals(type)){
-						if(!erpWeight.equals(datasForOne[3])){
+						
+						double erpWeight1 = Double.parseDouble(datasForOne[3].equals("")?"0":datasForOne[3]); 
+						double weightChange1 = Double.parseDouble(datasForOne[4].equals("")?"0":datasForOne[4]); 
+						double otherWeight1 = Double.parseDouble(datasForOne[5].equals("")?"0":datasForOne[5]); 
+						double realWeight1 = Double.parseDouble(datasForOne[6].equals("")?"0":datasForOne[6]); 
+						double taskWeight1 = Double.parseDouble(datasForOne[7].equals("")?"0":datasForOne[7]); 
+						double kpiWeight1 = Double.parseDouble(datasForOne[8].equals("")?"0":datasForOne[8]); 
+						double erpMoney1 = Double.parseDouble(datasForOne[9].equals("")?"0":datasForOne[9]); 
+						double moneyChange1 = Double.parseDouble(datasForOne[10].equals("")?"0":datasForOne[10]); 
+						double otherMoney1 = Double.parseDouble(datasForOne[11].equals("")?"0":datasForOne[11]); 
+						double realMoney1 = Double.parseDouble(datasForOne[12].equals("")?"0":datasForOne[12]); 
+						double taskMoney1 = Double.parseDouble(datasForOne[13].equals("")?"0":datasForOne[13]); 
+						double kpiMoney1 = Double.parseDouble(datasForOne[14].equals("")?"0":datasForOne[14]); 
+						
+						if(erpWeight!=erpWeight){
 							msg = msg + kpiEmp + "和高达销量不一致"+erpWeight+",";
 							success = "1";
-						}if(!weightChange.equals(datasForOne[4])){
+						}if(weightChange!=weightChange1){
 							msg = msg + kpiEmp + "和高达销量变化量不一致"+weightChange+",";
 							success = "1";
-						}if(!otherWeight.equals(datasForOne[5])){
+						}if(otherWeight!=otherWeight1){
 							msg = msg + kpiEmp + "其他吨位不一致"+otherWeight+",";
 							success = "1";
-						}if(!realWeight.equals(datasForOne[6])){
+						}if(realWeight!=realWeight1){
 							msg = msg + kpiEmp + "实际销量不一致"+realWeight+",";
 							success = "1";
-						}if(!taskWeight.equals(datasForOne[7])){
+						}if(taskWeight!=taskWeight){
 							msg = msg + kpiEmp + "销量任务量不一致"+taskWeight+",";
 							success = "1";
-						}if(!kpiWeight.equals(datasForOne[8])){
+						}if(kpiWeight!=kpiWeight1){
 							msg = msg + kpiEmp + "销量得分不一致"+kpiWeight+",";
 							success = "1";
-						}if(!erpMoney.equals(datasForOne[9])){
+						}if(erpMoney!=erpMoney1){
 							msg = msg + kpiEmp + "高达高卖不一致"+erpMoney+",";
 							success = "1";
-						}if(!moneyChange.equals(datasForOne[10])){
+						}if(moneyChange!=moneyChange1){
 							msg = msg + kpiEmp + "高卖变化量不一致"+moneyChange+",";
 							success = "1";
-						}if(!otherMoney.equals(datasForOne[11])){
+						}if(otherMoney!=otherMoney1){
 							msg = msg + kpiEmp + "应扣费用不一致"+otherMoney+",";
 							success = "1";
-						}if(!realMoney.equals(datasForOne[12])){
+						}if(realMoney!=realMoney1){
 							msg = msg + kpiEmp + "实际高卖不一致"+realMoney+",";
 							success = "1";
-						}if(!taskMoney.equals(datasForOne[13])){
+						}if(taskMoney!=taskMoney1){
 							msg = msg + kpiEmp + "高卖任务量不一致"+taskMoney+",";
 							success = "1";
-						}if(!kpiMoney.equals(datasForOne[14])){
+						}if(kpiMoney!=kpiMoney1){
 							msg = msg + kpiEmp + "高卖得分不一致"+kpiMoney+",";
 							success = "1";
 						}
 					}if("3".equals(type)){
-						if(!erpWeight.equals(datasForOne[3])){
+						
+						double erpWeight1 = Double.parseDouble(datasForOne[3].equals("")?"0":datasForOne[3]); 
+						double weightChange1 = Double.parseDouble(datasForOne[4].equals("")?"0":datasForOne[4]); 
+						double otherWeight1 = Double.parseDouble(datasForOne[5].equals("")?"0":datasForOne[5]); 
+						double realWeight1 = Double.parseDouble(datasForOne[6].equals("")?"0":datasForOne[6]); 
+						double taskWeight1 = Double.parseDouble(datasForOne[7].equals("")?"0":datasForOne[7]); 
+						double kpiWeight1 = Double.parseDouble(datasForOne[8].equals("")?"0":datasForOne[8]); 
+						double avgPrice1 = Double.parseDouble(datasForOne[9].equals("")?"0":datasForOne[9]); 
+						double mmAssessPrice1 = Double.parseDouble(datasForOne[10].equals("")?"0":datasForOne[10]); 
+						double mmAvgStore1 = Double.parseDouble(datasForOne[11].equals("")?"0":datasForOne[11]); 
+						double storeRange1 = Double.parseDouble(datasForOne[12].equals("")?"0":datasForOne[12]); 
+						double AssessWeight1 = Double.parseDouble(datasForOne[13].equals("")?"0":datasForOne[13]); 
+						double kpiStore1 = Double.parseDouble(datasForOne[14].equals("")?"0":datasForOne[14]); 
+						
+						if(erpWeight!=erpWeight1){
 							msg = msg + kpiEmp + "和高达销量不一致"+erpWeight+",";
 							success = "1";
-						}if(!weightChange.equals(datasForOne[4])){
+						}if(weightChange!=weightChange1){
 							msg = msg + kpiEmp + "和高达销量变化量不一致"+weightChange+",";
 							success = "1";
-						}if(!otherWeight.equals(datasForOne[5])){
+						}if(otherWeight!=otherWeight1){
 							msg = msg + kpiEmp + "其他吨位不一致"+otherWeight+",";
 							success = "1";
-						}if(!realWeight.equals(datasForOne[6])){
+						}if(realWeight!=realWeight1){
 							msg = msg + kpiEmp + "实际销量不一致"+realWeight+",";
 							success = "1";
-						}if(!taskWeight.equals(datasForOne[7])){
+						}if(taskWeight!=taskWeight1){
 							msg = msg + kpiEmp + "销量任务量不一致"+taskWeight+",";
 							success = "1";
-						}if(!kpiWeight.equals(datasForOne[8])){
+						}if(kpiWeight!=kpiWeight1){
 							msg = msg + kpiEmp + "销量得分不一致"+kpiWeight+",";
 							success = "1";
-						}if(!avgPrice.equals(datasForOne[9])){
+						}if(avgPrice!=avgPrice1){
 							msg = msg + kpiEmp + "本月平均价格不一致"+avgPrice+",";
 							success = "1";
-						}if(!mmAssessPrice.equals(datasForOne[10])){
+						}if(mmAssessPrice!=mmAssessPrice1){
 							msg = msg + kpiEmp + "本月考核价格不一致"+mmAssessPrice+",";
 							success = "1";
-						}if(!mmAvgStore.equals(datasForOne[11])){
+						}if(mmAvgStore!=mmAvgStore1){
 							msg = msg + kpiEmp + "本月平均库存不一致";
 							success = "1";
-						}if(!storeRange.equals(datasForOne[12])){
+						}if(storeRange!=storeRange1){
 							msg = msg + kpiEmp + "库存范围不一致";
 							success = "1";
-						}if(!AssessWeight.equals(datasForOne[13])){
+						}if(AssessWeight!=AssessWeight1){
 							msg = msg + kpiEmp + "考核吨位不一致";
 							success = "1";
-						}if(!kpiStore.equals(datasForOne[14])){
+						}if(kpiStore!=kpiStore1){
 							msg = msg + kpiEmp + "库存得分不一致";
 							success = "1";
 						}
@@ -494,7 +522,10 @@ public class KpiService extends BaseService{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
 		String yyyy = sdf.format(new Date());
 		List<EmpOA> list = kpiMapper.queryEmp(kpiEmp);
-		kpiMapper.insertKpiData(yyyy,kpiTypeDt, list.get(0).getUid()+"", erpWeight+"", changeWeight+"", erpMoney+"", changeMoney+"",kpiEmp);
+		log.info(list.toString());
+		if(list.size()>0){
+			kpiMapper.insertKpiData(yyyy,kpiTypeDt, list.get(0).getUid()+"", erpWeight+"", changeWeight+"", erpMoney+"", changeMoney+"",kpiEmp);
+		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{	
@@ -519,5 +550,9 @@ public class KpiService extends BaseService{
 		return datatype;
 	}
 	
-
+	public static void main(String[] args) {
+		double a = 1.0;
+		double b = 1.00;
+		System.out.println(a == b);
+	}
 }

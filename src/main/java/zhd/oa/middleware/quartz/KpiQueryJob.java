@@ -48,7 +48,11 @@ public class KpiQueryJob implements Job{
 		List<KpiData> list = kpiService.getKpiData();
 		logger.info(list.toString());
 		for (int i = 0; i < list.size(); i++) {
-			kpiService.insertKpiData(list.get(i).getMM(), list.get(i).getOneName(), 
+			
+			int mm = Integer.parseInt(list.get(i).getMM())-1;//当月获取的是上个月的数据
+			String MM = mm<=9?"0"+mm:""+mm;
+			
+			kpiService.insertKpiData(MM, list.get(i).getOneName(), 
 					list.get(i).getOneWeight(), list.get(i).getWeightChange(),
 					list.get(i).getOneMoney(), list.get(i).getMoneyChange());
 		}
