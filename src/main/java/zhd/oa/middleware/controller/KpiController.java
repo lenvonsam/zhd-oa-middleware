@@ -1,28 +1,29 @@
 package zhd.oa.middleware.controller;
 
+import static spark.Spark.get;
+import static spark.Spark.post;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.http.Part;
+
+import org.apache.commons.io.IOUtils;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.io.IOUtils;
+
 import zhd.oa.middleware.innotation.Autowired;
 import zhd.oa.middleware.model.EmpOA;
 import zhd.oa.middleware.service.KpiService;
 import zhd.oa.middleware.utils.FormaChecktUtil;
 import zhd.oa.middleware.utils.ReadExcelUtil;
 
-import javax.servlet.MultipartConfigElement;
-import javax.servlet.http.Part;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static spark.Spark.get;
-import static spark.Spark.post;
-
 public class KpiController extends BaseController {
-	private static String staticData = "";
 	@Autowired
 	private KpiService kpiService;
 
@@ -31,7 +32,6 @@ public class KpiController extends BaseController {
 		get("/tes", (req, res) -> {
 
 			// String[][] result = ReadExcelUtil.shareInstance().getData(file, 1);
-
 			return "";
 		});
 
@@ -61,12 +61,12 @@ public class KpiController extends BaseController {
 
 			int checkRes = FormaChecktUtil.shareInstance().checkDatas(data, type);
 			log.info(checkRes + "<===checkRes");
+			// checkRes ==0 未正常 大于0是异常的条数
 			if (checkRes == 0) {
 				String dept = kpiService.getDeptIdByUid(uid) + "";
 				map = kpiService.compareKpi(type, data, uid, dept);
-				log.info("map.toString()" + map.toString());
 				String mainid = kpiService.getMainid(map.get("requestid"));
-				log.info("mainid" + mainid);
+				// map success是0时正常 进行插入数据
 				if ("0".equals(map.get("success"))) {
 					String[] datas = data.split("\\$");
 
@@ -81,10 +81,8 @@ public class KpiController extends BaseController {
 				map.put("success", "1");
 				map.put("msg", "数据格式不正确！调整后请重新上传");
 			}
-
 			log.info("map.toString()==>" + map.toString());
 			return JSONObject.toJSON(map);
-
 		});
 	}
 
