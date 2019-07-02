@@ -44,7 +44,7 @@ public class KpiController extends BaseController {
             try (InputStream is = req.raw().getPart("file_data").getInputStream()) {
                 BufferedInputStream in = new BufferedInputStream(is);
                 List<String[]> resultData = ReadExcelUtil.shareInstance().getData(null, in, 1);
-                log.info(">>>{}", JSON.toJSONString(resultData));
+                log.info("--->>>{}", JSON.toJSONString(resultData));
                 result.put("list", resultData);
             }
             result.put("returnCode", 0);
@@ -60,13 +60,13 @@ public class KpiController extends BaseController {
         	Map<String,String> map = new HashMap<String,String>();
         	
         	int checkRes = FormaChecktUtil.shareInstance().checkDatas(data, type);
-        	log.info(checkRes+"<===checkRes");
+        	//checkRes ==0 未正常   大于0是异常的条数
+        	log.info("checkRes"+checkRes);
         	if(checkRes==0){
         		String dept = kpiService.getDeptIdByUid(uid)+"";
         		map = kpiService.compareKpi(type, data , uid,dept);
-        		log.info("map.toString()"+map.toString());
         		String mainid = kpiService.getMainid(map.get("requestid"));
-        		log.info("mainid"+mainid);
+        		//map success是0时正常  进行插入数据
         		if("0".equals(map.get("success"))){
         			String[] datas = data.split("\\$");
         			
