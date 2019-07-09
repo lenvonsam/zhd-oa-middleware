@@ -18,6 +18,8 @@ public abstract class BaseService {
 	protected void closeSession() {
 		try {
 			if (session != null)
+				log.info(session.flushStatements()+"");
+				
 				session.commit();
 		} catch (Exception e) {
 			session.rollback();

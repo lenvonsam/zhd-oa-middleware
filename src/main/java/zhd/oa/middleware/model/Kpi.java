@@ -2,189 +2,203 @@ package zhd.oa.middleware.model;
 
 public class Kpi {
 
-	private String yyyy;
-	private String kpiTypeDt;
-	private String kpiEmp;
-	private String kpiJob;
-	private String empArea;
-	private String empName;
+	 private int yyyy; 
+	 private int kpitypedt; 
+	 private int kpiemp; 
+	 private int kpijob; 
+	 private String emparea; 
+	 private String empname; 
+	 private String job_; 
+	 private String type_; 
+	 private double erpweight; 
+	 private double erpchangeweight; 
+	 private double otherweight; 
+	 private double realweight; 
+	 private double taskweight; 
+	 private double kpiweight; 
+	 private double erpmoney; 
+	 private double erpchangemoney; 
+	 private double othermoney; 
+	 private double realmoney; 
+	 private double taskmoney; 
+	 private double kpimoney; 
+	 private double avgprice; 
+	 private double mmassessprice; 
+	 private double mmavgstore; 
+	 private double storerange; 
+	 private double assessweight; 
+	 private double kpistore;
 	
-	private double erpWeight;
-	private double erpChangeWeight;
-	private double otherWeight;
-	private double realWeight;
-	private double taskWeight;
-	private double kpiWeight;
-	private double erpMoney;
-	private double erpChangeMoney;
-	private double otherMoney;
-	private double realMoney;
-	private double taskMoney;
-	private double kpiMoney;
-	private double avgPrice;
-	private double mmAssessPrice;
-	private double mmAvgStore;
-	private double storeRange;
-	private double AssessWeight;
-	private double kpiStore;
-	public String getYyyy() {
+	public int getYyyy() {
 		return yyyy;
 	}
-	public void setYyyy(String yyyy) {
+	public void setYyyy(int yyyy) {
 		this.yyyy = yyyy;
 	}
-	public String getKpiTypeDt() {
-		return kpiTypeDt;
+	public int getKpitypedt() {
+		return kpitypedt;
 	}
-	public void setKpiTypeDt(String kpiTypeDt) {
-		this.kpiTypeDt = kpiTypeDt;
+	public void setKpitypedt(int kpitypedt) {
+		this.kpitypedt = kpitypedt;
 	}
-	public String getKpiEmp() {
-		return kpiEmp;
+	public int getKpiemp() {
+		return kpiemp;
 	}
-	public void setKpiEmp(String kpiEmp) {
-		this.kpiEmp = kpiEmp;
+	public void setKpiemp(int kpiemp) {
+		this.kpiemp = kpiemp;
 	}
-	public String getKpiJob() {
-		return kpiJob;
+	public int getKpijob() {
+		return kpijob;
 	}
-	public void setKpiJob(String kpiJob) {
-		this.kpiJob = kpiJob;
+	public void setKpijob(int kpijob) {
+		this.kpijob = kpijob;
 	}
-	public String getEmpArea() {
-		return empArea;
+	public String getEmparea() {
+		return emparea;
 	}
-	public void setEmpArea(String empArea) {
-		this.empArea = empArea;
+	public void setEmparea(String emparea) {
+		this.emparea = emparea;
 	}
-	public String getEmpName() {
-		return empName;
+	public String getEmpname() {
+		return empname;
 	}
-	public void setEmpName(String empName) {
-		this.empName = empName;
+	public void setEmpname(String empname) {
+		this.empname = empname;
 	}
-	public double getErpWeight() {
-		return erpWeight;
+	public String getJob_() {
+		return job_;
 	}
-	public void setErpWeight(double erpWeight) {
-		this.erpWeight = erpWeight;
+	public void setJob_(String job_) {
+		this.job_ = job_;
 	}
-	public double getErpChangeWeight() {
-		return erpChangeWeight;
+	public String getType_() {
+		return type_;
 	}
-	public void setErpChangeWeight(double erpChangeWeight) {
-		this.erpChangeWeight = erpChangeWeight;
+	public void setType_(String type_) {
+		this.type_ = type_;
 	}
-	public double getOtherWeight() {
-		return otherWeight;
+	public double getErpweight() {
+		return erpweight;
 	}
-	public void setOtherWeight(double otherWeight) {
-		this.otherWeight = otherWeight;
+	public void setErpweight(double erpweight) {
+		this.erpweight = erpweight;
 	}
-	public double getRealWeight() {
-		return realWeight;
+	public double getErpchangeweight() {
+		return erpchangeweight;
 	}
-	public void setRealWeight(double realWeight) {
-		this.realWeight = realWeight;
+	public void setErpchangeweight(double erpchangeweight) {
+		this.erpchangeweight = erpchangeweight;
 	}
-	public double getTaskWeight() {
-		return taskWeight;
+	public double getOtherweight() {
+		return otherweight;
 	}
-	public void setTaskWeight(double taskWeight) {
-		this.taskWeight = taskWeight;
+	public void setOtherweight(double otherweight) {
+		this.otherweight = otherweight;
 	}
-	public double getKpiWeight() {
-		return kpiWeight;
+	public double getRealweight() {
+		return realweight;
 	}
-	public void setKpiWeight(double kpiWeight) {
-		this.kpiWeight = kpiWeight;
+	public void setRealweight(double realweight) {
+		this.realweight = realweight;
 	}
-	public double getErpMoney() {
-		return erpMoney;
+	public double getTaskweight() {
+		return taskweight;
 	}
-	public void setErpMoney(double erpMoney) {
-		this.erpMoney = erpMoney;
+	public void setTaskweight(double taskweight) {
+		this.taskweight = taskweight;
 	}
-	public double getErpChangeMoney() {
-		return erpChangeMoney;
+	public double getKpiweight() {
+		return kpiweight;
 	}
-	public void setErpChangeMoney(double erpChangeMoney) {
-		this.erpChangeMoney = erpChangeMoney;
+	public void setKpiweight(double kpiweight) {
+		this.kpiweight = kpiweight;
 	}
-	public double getOtherMoney() {
-		return otherMoney;
+	public double getErpmoney() {
+		return erpmoney;
 	}
-	public void setOtherMoney(double otherMoney) {
-		this.otherMoney = otherMoney;
+	public void setErpmoney(double erpmoney) {
+		this.erpmoney = erpmoney;
 	}
-	public double getRealMoney() {
-		return realMoney;
+	public double getErpchangemoney() {
+		return erpchangemoney;
 	}
-	public void setRealMoney(double realMoney) {
-		this.realMoney = realMoney;
+	public void setErpchangemoney(double erpchangemoney) {
+		this.erpchangemoney = erpchangemoney;
 	}
-	public double getTaskMoney() {
-		return taskMoney;
+	public double getOthermoney() {
+		return othermoney;
 	}
-	public void setTaskMoney(double taskMoney) {
-		this.taskMoney = taskMoney;
+	public void setOthermoney(double othermoney) {
+		this.othermoney = othermoney;
 	}
-	public double getKpiMoney() {
-		return kpiMoney;
+	public double getRealmoney() {
+		return realmoney;
 	}
-	public void setKpiMoney(double kpiMoney) {
-		this.kpiMoney = kpiMoney;
+	public void setRealmoney(double realmoney) {
+		this.realmoney = realmoney;
 	}
-	public double getAvgPrice() {
-		return avgPrice;
+	public double getTaskmoney() {
+		return taskmoney;
 	}
-	public void setAvgPrice(double avgPrice) {
-		this.avgPrice = avgPrice;
+	public void setTaskmoney(double taskmoney) {
+		this.taskmoney = taskmoney;
 	}
-	public double getMmAssessPrice() {
-		return mmAssessPrice;
+	public double getKpimoney() {
+		return kpimoney;
 	}
-	public void setMmAssessPrice(double mmAssessPrice) {
-		this.mmAssessPrice = mmAssessPrice;
+	public void setKpimoney(double kpimoney) {
+		this.kpimoney = kpimoney;
 	}
-	public double getMmAvgStore() {
-		return mmAvgStore;
+	public double getAvgprice() {
+		return avgprice;
 	}
-	public void setMmAvgStore(double mmAvgStore) {
-		this.mmAvgStore = mmAvgStore;
+	public void setAvgprice(double avgprice) {
+		this.avgprice = avgprice;
 	}
-	public double getStoreRange() {
-		return storeRange;
+	public double getMmassessprice() {
+		return mmassessprice;
 	}
-	public void setStoreRange(double storeRange) {
-		this.storeRange = storeRange;
+	public void setMmassessprice(double mmassessprice) {
+		this.mmassessprice = mmassessprice;
 	}
-	public double getAssessWeight() {
-		return AssessWeight;
+	public double getMmavgstore() {
+		return mmavgstore;
 	}
-	public void setAssessWeight(double assessWeight) {
-		AssessWeight = assessWeight;
+	public void setMmavgstore(double mmavgstore) {
+		this.mmavgstore = mmavgstore;
 	}
-	public double getKpiStore() {
-		return kpiStore;
+	public double getStorerange() {
+		return storerange;
 	}
-	public void setKpiStore(double kpiStore) {
-		this.kpiStore = kpiStore;
+	public void setStorerange(double storerange) {
+		this.storerange = storerange;
+	}
+	public double getAssessweight() {
+		return assessweight;
+	}
+	public void setAssessweight(double assessweight) {
+		this.assessweight = assessweight;
+	}
+	public double getKpistore() {
+		return kpistore;
+	}
+	public void setKpistore(double kpistore) {
+		this.kpistore = kpistore;
 	}
 	@Override
 	public String toString() {
-		return "Kpi [yyyy=" + yyyy + ", kpiTypeDt=" + kpiTypeDt + ", kpiEmp=" + kpiEmp + ", kpiJob=" + kpiJob
-				+ ", empArea=" + empArea + ", empName=" + empName + ", erpWeight=" + erpWeight + ", erpChangeWeight="
-				+ erpChangeWeight + ", otherWeight=" + otherWeight + ", realWeight=" + realWeight + ", taskWeight="
-				+ taskWeight + ", kpiWeight=" + kpiWeight + ", erpMoney=" + erpMoney + ", erpChangeMoney="
-				+ erpChangeMoney + ", otherMoney=" + otherMoney + ", realMoney=" + realMoney + ", taskMoney="
-				+ taskMoney + ", kpiMoney=" + kpiMoney + ", avgPrice=" + avgPrice + ", mmAssessPrice=" + mmAssessPrice
-				+ ", mmAvgStore=" + mmAvgStore + ", storeRange=" + storeRange + ", AssessWeight=" + AssessWeight
-				+ ", kpiStore=" + kpiStore + "]";
+		return "Kpi [yyyy=" + yyyy + ", kpitypedt=" + kpitypedt + ", kpiemp=" + kpiemp + ", kpijob=" + kpijob
+				+ ", emparea=" + emparea + ", empname=" + empname + ", job_=" + job_ + ", type_=" + type_
+				+ ", erpweight=" + erpweight + ", erpchangeweight=" + erpchangeweight + ", otherweight=" + otherweight
+				+ ", realweight=" + realweight + ", taskweight=" + taskweight + ", kpiweight=" + kpiweight
+				+ ", erpmoney=" + erpmoney + ", erpchangemoney=" + erpchangemoney + ", othermoney=" + othermoney
+				+ ", realmoney=" + realmoney + ", taskmoney=" + taskmoney + ", kpimoney=" + kpimoney + ", avgprice="
+				+ avgprice + ", mmassessprice=" + mmassessprice + ", mmavgstore=" + mmavgstore + ", storerange="
+				+ storerange + ", assessweight=" + assessweight + ", kpistore=" + kpistore + "]";
 	}
 	
-	
-	
+	 
+	 
 	
 	
 	

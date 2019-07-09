@@ -83,9 +83,29 @@ public class ReadExcelUtil {
                     String value = "";
 
                     cell = row.getCell(columnIndex);
-
+                    
                     if (cell != null) {
+                    	
+                    	if(columnIndex==0){
+                    		
+                    		 switch (cell.getCellType()) {
+                    		
+                    		 	case HSSFCell.CELL_TYPE_STRING:
 
+	                                 value = cell.getStringCellValue()+"";
+	
+	                                 break;
+                    		 
+                    		 	case HSSFCell.CELL_TYPE_NUMERIC:
+                    		 		
+
+	                                 value = Math.round(cell.getNumericCellValue()) + "";
+	
+	                                 break;
+	                            
+                    		 }
+                    		
+                    	}else{
                         // 注意：一定要设成这个，否则可能会出现乱码
 
 //	                     cell.setEncoding(HSSFCell.ENCODING_UTF_16);
@@ -95,7 +115,7 @@ public class ReadExcelUtil {
                             case HSSFCell.CELL_TYPE_STRING:
 
                                 value = cell.getStringCellValue();
-
+                                
                                 break;
 
                             case HSSFCell.CELL_TYPE_NUMERIC:
@@ -123,9 +143,10 @@ public class ReadExcelUtil {
                                 		value = "";
                                 		
                                 	}else{
-                                		value = new DecimalFormat("0.0000").format(cell
-                                				
-                                				.getNumericCellValue());
+//                                		value = new DecimalFormat("0.0000").format(cell
+//                                				
+//                                				.getNumericCellValue());
+                                		value =  Double.parseDouble(cell.getNumericCellValue()+"")+"";
                                 	}
 
                                 }
@@ -174,7 +195,7 @@ public class ReadExcelUtil {
                                         : "N");
 
                                 break;
-
+                                
                             default:
 
                                 value = "";
@@ -191,6 +212,7 @@ public class ReadExcelUtil {
                     values[columnIndex] = rightTrim(value);
 
                     hasValue = true;
+                    }
                 }
                 if (hasValue) {
 

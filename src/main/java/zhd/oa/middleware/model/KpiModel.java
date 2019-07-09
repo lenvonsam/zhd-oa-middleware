@@ -1,7 +1,5 @@
 package zhd.oa.middleware.model;
 
-import java.math.BigDecimal;
-
 public class KpiModel {
 	/**
 	 * 
@@ -9,18 +7,20 @@ public class KpiModel {
 	private String yyyy;
 	private String kpiTypeDt;
 	private String kpiEmp;
+	private String empCode;
+	private String deptCode;
 	/**
 	 * 业务员销量
 	 */
-	private BigDecimal erpWeight;
+	private double erpWeight;
 	/**
 	 * 业务员高卖
 	 */
-	private BigDecimal erpMoney;
+	private double erpMoney;
 	/**
 	 * 采购本月平均库存
 	 */
-	private BigDecimal mmAvgStore;
+	private double mmAvgStore;
 	
 	public String getYyyy() {
 		return yyyy;
@@ -40,30 +40,44 @@ public class KpiModel {
 	public void setKpiEmp(String kpiEmp) {
 		this.kpiEmp = kpiEmp;
 	}
-	public BigDecimal getErpWeight() {
+	public String getEmpCode() {
+		return empCode;
+	}
+	public void setEmpCode(String empCode) {
+		this.empCode = empCode;
+	}
+	public String getDeptCode() {
+		return deptCode;
+	}
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
+	}
+	public double getErpWeight() {
 		return erpWeight;
 	}
-	public void setErpWeight(BigDecimal erpWeight) {
+	public void setErpWeight(double erpWeight) {
 		this.erpWeight = erpWeight;
 	}
-	public BigDecimal getErpMoney() {
+	public double getErpMoney() {
 		return erpMoney;
 	}
-	public void setErpMoney(BigDecimal erpMoney) {
+	public void setErpMoney(double erpMoney) {
 		this.erpMoney = erpMoney;
 	}
-	public BigDecimal getMmAvgStore() {
+	public double getMmAvgStore() {
 		return mmAvgStore;
 	}
-	public void setMmAvgStore(BigDecimal mmAvgStore) {
+	public void setMmAvgStore(double mmAvgStore) {
 		this.mmAvgStore = mmAvgStore;
 	}
 	@Override
 	public String toString() {
-		return "KpiModel [yyyy=" + yyyy + ", kpiTypeDt=" + kpiTypeDt + ", kpiEmp=" + kpiEmp 
-				+ ", erpWeight=" + erpWeight + ", erpMoney=" + erpMoney + ", mmAvgStore="
+		return "KpiModel [yyyy=" + yyyy + ", kpiTypeDt=" + kpiTypeDt + ", kpiEmp=" + kpiEmp + ", empCode=" + empCode
+				+ ", deptCode=" + deptCode + ", erpWeight=" + erpWeight + ", erpMoney=" + erpMoney + ", mmAvgStore="
 				+ mmAvgStore + "]";
 	}
+	
+
 	
 
 	
