@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>zhd.oa</groupId>
@@ -9,19 +8,19 @@
 	<name>oa-middleware Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
-    <properties>
-        <java.version>1.8</java.version>
-        <spark.version>2.7.2</spark.version>
-        <mybatis.version>3.4.6</mybatis.version>
-        <spark-template.version>2.7.1</spark-template.version>
-        <quartz.version>2.2.1</quartz.version>
-        <axis.version>1.4</axis.version>
-        <junit.version>4.12</junit.version>
-        <oracle.version>12.0.0.2</oracle.version>
-        <commons.version>2.5.0</commons.version>
-        <fastjson.version>1.2.5</fastjson.version>
-        <slf4j.version>1.7.21</slf4j.version>
-    </properties>
+	<properties>
+		<java.version>1.8</java.version>
+		<spark.version>2.7.2</spark.version>
+		<mybatis.version>3.4.6</mybatis.version>
+		<spark-template.version>2.7.1</spark-template.version>
+		<quartz.version>2.2.1</quartz.version>
+		<axis.version>1.4</axis.version>
+		<junit.version>4.12</junit.version>
+		<oracle.version>12.0.0.2</oracle.version>
+		<commons.version>2.5.0</commons.version>
+		<fastjson.version>1.2.5</fastjson.version>
+		<slf4j.version>1.7.21</slf4j.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -29,35 +28,35 @@
 			<artifactId>spark-core</artifactId>
 			<version>${spark.version}</version>
 		</dependency>
-        <!-- freemarker模板-->
-        <dependency>
-            <groupId>com.sparkjava</groupId>
-            <artifactId>spark-template-freemarker</artifactId>
-            <version>${spark-template.version}</version>
-        </dependency>
-        <!-- velocity模板-->
-        <dependency>
-            <groupId>com.sparkjava</groupId>
-            <artifactId>spark-template-velocity</artifactId>
-            <version>${spark-template.version}</version>
-        </dependency>
-        <!-- jade模板-->
-        <dependency>
-            <groupId>com.sparkjava</groupId>
-            <artifactId>spark-template-jade</artifactId>
-            <version>${spark-template.version}</version>
-        </dependency>
-        <!-- axis-->
-        <dependency>
-            <groupId>javax.xml.rpc</groupId>
-            <artifactId>javax.xml.rpc-api</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.axis</groupId>
-            <artifactId>axis</artifactId>
-            <version>1.4</version>
-        </dependency>
+		<!-- freemarker模板 -->
+		<dependency>
+			<groupId>com.sparkjava</groupId>
+			<artifactId>spark-template-freemarker</artifactId>
+			<version>${spark-template.version}</version>
+		</dependency>
+		<!-- velocity模板 -->
+		<dependency>
+			<groupId>com.sparkjava</groupId>
+			<artifactId>spark-template-velocity</artifactId>
+			<version>${spark-template.version}</version>
+		</dependency>
+		<!-- jade模板 -->
+		<dependency>
+			<groupId>com.sparkjava</groupId>
+			<artifactId>spark-template-jade</artifactId>
+			<version>${spark-template.version}</version>
+		</dependency>
+		<!-- axis -->
+		<dependency>
+			<groupId>javax.xml.rpc</groupId>
+			<artifactId>javax.xml.rpc-api</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>
+		</dependency>
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -96,11 +95,22 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
 		<dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi</artifactId>
-		    <version>3.17</version>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.17</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.16</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
+
+
 	</dependencies>
 	<build>
 		<finalName>oa-middleware</finalName>

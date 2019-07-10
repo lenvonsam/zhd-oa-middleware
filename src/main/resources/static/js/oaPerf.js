@@ -152,7 +152,8 @@ $(function() {
     uploadExtraData: function() {
       return {
         excelType: excelType,
-        uid: uid
+        uid: uid,
+        filename: $('.file-caption-name').attr('title')
       };
     },
     layoutTemplates: {

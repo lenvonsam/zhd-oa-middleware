@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.MultipartConfigElement;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -30,14 +31,15 @@ public class KpiController extends BaseController {
 		});
 
 		post("/OaUpload", (req, res) -> {
+			
 			HashMap<String, Object> result = new HashMap<>();
 			req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
 			// multipart/form-data请求获取其他参数需要二进制流转string
-//			Part uidPart = req.raw().getPart("uid");
-//			String uid = IOUtils.toString(uidPart.getInputStream());
-			try (InputStream is = req.raw().getPart("file_data").getInputStream()) {
+			
+			String filename = req.queryParams("filename");
+			try (InputStream is = req.raw().getPart("file_data").getInputStream() ) {
 				BufferedInputStream in = new BufferedInputStream(is);
-				List<String[]> resultData = ReadExcelUtil.shareInstance().getData(null, in, 1);
+				List<String[]> resultData = ReadExcelUtil.shareInstance().getData(null, in, 1 , filename);
 				log.info(">>>{}", JSON.toJSONString(resultData));
 				result.put("list", resultData);
 			}

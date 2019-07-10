@@ -17,7 +17,6 @@ public class FormaChecktUtil {
 	
 	
 	public int checkDatas(String data , String type){
-		System.out.println("is coming");
 		int checkRes = 1;
 		String[] datas = data.split("\\$");
 		for (int i = 0; i < datas.length; i++) {
@@ -89,7 +88,6 @@ public class FormaChecktUtil {
 				}
 			}
 		}
-		System.out.println(checkRes);
 		return checkRes;
 		
 	}
