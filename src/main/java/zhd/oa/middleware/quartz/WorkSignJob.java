@@ -80,6 +80,7 @@ public class WorkSignJob implements Job{
 				System.out.println("requestid:"+requestid);
 				
 			}
+			System.out.println("once over!");
 		}catch(Exception e){
 			e.printStackTrace();
 		}

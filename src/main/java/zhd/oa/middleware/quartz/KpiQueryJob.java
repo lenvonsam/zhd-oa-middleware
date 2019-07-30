@@ -33,30 +33,27 @@ public class KpiQueryJob implements Job{
 //			kpiService.insertKpiConsult(kpis.get(i));
 			
 		}
-		
-		/**
-		 * 定时写入销售的整个数据
-		 */
-		List<KpiTotalChangeOne> ChangeOne = kpiService.queryChangeOne();
-		logger.info("ChangeOne.size()==>"+ChangeOne.size());
-		logger.info(ChangeOne.toString());
-		for (int i = 0; i < ChangeOne.size(); i++) {
-//			kpiService.insertChangeOne(ChangeOne.get(i));
-		}
-		
-		/**
-		 * 定时将可以查询出来的数据插入绩效表中 ，以做对比
-		 */
-		List<KpiData> list = kpiService.getKpiData();
-		logger.info("list.size()==>"+list.size());
-		logger.info(list.toString());
-		for (int i = 0; i < list.size(); i++) {
-//			kpiService.insertKpiData(list.get(i));
-		}
-		
-		logger.info("one times is over!!!");
-		
-		
+//		
+//		/**
+//		 * 定时写入销售的整个数据
+//		 */
+//		List<KpiTotalChangeOne> ChangeOne = kpiService.queryChangeOne();
+//		logger.info("ChangeOne.size()==>"+ChangeOne.size());
+//		logger.info(ChangeOne.toString());
+//		for (int i = 0; i < ChangeOne.size(); i++) {
+////			kpiService.insertChangeOne(ChangeOne.get(i));
+//		}
+//		
+//		/**
+//		 * 定时将可以查询出来的数据插入绩效表中 ，以做对比
+//		 */
+//		List<KpiData> list = kpiService.getKpiData();
+//		logger.info("list.size()==>"+list.size());
+//		logger.info(list.toString());
+//		for (int i = 0; i < list.size(); i++) {
+////			kpiService.insertKpiData(list.get(i));
+//		}
+//		
 		/**
 		 * 2019-07-06
 		 * 查询当前日期的上个月的实时Erp数据,
@@ -81,7 +78,17 @@ public class KpiQueryJob implements Job{
 		for (int i = 0; i < listZhdKpi.size(); i++) {
 //			kpiService.insertSaleKpisIntoKpicompare(listZhdKpi.get(i));
 		}
-		logger.info("insertSaleDatasIntoOnetotal one times is over!!!");
+		
+		
+		/**
+		 * 2019-07-08
+		 * 提成报表
+		 * 每月2号将查询的数据插入表中
+		 */
+		//kpiService.getKpidataAndInsertIntoWagetable();
+		
+		logger.info("job one times is over!!!");
+		
 		
 		
 		

@@ -45,6 +45,7 @@ public class ReadExcelUtil {
         int rowSize = 0;
 
         if (null != file) {
+        	
             in = new BufferedInputStream(new FileInputStream(file));
 
         }

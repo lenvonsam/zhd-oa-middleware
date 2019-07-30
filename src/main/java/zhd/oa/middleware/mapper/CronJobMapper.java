@@ -16,7 +16,7 @@ public interface CronJobMapper {
 			+ "	when 下班='异常' then datei||' '||week||' '||am||' '||pm|| '    【下班异常】'  "
 			+ "	end msg "
 			+ "	from v_sign_base t "
-			+ "	where  datei>=to_char(sysdate,'yyyy-MM')||'-01'"
+			+ "	where datei>=to_char(sysdate,'yyyy-MM')||'-01'"
 			+ "	and datei<to_char(sysdate,'yyyy-MM-dd')"
 			+ "	and 最终判定='考勤异常'"
 			+ ")group by userid,uname")

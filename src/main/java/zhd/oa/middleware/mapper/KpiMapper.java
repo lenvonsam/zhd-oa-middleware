@@ -14,6 +14,7 @@ import zhd.oa.middleware.model.KpiModel;
 import zhd.oa.middleware.model.KpiTotalChange;
 import zhd.oa.middleware.model.KpiTotalChangeOne;
 import zhd.oa.middleware.model.SaleDatas;
+import zhd.oa.middleware.model.WageTable;
 import zhd.oa.middleware.model.ZhdKpi;
 
 public interface KpiMapper {
@@ -491,5 +492,57 @@ public interface KpiMapper {
 			@Param ("basicscore") double  basicscore, @Param ("otherscore") double  otherscore, @Param ("otherremk") String  otherremk, 
 			@Param ("kpitotal") double  kpitotal, @Param ("kpitypedt") String  kpitypedt, @Param ("empname") String  empname);
 
+	
+	/**
+	 * 2019-07-11
+	 * 查询提成数据
+	 * @return
+	 */
+	@Select(" select DEPARTMENTID, YYYY, MM, EMPID, "
+			+ " JOBTITLE, ENTRYDATE, FULLDATE, FULLYEAR, BASICASSESS, "
+			+ " REALWEIGHT, REALMONEY, WAGEWEIGHT, WAGEMONEY, REDUCE, TOTAL, INSERTDATE "
+			+ " from V_ZHD_GETWAGETABLE t ")
+	public List<WageTable> getWageTable();
+	
+	/**
+	 * 2019-07-12
+	 * 插入提成表数据
+	 * @param departmentid
+	 * @param yyyy
+	 * @param mm
+	 * @param empid
+	 * @param jobtitle
+	 * @param entrydate
+	 * @param fulldate
+	 * @param fullyear
+	 * @param basicassess
+	 * @param realweight
+	 * @param realmoney
+	 * @param wageweight
+	 * @param wagemoney
+	 * @param reduce
+	 * @param total
+	 * @param insertdate
+	 */
+	@Insert(" insert into uf_zhdWage ( dept , yyyy , mm , empname , empjob , entrydate , fulldate ,fullyear , basicAssess ,"
+			+ " realWeight , realMoney  , wageWeight ,wageMoney , reduce, total, insertDate  ) values ( "
+			+ "  #{departmentid} , #{yyyy} , #{mm} , #{empid} , #{jobtitle} , #{entrydate} , #{fulldate} , #{fullyear} , #{basicassess} , "
+			+ " #{realweight} , #{realmoney} ,  #{wageweight} , #{wagemoney} , #{reduce} , #{total} , #{insertdate}) ")
+	public void insertIntoZhdWage(@Param("departmentid") int  departmentid,    
+			@Param("yyyy") int  yyyy,    
+			@Param("mm") int  mm,    
+			@Param("empid") int  empid,    
+			@Param("jobtitle") int  jobtitle,    
+			@Param("entrydate") String  entrydate,    
+			@Param("fulldate") String  fulldate,    
+			@Param("fullyear") double  fullyear,    
+			@Param("basicassess") String  basicassess,   
+			@Param("realweight") double  realweight,    
+			@Param("realmoney") double  realmoney,    
+			@Param("wageweight") double  wageweight,    
+			@Param("wagemoney") double  wagemoney,    
+			@Param("reduce") double  reduce,    
+			@Param("total") double  total,    
+			@Param("insertdate") String  insertdate);
 	
 }
