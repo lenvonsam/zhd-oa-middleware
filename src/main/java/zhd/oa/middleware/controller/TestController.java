@@ -12,8 +12,8 @@ public class TestController extends BaseController {
 
 	public void router() {
 		get("/hello", (req, res) -> {
-			throw new NullPointerException();
-			// return "hello world 1";
+			// throw new NullPointerException();
+			return "hello world 1";
 		});
 
 		get("/testView", (req, res) -> {
