@@ -30,7 +30,7 @@ public interface OutSbillsMapper {
 	 * @param billcodes
 	 * @return
 	 */
-	@Select("select t.ownerout_billcode billcode,t.ownerout_billbatch billbatch,t1.datas_acceptcorpname customer,"
+	@Select("select t.ownerout_billcode billcode,t.ownerout_billcode billbatch,t1.datas_acceptcorpname customer,"
 			+ " t.pntree_name pntree,t.goods_spec spec,"
 			+ " t.goods_material mat,t.goods_property1 mlength,t.productarea_name area,"
 			+ " t.goods_property4 zlfw,t.goods_property5 gcfw,t.goods_metering metering,"
