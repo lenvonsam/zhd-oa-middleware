@@ -8,9 +8,7 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import zhd.oa.middleware.model.KpiData;
 import zhd.oa.middleware.model.KpiModel;
-import zhd.oa.middleware.model.KpiTotalChangeOne;
 import zhd.oa.middleware.model.SaleDatas;
 import zhd.oa.middleware.model.ZhdKpi;
 import zhd.oa.middleware.service.KpiService;
