@@ -21,16 +21,16 @@ public class KpiQueryJob implements Job{
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		
-		/**
-		 * 定时每月2号9：00查询数据并插入临时的数据表中，用来计算变化量。固定的数据
-		 */
-		List<KpiModel> kpis = kpiService.queryKpi();
-		logger.info("kpis.size()===>"+kpis.size());
-		logger.info(kpis.toString());
-		for (int i = 0; i < kpis.size(); i++) {
-//			kpiService.insertKpiConsult(kpis.get(i));
-			
-		}
+//		/**
+//		 * 定时每月2号9：00查询数据并插入临时的数据表中，用来计算变化量。固定的数据
+//		 */
+//		List<KpiModel> kpis = kpiService.queryKpi();
+//		logger.info("kpis.size()===>"+kpis.size());
+//		logger.info(kpis.toString());
+//		for (int i = 0; i < kpis.size(); i++) {
+////			kpiService.insertKpiConsult(kpis.get(i));
+//			
+//		}
 //		
 //		/**
 //		 * 定时写入销售的整个数据
@@ -53,6 +53,7 @@ public class KpiQueryJob implements Job{
 //		}
 //		
 		/**
+		 * 定时每月2号9：00查询数据并插入临时的数据表中
 		 * 2019-07-06
 		 * 查询当前日期的上个月的实时Erp数据,
 		 * 结果插入到uf_onetotal表中,以计算得出变化量
@@ -62,7 +63,7 @@ public class KpiQueryJob implements Job{
 		logger.info("listSaleDatas.size()==>"+listSaleDatas.size());
 		logger.info(listSaleDatas.toString());
 		for (int i = 0; i < listSaleDatas.size(); i++) {
-//			kpiService.insertSaleDatasIntoOnetotal(listSaleDatas.get(i));
+			kpiService.insertSaleDatasIntoOnetotal(listSaleDatas.get(i));
 		}
 		
 		/**
@@ -74,7 +75,7 @@ public class KpiQueryJob implements Job{
 		logger.info("listZhdKpi.size()==>"+listZhdKpi.size());
 		logger.info(listZhdKpi.toString());
 		for (int i = 0; i < listZhdKpi.size(); i++) {
-//			kpiService.insertSaleKpisIntoKpicompare(listZhdKpi.get(i));
+			kpiService.insertSaleKpisIntoKpicompare(listZhdKpi.get(i));
 		}
 		
 		
@@ -83,7 +84,7 @@ public class KpiQueryJob implements Job{
 		 * 提成报表
 		 * 每月2号将查询的数据插入表中
 		 */
-		//kpiService.getKpidataAndInsertIntoWagetable();
+		kpiService.getKpidataAndInsertIntoWagetable();
 		
 		logger.info("job one times is over!!!");
 		

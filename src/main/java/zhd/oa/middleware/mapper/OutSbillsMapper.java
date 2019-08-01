@@ -19,9 +19,9 @@ public interface OutSbillsMapper {
 			+ " t.GOODS_PROPERTY1 mlength,t.PRODUCTAREA_NAME area ,"
 			+ " t.GOODS_PROPERTY4 zlfw,t.GOODS_PROPERTY5 gcfw,t.GOODS_METERING metering,"
 			+ " t1.warehouse_name warehouse,t.GOODS_NUM nums "
-			+ " from WAREHOUSE_DELIVERY_DETAIL@oa_erp t "
-			+ " left join BASIC_WAREHOUSE@oa_erp t1 on t.WAREHOUSE_CODE = t1.WAREHOUSE_CODE "
-			+ " left join WAREHOUSE_DELIVERY@oa_erp t2 on t.SBILL_BILLCODE = t2.SBILL_BILLCODE "
+			+ " from WAREHOUSE_DELIVERY_DETAIL@erp_cs t "
+			+ " left join BASIC_WAREHOUSE@erp_cs t1 on t.WAREHOUSE_CODE = t1.WAREHOUSE_CODE "
+			+ " left join WAREHOUSE_DELIVERY@erp_cs t2 on t.SBILL_BILLCODE = t2.SBILL_BILLCODE "
 			+ " where t.SBILL_BILLCODE in ( #{billcodes} ) ")
 	public List<OutSbills> getOutSbillsBySbillscode(@Param("billcodes") String billcodes);
 	
@@ -35,9 +35,9 @@ public interface OutSbillsMapper {
 			+ " t.goods_material mat,t.goods_property1 mlength,t.productarea_name area,"
 			+ " t.goods_property4 zlfw,t.goods_property5 gcfw,t.goods_metering metering,"
 			+ " t2.warehouse_name warehouse,t.goods_num nums "
-			+ " from storage_ownerout_detail@oa_wms t "
-			+ " left join storage_ownerout@oa_wms t1 on t.ownerout_billcode = t1.ownerout_billcode "
-			+ " left join basic_warehouse@oa_wms t2 on t.warehouse_code = t2.warehouse_code"
+			+ " from storage_ownerout_detail@wms t "
+			+ " left join storage_ownerout@wms t1 on t.ownerout_billcode = t1.ownerout_billcode "
+			+ " left join basic_warehouse@wms t2 on t.warehouse_code = t2.warehouse_code"
 			+ " where t.ownerout_billcode in (#{billcodes} ) ")
 	public List<OutSbills> getOutSbillsCodeBySbillscode(@Param("billcodes") String billcodes);
 	
