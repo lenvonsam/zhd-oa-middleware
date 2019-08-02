@@ -33,6 +33,7 @@ public class WorkflowController extends BaseController{
         	
         	String listOutSbill = JSONObject.toJSON(listOutSbills)+"";
         	System.out.println(listOutSbill);
+        	System.out.println(listOutSbills.size()+"---size");
         	
         	return callback + "("+JSONObject.toJSON(listOutSbills)+")";
         });
