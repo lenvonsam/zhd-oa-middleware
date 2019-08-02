@@ -128,9 +128,9 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>2.1</version>
 				<configuration>
-					<url>http://192.168.80.99:8080/manager/text</url>
+					<url>http://192.168.20.148:8080/manager/text</url>
 					<server>zhdTomcatDeploy</server>
-					<path>/oamiddleware</path>
+					<path>/oa-middleware</path>
 				</configuration>
 			</plugin>
 		</plugins>
