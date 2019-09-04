@@ -19,7 +19,7 @@ import zhd.oa.middleware.service.CronJobService;
 
 public class WorkSignJob implements Job{
 	// prod
-	private final static String url = "http://http://oa.xingyun361.com/services/WorkflowService";
+	private final static String url = "http://oa.xingyun361.com/services/WorkflowService";
 
 	private CronJobService cronJobService = new CronJobService();
 	@Override
