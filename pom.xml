@@ -18,7 +18,7 @@
 		<junit.version>4.12</junit.version>
 		<oracle.version>12.0.0.2</oracle.version>
 		<commons.version>2.5.0</commons.version>
-		<fastjson.version>1.2.5</fastjson.version>
+		<fastjson.version>1.2.25</fastjson.version>
 		<slf4j.version>1.7.21</slf4j.version>
 	</properties>
 
