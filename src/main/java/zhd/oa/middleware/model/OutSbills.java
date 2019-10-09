@@ -10,7 +10,8 @@ public class OutSbills {
 	
 	private String billcode;    
 	private String billbatch;
-	private String customer;       
+	private String customer;   
+	private String org;
 	private String pntree;       
 	private String mat;       
 	private String spec;       
@@ -36,6 +37,12 @@ public class OutSbills {
 	}
 	public String getCustomer() {
 		return customer;
+	}
+	public String getOrg() {
+		return org;
+	}
+	public void setOrg(String org) {
+		this.org = org;
 	}
 	public void setCustomer(String customer) {
 		this.customer = customer;
@@ -102,11 +109,12 @@ public class OutSbills {
 	}
 	@Override
 	public String toString() {
-		return "OutSbills [billcode=" + billcode + ", billbatch=" + billbatch + ", customer=" + customer + ", pntree="
-				+ pntree + ", mat=" + mat + ", spec=" + spec + ", mlength=" + mlength + ", area=" + area + ", zlfw="
-				+ zlfw + ", gcfw=" + gcfw + ", metering=" + metering + ", warehouse=" + warehouse + ", nums=" + nums
-				+ "]";
+		return "OutSbills [billcode=" + billcode + ", billbatch=" + billbatch + ", customer=" + customer + ", org="
+				+ org + ", pntree=" + pntree + ", mat=" + mat + ", spec=" + spec + ", mlength=" + mlength + ", area="
+				+ area + ", zlfw=" + zlfw + ", gcfw=" + gcfw + ", metering=" + metering + ", warehouse=" + warehouse
+				+ ", nums=" + nums + "]";
 	}
+	
 	
 	
 	
