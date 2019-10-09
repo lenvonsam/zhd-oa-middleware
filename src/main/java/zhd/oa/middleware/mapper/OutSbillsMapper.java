@@ -29,7 +29,7 @@ public interface OutSbillsMapper {
 //			+ " t1.warehouse_name,t.GOODS_NUM ")
 //	public List<OutSbills> getOutSbillsBySbillscode(@Param("billcodes") String billcodes);
 //	
-	@Select(" select SBILL_BILLCODE, BILLCODE, BILLBATCH, CUSTOMER, PNTREE, "
+	@Select(" select SBILL_BILLCODE, BILLCODE, BILLBATCH,ORG , CUSTOMER, PNTREE, "
 			+ " MAT, SPEC, AREA, ZLFW, GCFW, METERING, WAREHOUSE, NUMS "
 			+ " from V_ERP_SBILL_DT t "
 			+ " where SBILL_BILLCODE in ( #{billcodes} ) ")
@@ -54,7 +54,7 @@ public interface OutSbillsMapper {
 //			+ " t.goods_property1,t.productarea_name,t.goods_property4,t.goods_property5,t.goods_metering,t2.warehouse_name,t.goods_num  ")
 //	public List<OutSbills> getOutSbillsCodeBySbillscode(@Param("billcodes") String billcodes);
 //	
-	@Select(" select SBILL_BILLCODE, BILLCODE, BILLBATCH, "
+	@Select(" select SBILL_BILLCODE, BILLCODE, BILLBATCH,ORG, "
 			+ "CUSTOMER, PNTREE, MAT, SPEC, AREA, ZLFW, "
 			+ "GCFW, METERING, WAREHOUSE, NUMS "
 			+ "from V_ERP_OUTSBILL_DT t "
