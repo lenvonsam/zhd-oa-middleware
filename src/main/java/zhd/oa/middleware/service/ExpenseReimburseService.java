@@ -13,6 +13,7 @@ import weaver.workflow.webservices.WorkflowRequestTableRecord;
 import zhd.oa.middleware.mapper.ExpenseReimburseMapper;
 import zhd.oa.middleware.model.ExpenseReimburseDetail;
 import zhd.oa.middleware.model.ExpenseReimburseMain;
+import zhd.oa.middleware.utils.WorkflowUtil;
 
 public class ExpenseReimburseService extends BaseService{
 	
@@ -165,7 +166,7 @@ public class ExpenseReimburseService extends BaseService{
 				
 				WorkflowBaseInfo workflowBaseInfo = new WorkflowBaseInfo();
 				
-				workflowBaseInfo.setWorkflowId("4801");//workflowid 流程接口演示流程2016==38    
+				workflowBaseInfo.setWorkflowId("4801");//workflowid 
 				 
 				WorkflowRequestInfo workflowRequestInfo = new WorkflowRequestInfo();//流程基本信息           
 				workflowRequestInfo.setCreatorId(expenseReimburseMain.getUserid()+"");//创建人id        
@@ -175,7 +176,7 @@ public class ExpenseReimburseService extends BaseService{
 				workflowRequestInfo.setWorkflowDetailTableInfos(WorkflowDetailTableInfo);//添加明细数据
 				
 				workflowRequestInfo.setWorkflowBaseInfo(workflowBaseInfo);        
-				WorkflowServicePortTypeProxy WorkflowServicePortTypeProxy = new WorkflowServicePortTypeProxy("http://oaapp-test.xingyun361.com:88/services/WorkflowService");        
+				WorkflowServicePortTypeProxy WorkflowServicePortTypeProxy = new WorkflowServicePortTypeProxy(WorkflowUtil.OAPROXYURL + "/services/WorkflowService");        
 				String returnRequestid = WorkflowServicePortTypeProxy.doCreateWorkflowRequest(workflowRequestInfo, expenseReimburseMain.getUserid());
 				log.info("流程创建成功---requestid--->" + returnRequestid);
 				
