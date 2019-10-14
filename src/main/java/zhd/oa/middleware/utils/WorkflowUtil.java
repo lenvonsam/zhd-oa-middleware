@@ -14,7 +14,8 @@ import weaver.workflow.webservices.WorkflowRequestTableField;
 import weaver.workflow.webservices.WorkflowRequestTableRecord;
 
 public class WorkflowUtil {
-	private final static String url = "http://oaapp-test.xingyun361.com:88/services/WorkflowService";
+	public static String OAPROXYURL="";
+	private static String url = WorkflowUtil.OAPROXYURL+"/services/WorkflowService";
 	private static WorkflowUtil instance = null;
 
 	private WorkflowUtil() {

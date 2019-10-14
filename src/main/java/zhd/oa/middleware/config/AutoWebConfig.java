@@ -7,6 +7,7 @@ import zhd.oa.middleware.enums.DefaultProps;
 import zhd.oa.middleware.utils.FileUtil;
 import zhd.oa.middleware.utils.HttpUtil;
 import zhd.oa.middleware.utils.PropertyUtil;
+import zhd.oa.middleware.utils.WorkflowUtil;
 
 import java.util.Properties;
 
@@ -22,6 +23,8 @@ public class AutoWebConfig {
 			Properties globalProperties = PropertyUtil.shareInstance().initProperties(DefaultProps.BOOTFILE.getName());
 			// ERP proxy url
 			HttpUtil.ERPPROXYURL = globalProperties.getProperty("zhd.erp.proxy");
+			// OA proxy url
+			WorkflowUtil.OAPROXYURL = globalProperties.getProperty("zhd.oa.proxy");
 			// 当前模式
 			GlobalVariable.CURRENTPROFILE = globalProperties.getProperty(DefaultProps.PROFILE.getName(), "default");
 			// 端口启动
