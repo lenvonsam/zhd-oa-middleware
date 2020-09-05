@@ -9,9 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import zhd.oa.middleware.innotation.Autowired;
 import zhd.oa.middleware.model.OutSbills;
 import zhd.oa.middleware.model.PropertyBasic;
-import zhd.oa.middleware.service.ExpenseReimburseService;
-import zhd.oa.middleware.service.OutSbillsService;
-import zhd.oa.middleware.service.PropertyService;
+import zhd.oa.middleware.service.*;
 
 public class WorkflowController extends BaseController{
 	@Autowired
@@ -20,6 +18,10 @@ public class WorkflowController extends BaseController{
 	private PropertyService propertyService; 
 	@Autowired
 	private ExpenseReimburseService expenseReimburseService;
+	@Autowired
+	private LogisticsSbillInfoService logisticsSbillInfoService;
+	@Autowired
+	private LogisticsOutSbillService logisticsOutSbillService;
 	
 	@Override
 	public void router() {
@@ -84,6 +86,26 @@ public class WorkflowController extends BaseController{
         	return "SUCCESS === " + callback ;
         	
         });
+		/**
+		 * 调车流程查询明细表1数据
+		 */
+        get("/logisticsSbillInfo",(request, response) -> {
+
+			String callback = request.queryParams("jsoncallback");
+			String sbillCodes = request.queryParams("sbillCodes");
+			System.out.println("callback-->"+callback+"sbillCode-->"+sbillCodes);
+			return callback + "(" + JSONObject.toJSON(logisticsSbillInfoService.getListLogisticsSbillInfo(sbillCodes)) + ")";
+		});
+
+		/**
+		 * 调车流程查询明细表2出库数据
+		 */
+		get("/logisticsOutSbill",(request, response) -> {
+			String callback = request.queryParams("jsoncallback");
+			String codes = request.queryParams("codes");
+			System.out.println("callback-->"+callback+"codes-->"+codes);
+			return callback + "(" + JSONObject.toJSON(logisticsOutSbillService.getListLogisticsOutSbill(codes)) + ")";
+		});
         
         
         
