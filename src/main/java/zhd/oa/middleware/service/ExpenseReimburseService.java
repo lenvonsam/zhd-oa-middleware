@@ -13,7 +13,8 @@ import weaver.workflow.webservices.WorkflowRequestTableRecord;
 import zhd.oa.middleware.mapper.ExpenseReimburseMapper;
 import zhd.oa.middleware.model.ExpenseReimburseDetail;
 import zhd.oa.middleware.model.ExpenseReimburseMain;
-import zhd.oa.middleware.utils.WorkflowUtil;
+
+import static zhd.oa.middleware.utils.HttpUtil.OAPROXYURL;
 
 public class ExpenseReimburseService extends BaseService{
 	
@@ -176,7 +177,7 @@ public class ExpenseReimburseService extends BaseService{
 				workflowRequestInfo.setWorkflowDetailTableInfos(WorkflowDetailTableInfo);//添加明细数据
 				
 				workflowRequestInfo.setWorkflowBaseInfo(workflowBaseInfo);        
-				WorkflowServicePortTypeProxy WorkflowServicePortTypeProxy = new WorkflowServicePortTypeProxy(WorkflowUtil.OAPROXYURL + "/services/WorkflowService");        
+				WorkflowServicePortTypeProxy WorkflowServicePortTypeProxy = new WorkflowServicePortTypeProxy(OAPROXYURL + "/services/WorkflowService");
 				String returnRequestid = WorkflowServicePortTypeProxy.doCreateWorkflowRequest(workflowRequestInfo, expenseReimburseMain.getUserid());
 				log.info("流程创建成功---requestid--->" + returnRequestid);
 				

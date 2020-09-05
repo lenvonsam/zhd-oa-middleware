@@ -11,7 +11,13 @@ import java.net.URL;
 import java.net.URLDecoder;
 
 public class HttpUtil {
-	public static String ERPPROXYURL = "";
+	// 测试地址Erp
+	public static String  ERPPROXYURL = "http://192.168.80.147:8980/eep";
+	// 预上线地址Erp
+//	public static String ERPPROXYURL = "http://192.168.80.103:8980/eep";
+	// 测试仓储地址Erp
+	public static String WMPROXYURL = "http://192.168.80.147:8080/app";
+	public static String OAPROXYURL = "http://172.16.120.30:8899";
 
 	private static HttpUtil obj = null;
 

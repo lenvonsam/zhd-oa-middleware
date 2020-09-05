@@ -13,9 +13,10 @@ import weaver.workflow.webservices.WorkflowRequestInfo;
 import weaver.workflow.webservices.WorkflowRequestTableField;
 import weaver.workflow.webservices.WorkflowRequestTableRecord;
 
+import static zhd.oa.middleware.utils.HttpUtil.OAPROXYURL;
+
 public class WorkflowUtil {
-	public static String OAPROXYURL="";
-	private static String url = WorkflowUtil.OAPROXYURL+"/services/WorkflowService";
+	private static String url = OAPROXYURL+"/services/WorkflowService";
 	private static WorkflowUtil instance = null;
 
 	private WorkflowUtil() {
@@ -51,7 +52,6 @@ public class WorkflowUtil {
 		if (toDoList.contains(requestid + "")) {
 
 			res = "success";
-
 			wsptp.forwardWorkflowRequest(requestid, forwardids, remk + new Date(), uid, "172.16.120.238");
 
 		} else {
@@ -75,7 +75,7 @@ public class WorkflowUtil {
 	 * @throws Exception
 	 */
 
-	public String operateRequest(int requestid, int uid, String type) throws Exception {
+	public String operateRequest(int requestid, int uid, String type,String remk) throws Exception {
 
 		WorkflowServicePortTypeProxy wsptp = new WorkflowServicePortTypeProxy(url);
 
@@ -89,7 +89,7 @@ public class WorkflowUtil {
 
 			WorkflowRequestInfo wri = wsptp.getWorkflowRequest(requestid, uid, 0);
 
-			wsptp.submitWorkflowRequest(wri, requestid, uid, type,"系统定时提交");
+			wsptp.submitWorkflowRequest(wri, requestid, uid, type,remk);
 
 		} else {
 
