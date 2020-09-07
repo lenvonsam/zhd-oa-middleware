@@ -30,7 +30,7 @@ public class LogisticsController extends BaseController{
             /**
              * 需要提交流程的情况
              */
-            Map resultMap = logisticsWorkService.subLogisticsWork(dataJSONObject);
+            Map resultMap = logisticsWorkService.checkLogisticsData(dataJSONObject);
             log.info(JSONObject.toJSONString(resultMap));
             return JSONObject.toJSON(resultMap);
         });
