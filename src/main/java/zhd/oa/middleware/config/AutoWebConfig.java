@@ -24,7 +24,7 @@ public class AutoWebConfig {
 			// ERP proxy url
 			HttpUtil.ERPPROXYURL = globalProperties.getProperty("zhd.erp.proxy");
 			// OA proxy url
-			WorkflowUtil.OAPROXYURL = globalProperties.getProperty("zhd.oa.proxy");
+			HttpUtil.OAPROXYURL = globalProperties.getProperty("zhd.oa.proxy");
 			// 当前模式
 			GlobalVariable.CURRENTPROFILE = globalProperties.getProperty(DefaultProps.PROFILE.getName(), "default");
 			// 端口启动

@@ -16,12 +16,16 @@ import weaver.workflow.webservices.WorkflowRequestTableField;
 import weaver.workflow.webservices.WorkflowRequestTableRecord;
 import zhd.oa.middleware.model.CronJob;
 import zhd.oa.middleware.service.CronJobService;
-import zhd.oa.middleware.utils.WorkflowUtil;
 
-public class WorkSignJob implements Job {
+import static zhd.oa.middleware.utils.HttpUtil.OAPROXYURL;
 
-	private final static String url = WorkflowUtil.OAPROXYURL + "/services/WorkflowService";
 
+public class WorkSignJob implements Job{
+	// dev
+	//private final static String url = "http://oaapp-test.xingyun361.com:88/services/WorkflowService";
+	//
+	private static String url = OAPROXYURL + "/services/WorkflowService";
+	
 	private CronJobService cronJobService = new CronJobService();
 
 	@Override

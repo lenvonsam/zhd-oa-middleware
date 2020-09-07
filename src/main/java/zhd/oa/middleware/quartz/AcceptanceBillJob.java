@@ -43,7 +43,7 @@ public class AcceptanceBillJob implements Job {
 					if (requestids.contains(acceptanceBills.get(i).getRequestid())) {
 
 						WorkflowUtil.shareInstance()
-								.operateRequest(Integer.parseInt(acceptanceBills.get(i).getRequestid()), 124, "submit");
+								.operateRequest(Integer.parseInt(acceptanceBills.get(i).getRequestid()), 124, "submit","系统提交");
 					}
 				}
 			}

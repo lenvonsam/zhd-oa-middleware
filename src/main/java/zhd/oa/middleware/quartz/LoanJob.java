@@ -72,7 +72,7 @@ public class LoanJob implements Job {
 					if (requestids.contains(requestid)) {
 
 						String res = WorkflowUtil.shareInstance().operateRequest(Integer.parseInt(requestid), 124,
-								"submit");
+								"submit","系统提交");
 						logger.info("流程提交"+loansInterestList.get(i));
 					}
 				}
@@ -191,7 +191,7 @@ public class LoanJob implements Job {
 	/**
 	 * 根据最近的一条扣息创建明细数据并插入(非首次情况下)
 	 * 
-	 * @param mainid
+	 * @param
 	 * @param loansInterest
 	 */
 	public void newInterest(LoansInterest loansInterest) {
