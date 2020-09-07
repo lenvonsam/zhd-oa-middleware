@@ -11,13 +11,13 @@ public interface LogisticsWorkMapper {
      * @param goodSourceNo
      * @return
      */
-    @Select(" select max(id) from formtable_main_597 where sourceid = #{goodSourceNo} ")
+    @Select(" select max(id) from formtable_main_583 where sourceid = #{goodSourceNo} ")
     public String getMainid(@Param("goodSourceNo") String goodSourceNo);
 
     /**
      * 根据mainid获取流程requestid
      */
-    @Select(" select requestid from formtable_main_597 where id = #{mainid} ")
+    @Select(" select requestid from formtable_main_583 where id = #{mainid} ")
     public String getRequestid(@Param("mainid") String mainid);
 
     /**
@@ -25,7 +25,7 @@ public interface LogisticsWorkMapper {
      * @param sourceid 货源id即货源编号goodSourceNo
      * @return
      */
-    @Select(" select requestid from formtable_main_597 where sourceid = #{sourceid} ")
+    @Select(" select requestid from formtable_main_583 where sourceid = #{sourceid} ")
     public String getRequestidBySourceid(@Param("sourceid") String sourceid);
 
     /**
@@ -78,7 +78,7 @@ public interface LogisticsWorkMapper {
      * @param remk
      * @return
      */
-    @Insert(" insert into formtable_main_597_dt2 a ( " +
+    @Insert(" insert into formtable_main_583_dt2 a ( " +
             " a.mainid, a.balance_com, a.tran_com, " +
             " a.driver, a.phone, a.car_no, a.freight_mode, a.freight_price, a.freight_unit, " +
             " a.tran_weight, a.tran_money, a.car_max, a.car_length, a.remk ) " +
