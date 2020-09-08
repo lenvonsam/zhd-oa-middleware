@@ -80,7 +80,7 @@ public interface LogisticsWorkMapper {
      */
     @Insert(" insert into formtable_main_583_dt2 a ( " +
             " a.mainid, a.balance_com, a.tran_com, " +
-            " a.driver, a.phone, a.car_no, a.freight_mode, a.freight_price, a.freight_unit, " +
+            " a.driver, a.phone, a.car_no_str, a.freight_mode, a.freight_price, a.freight_unit, " +
             " a.tran_weight, a.tran_money, a.car_max, a.car_length, a.remk ) " +
             " values ( #{mainid},#{closeCom},#{tranCom},#{driver},#{phone},#{carNo}, " +
             " #{freightMode},#{price},#{unit},#{weight},#{money},#{carMax},#{carLength},#{remk} ) ")
@@ -89,6 +89,18 @@ public interface LogisticsWorkMapper {
                                             @Param("freightMode") String freightMode,@Param("price") String price,@Param("unit") String unit,
                                             @Param("weight") String weight,@Param("money") String money,@Param("carMax") String carMax,
                                             @Param("carLength") String carLength,@Param("remk") String remk);
+
+    /**
+     * 记录回调接口
+     * @param data
+     * @param result
+     * @param remk
+     * @param url
+     */
+    @Insert(" insert into uf_zf_record ( work_reqid,req_time,req_data,req_result,remk,req_url ) " +
+            " values (#{requestid},to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),#{data},#{result},#{remk},#{url} ) ")
+    public void insertLogisticsRecord(@Param("requestid") String requestid,@Param("data") String data,
+                                      @Param("result") String result,@Param("remk") String remk,@Param("url") String url);
 
 
 
