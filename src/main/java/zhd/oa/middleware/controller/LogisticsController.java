@@ -19,7 +19,6 @@ public class LogisticsController extends BaseController{
          * 简易版4.3调车流程
          */
         post("/subLogisticsWork",(req,res) -> {
-            log.info(req.body());
             JSONObject dataJSONObject= JSONObject.parseObject(req.body());
 
             /**
@@ -32,6 +31,8 @@ public class LogisticsController extends BaseController{
              */
             Map resultMap = logisticsWorkService.checkLogisticsData(dataJSONObject);
             log.info(JSONObject.toJSONString(resultMap));
+
+            logisticsWorkService.recordLogisticsRequest(req.body(),JSONObject.toJSONString(resultMap),"来访ip:"+req.ip(),req.url());
             return JSONObject.toJSON(resultMap);
         });
 

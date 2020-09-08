@@ -90,6 +90,17 @@ public interface LogisticsWorkMapper {
                                             @Param("weight") String weight,@Param("money") String money,@Param("carMax") String carMax,
                                             @Param("carLength") String carLength,@Param("remk") String remk);
 
+    /**
+     * 记录回调接口
+     * @param data
+     * @param result
+     * @param remk
+     * @param url
+     */
+    @Insert(" insert into uf_zf_record ( req_time,req_data,req_result,remk,req_url ) " +
+            " values (to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),#{data},#{result},#{remk},#{url} ) ")
+    public void insertLogisticsRecord(@Param("data") String data,@Param("result") String result,@Param("remk") String remk,@Param("url") String url);
+
 
 
 

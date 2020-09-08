@@ -222,4 +222,25 @@ public class LogisticsWorkService extends BaseService {
         }
     }
 
+    /**
+     * 记录接口调用
+     * @param data 传的参数
+     * @param result 操作结果
+     * @param remk 备注
+     * @param url 地址
+     */
+    public void recordLogisticsRequest(String data,String result,String remk,String url){
+
+        try {
+            session = openSession();
+            logisticsWorkMapper = session.getMapper(LogisticsWorkMapper.class);
+            logisticsWorkMapper.insertLogisticsRecord(data,result,remk,url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeSession();
+        }
+
+    }
+
 }
