@@ -97,9 +97,10 @@ public interface LogisticsWorkMapper {
      * @param remk
      * @param url
      */
-    @Insert(" insert into uf_zf_record ( req_time,req_data,req_result,remk,req_url ) " +
-            " values (to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),#{data},#{result},#{remk},#{url} ) ")
-    public void insertLogisticsRecord(@Param("data") String data,@Param("result") String result,@Param("remk") String remk,@Param("url") String url);
+    @Insert(" insert into uf_zf_record ( work_reqid,req_time,req_data,req_result,remk,req_url ) " +
+            " values (#{requestid},to_char(sysdate,'yyyy-mm-dd hh24:mi:ss'),#{data},#{result},#{remk},#{url} ) ")
+    public void insertLogisticsRecord(@Param("requestid") String requestid,@Param("data") String data,
+                                      @Param("result") String result,@Param("remk") String remk,@Param("url") String url);
 
 
 

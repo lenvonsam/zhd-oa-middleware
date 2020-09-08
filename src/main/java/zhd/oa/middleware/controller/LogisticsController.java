@@ -32,7 +32,10 @@ public class LogisticsController extends BaseController{
             Map resultMap = logisticsWorkService.checkLogisticsData(dataJSONObject);
             log.info(JSONObject.toJSONString(resultMap));
 
-            logisticsWorkService.recordLogisticsRequest(req.body(),JSONObject.toJSONString(resultMap),"来访ip:"+req.ip(),req.url());
+            String requestid = dataJSONObject.getString("businessBillNo");
+            requestid = requestid == null ? "" : requestid;
+
+            logisticsWorkService.recordLogisticsRequest(requestid,req.body(),JSONObject.toJSONString(resultMap),"来访ip:"+req.ip(),req.url());
             return JSONObject.toJSON(resultMap);
         });
 

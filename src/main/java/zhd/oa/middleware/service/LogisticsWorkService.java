@@ -229,12 +229,12 @@ public class LogisticsWorkService extends BaseService {
      * @param remk 备注
      * @param url 地址
      */
-    public void recordLogisticsRequest(String data,String result,String remk,String url){
+    public void recordLogisticsRequest(String requestid ,String data,String result,String remk,String url){
 
         try {
             session = openSession();
             logisticsWorkMapper = session.getMapper(LogisticsWorkMapper.class);
-            logisticsWorkMapper.insertLogisticsRecord(data,result,remk,url);
+            logisticsWorkMapper.insertLogisticsRecord(requestid,data,result,remk,url);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
