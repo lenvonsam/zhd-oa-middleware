@@ -100,12 +100,12 @@ public class LogisticsWorkService extends BaseService {
                     String driverCode = logisticsWorkMapper.checkDriver(driver);
                     String carCode = "";
                     Boolean car = carNo.matches("^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Za-z](([0-9]{5}[DFdf])|([DFdf]([A-Ha-hJ-Nj-nP-Zp-z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Za-z][A-Ha-hJ-Nj-nP-Zp-z0-9]{4}[A-Ha-hJ-Nj-nP-Zp-z0-9挂学警港澳使领]))$");
-                    if(car){
-                        carCode = logisticsWorkMapper.checkCarNo(carNo);
-                        if(null==carCode || "".equals(carCode)){
-                            msgDt += "Erp系统未收录该车牌号!";
-                        }
-                    }
+//                    if(car){
+//                        carCode = logisticsWorkMapper.checkCarNo(carNo);
+//                        if(null==carCode || "".equals(carCode)){
+//                            msgDt += "Erp系统未收录该车牌号!";
+//                        }
+//                    }
 
                     if(null==comCode || (!"0".equals(closeCom) && !"1".equals(closeCom))){
                         msgDt += "结算单位不正确!";
@@ -119,7 +119,7 @@ public class LogisticsWorkService extends BaseService {
                     if(null == phone || !phone.matches("^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$")){
                         msgDt += "手机号不正确!";
                     }
-                    if(null == freightMode || !car){
+                    if(null == carNo || !car){
                         msgDt += "车牌号不正确!";
                     }
                     if(null == freightMode || (!"0".equals(freightMode) && !"1".equals(freightMode))){
@@ -211,7 +211,7 @@ public class LogisticsWorkService extends BaseService {
                 String carCode = logisticsWorkMapper.checkCarNo(carNo);
 
                 boolean result = logisticsWorkMapper.insetLogisticsWorkDetail(mainid,closeCom,comCode,driverCode,
-                        phone,carCode,freightMode,price,unit,weight,money,carMax,carLength,"【物流平台配车】"+remk);
+                        phone,carNo,freightMode,price,unit,weight,money,carMax,carLength,"【物流平台配车】"+remk);
                 log.info(detailJSONObject.toJSONString()+"执行结果--->"+result);
             }
 
