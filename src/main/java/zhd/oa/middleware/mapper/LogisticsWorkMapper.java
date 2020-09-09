@@ -1,5 +1,6 @@
 package zhd.oa.middleware.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -59,6 +60,9 @@ public interface LogisticsWorkMapper {
      */
     @Select(" select max(car_code) from v_erp_cars where car_number = #{carno} ")
     public String checkCarNo(@Param("carno") String carno);
+    
+    @Delete("delete from formtable_main_597_dt2 where and driver is null and mainid=#{mainId}")
+    public int batchDeleteByMainId(String mainId);
 
     /**
      * 新版本调车流程更新明细数据
@@ -80,7 +84,7 @@ public interface LogisticsWorkMapper {
      */
     @Insert(" insert into formtable_main_583_dt2 a ( " +
             " a.mainid, a.balance_com, a.tran_com, " +
-            " a.driver, a.phone, a.car_no_str, a.freight_mode, a.freight_price, a.freight_unit, " +
+            " a.driver_str, a.phone, a.car_no_str, a.freight_mode, a.freight_price, a.freight_unit, " +
             " a.tran_weight, a.tran_money, a.car_max, a.car_length, a.remk ) " +
             " values ( #{mainid},#{closeCom},#{tranCom},#{driver},#{phone},#{carNo}, " +
             " #{freightMode},#{price},#{unit},#{weight},#{money},#{carMax},#{carLength},#{remk} ) ")
