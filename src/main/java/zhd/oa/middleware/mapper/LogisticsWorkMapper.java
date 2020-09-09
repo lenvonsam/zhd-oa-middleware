@@ -80,7 +80,7 @@ public interface LogisticsWorkMapper {
      */
     @Insert(" insert into formtable_main_597_dt2 a ( " +
             " a.mainid, a.balance_com, a.tran_com, " +
-            " a.driver, a.phone, a.car_no_str, a.freight_mode, a.freight_price, a.freight_unit, " +
+            " a.driver_str, a.phone, a.car_no_str, a.freight_mode, a.freight_price, a.freight_unit, " +
             " a.tran_weight, a.tran_money, a.car_max, a.car_length, a.remk ) " +
             " values ( #{mainid},#{closeCom},#{tranCom},#{driver},#{phone},#{carNo}, " +
             " #{freightMode},#{price},#{unit},#{weight},#{money},#{carMax},#{carLength},#{remk} ) ")

@@ -97,7 +97,7 @@ public class LogisticsWorkService extends BaseService {
                     String remk = detailJSONObject.getString("remark");//
 
                     String comCode = logisticsWorkMapper.checkComname(tranCom);
-                    String driverCode = logisticsWorkMapper.checkDriver(driver);
+//                    String driverCode = logisticsWorkMapper.checkDriver(driver);
                     String carCode = "";
                     Boolean car = carNo.matches("^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Za-z](([0-9]{5}[DFdf])|([DFdf]([A-Ha-hJ-Nj-nP-Zp-z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Za-z][A-Ha-hJ-Nj-nP-Zp-z0-9]{4}[A-Ha-hJ-Nj-nP-Zp-z0-9挂学警港澳使领]))$");
 //                    if(car){
@@ -113,8 +113,11 @@ public class LogisticsWorkService extends BaseService {
                     if(null==comCode || "".equals(comCode)){
                         msgDt += "运输单位不在系统中!";
                     }
-                    if(null==driverCode || "".equals(driverCode)){
-                        msgDt += "司机不在系统中!";
+//                    if(null==driverCode || "".equals(driverCode)){
+//                        msgDt += "司机不在系统中!";
+//                    }
+                    if(null== driver || driver.length() > 200 ){
+                        msgDt += "司机长度不要超过200字符!";
                     }
                     if(null == phone || !phone.matches("^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$")){
                         msgDt += "手机号不正确!";
@@ -205,12 +208,13 @@ public class LogisticsWorkService extends BaseService {
                 carMax = null == carMax ?"":carMax;
                 carLength = null == carLength ?"":carLength;
                 remk = null == remk ?"":remk;
+                driver = null == driver ? "":driver;
 
                 String comCode = logisticsWorkMapper.checkComname(tranCom);
-                String driverCode = logisticsWorkMapper.checkDriver(driver);
+//                String driverCode = logisticsWorkMapper.checkDriver(driver);
                 String carCode = logisticsWorkMapper.checkCarNo(carNo);
 
-                boolean result = logisticsWorkMapper.insetLogisticsWorkDetail(mainid,closeCom,comCode,driverCode,
+                boolean result = logisticsWorkMapper.insetLogisticsWorkDetail(mainid,closeCom,comCode,driver,
                         phone,carNo,freightMode,price,unit,weight,money,carMax,carLength,"【物流平台配车】"+remk);
                 log.info(detailJSONObject.toJSONString()+"执行结果--->"+result);
             }
