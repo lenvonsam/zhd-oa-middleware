@@ -116,12 +116,9 @@ public class LogisticsWorkService extends BaseService {
 //                    if(null==driverCode || "".equals(driverCode)){
 //                        msgDt += "司机不在系统中!";
 //                    }
-<<<<<<< HEAD
-=======
-                    if(null== driver || driver.length() > 200 ){
-                        msgDt += "司机长度不要超过200字符!";
-                    }
->>>>>>> 1aadc693c9e0c6eeec19b62f79f8342e54130a8e
+//                    if(null== driver || driver.length() > 200 ){
+//                        msgDt += "司机长度不要超过200字符!";
+//                    }
                     if(null == phone || !phone.matches("^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$")){
                         msgDt += "手机号不正确!";
                     }
