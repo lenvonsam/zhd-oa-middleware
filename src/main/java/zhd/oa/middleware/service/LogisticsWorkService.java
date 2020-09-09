@@ -186,6 +186,8 @@ public class LogisticsWorkService extends BaseService {
             String mainid = logisticsWorkMapper.getMainid(goodSourceNo);
 
             JSONArray detailJSONArray = jsonObject.getJSONArray("details");
+            // 插入前批量删除原同步明细数据
+            logisticsWorkMapper.batchDeleteByMainId(mainid);
 
             for (int i = 0; i < detailJSONArray.size(); i++) {
 
@@ -212,8 +214,7 @@ public class LogisticsWorkService extends BaseService {
 
                 String comCode = logisticsWorkMapper.checkComname(tranCom);
 //                String driverCode = logisticsWorkMapper.checkDriver(driver);
-                String carCode = logisticsWorkMapper.checkCarNo(carNo);
-
+//                String carCode = logisticsWorkMapper.checkCarNo(carNo);
                 boolean result = logisticsWorkMapper.insetLogisticsWorkDetail(mainid,closeCom,comCode,driver,
                         phone,carNo,freightMode,price,unit,weight,money,carMax,carLength,"【物流平台配车】"+remk);
                 log.info(detailJSONObject.toJSONString()+"执行结果--->"+result);
