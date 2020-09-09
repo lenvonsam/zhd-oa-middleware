@@ -113,9 +113,9 @@ public class LogisticsWorkService extends BaseService {
                     if(null==comCode || "".equals(comCode)){
                         msgDt += "运输单位不在系统中!";
                     }
-                    if(null==driverCode || "".equals(driverCode)){
-                        msgDt += "司机不在系统中!";
-                    }
+//                    if(null==driverCode || "".equals(driverCode)){
+//                        msgDt += "司机不在系统中!";
+//                    }
                     if(null == phone || !phone.matches("^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$")){
                         msgDt += "手机号不正确!";
                     }
@@ -210,7 +210,7 @@ public class LogisticsWorkService extends BaseService {
                 String driverCode = logisticsWorkMapper.checkDriver(driver);
                 String carCode = logisticsWorkMapper.checkCarNo(carNo);
 
-                boolean result = logisticsWorkMapper.insetLogisticsWorkDetail(mainid,closeCom,comCode,driverCode,
+                boolean result = logisticsWorkMapper.insetLogisticsWorkDetail(mainid,closeCom,comCode,driverCode == null ? driver: driverCode,
                         phone,carNo,freightMode,price,unit,weight,money,carMax,carLength,"【物流平台配车】"+remk);
                 log.info(detailJSONObject.toJSONString()+"执行结果--->"+result);
             }
