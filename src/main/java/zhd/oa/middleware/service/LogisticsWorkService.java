@@ -119,7 +119,7 @@ public class LogisticsWorkService extends BaseService {
 //                    if(null== driver || driver.length() > 200 ){
 //                        msgDt += "司机长度不要超过200字符!";
 //                    }
-                    if(null == phone || !phone.matches("^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$")){
+                    if(null == phone || !phone.matches("^1[3-9]\\d{9}$")){
                         msgDt += "手机号不正确!";
                     }
                     if(null == carNo || !car){
