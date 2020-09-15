@@ -166,9 +166,15 @@ public class LogisticsWorkService extends BaseService {
 			closeSession();
 		}
 		if ("".equals(msg)) {
-			insetLogisticsWorkDetail(jsonObject);
-			success = "0";
-			msg = "执行成功!";
+
+			boolean res = insetLogisticsWorkDetail(jsonObject);
+			if(res){
+				success = "0";
+				msg = "执行成功!";
+			}else{
+				success = "1";
+				msg = "执行失败!";
+			}
 		}
 
 		resultMap.put("success", success);
@@ -183,7 +189,9 @@ public class LogisticsWorkService extends BaseService {
 	 * 
 	 * @param jsonObject
 	 */
-	public void insetLogisticsWorkDetail(JSONObject jsonObject) {
+	public boolean insetLogisticsWorkDetail(JSONObject jsonObject) {
+
+		boolean res = true;
 
 		try {
 
@@ -225,13 +233,18 @@ public class LogisticsWorkService extends BaseService {
 				boolean result = logisticsWorkMapper.insetLogisticsWorkDetail(mainid, closeCom, comCode, driver, phone,
 						carNo, freightMode, price, unit, weight, money, carMax, carLength, "【物流平台配车】" + remk);
 				log.info(detailJSONObject.toJSONString() + "执行结果--->" + result);
-			}
 
+				if(!result){
+					res = false;
+				}
+			}
 		} catch (Exception e) {
+			res = false;
 			e.printStackTrace();
 		} finally {
 			closeSession();
 		}
+		return res;
 	}
 
 	/**
