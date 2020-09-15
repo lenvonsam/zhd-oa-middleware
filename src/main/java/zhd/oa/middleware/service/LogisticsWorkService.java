@@ -226,6 +226,7 @@ public class LogisticsWorkService extends BaseService {
 				carLength = null == carLength ? "" : carLength;
 				remk = null == remk ? "" : remk;
 				driver = null == driver ? "" : driver;
+				phone = null == phone ? "" : phone ;
 
 				String comCode = logisticsWorkMapper.checkComname(tranCom);
 //                String driverCode = logisticsWorkMapper.checkDriver(driver);
