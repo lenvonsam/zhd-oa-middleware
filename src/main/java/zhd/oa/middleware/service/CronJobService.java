@@ -4,6 +4,8 @@ import java.util.List;
 
 import zhd.oa.middleware.mapper.CronJobMapper;
 import zhd.oa.middleware.model.CronJob;
+import zhd.oa.middleware.model.CronJobChecker;
+import zhd.oa.middleware.utils.CreateNoticeWorkflow;
 
 public class CronJobService extends BaseService{
 	
@@ -47,5 +49,27 @@ public class CronJobService extends BaseService{
 		return res;
 	}
 
+	public void cronJob(String identity){
+		log.info("进入定时任务--->");
+		try {
+			session = openSession();
+			cronJobMapper = session.getMapper(CronJobMapper.class);
+			CronJobChecker cronJobChecker = cronJobMapper.checkJob(identity);//1：提醒  2：同步
+			String cc = "<a href='http://oaapp-test.xingyun361.com:88/formmode/view/AddFormMode.jsp?customTreeDataId=null&mainid=0&modeId=2801&formId=-608&type=1' target='_blank' >【点击添加配置】</a>";
+			if("1".equals(cronJobChecker.getRes())){
+				log.info("创建绩效同步提醒流程！");
+				log.info(cronJobChecker.getEmps());
+				String requestid = CreateNoticeWorkflow.shareInstance().notice("绩效同步提醒",cronJobChecker.getEmps()+",1",cc);
+				log.info("流程id-->"+requestid);
+			}if("2".equals(cronJobChecker.getRes())){
+				log.info("执行同步操作！");
+				syncPerfJob();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			closeSession();
+		}
+	}
 
 }

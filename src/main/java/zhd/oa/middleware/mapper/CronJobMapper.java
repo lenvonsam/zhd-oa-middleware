@@ -2,11 +2,10 @@ package zhd.oa.middleware.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import zhd.oa.middleware.model.CronJob;
+import zhd.oa.middleware.model.CronJobChecker;
 
 public interface CronJobMapper {
 	
@@ -56,5 +55,26 @@ public interface CronJobMapper {
 	 */
 	@Delete(" delete from uf_ErpPerfEmp where data_yyyymm = to_char(sysdate,'yyyymm') ")
 	public boolean clearErpPerfEmp();
+
+	/**
+	 * 检测定时任务的提醒或是触发
+	 * @param identity
+	 * @return
+	 */
+	@Select(" select prop_manager emps,\n" +
+			"        case    \n" +
+			"        when ( b.prop_date is null and to_char(sysdate,'dd') = 1 ) or to_char(sysdate+1,'yyyy-mm-dd') = b.prop_date then 1    \n" +
+			"        when ( b.prop_date is null and to_char(sysdate,'dd') = 2 ) or to_char(sysdate,'yyyy-mm-dd') = b.prop_date then 2   \n" +
+			"        else 0 end res   \n" +
+			"from dual a  \n" +
+			"left join (\n" +
+			"        select t.prop_date,t.prop_manager,\n" +
+			"               row_number() over(partition by substr(t.prop_date,0,7) order by t.id desc) cc\n" +
+			"        from uf_CronProp t\n" +
+			"        where t.prop_status = 1\n" +
+			"        and t.prop_id = 'ErpPerfEmp'\n" +
+			") b on b.cc = 1\n" +
+			"where b.cc = 1 ")
+	public CronJobChecker checkJob(@Param("identity") String identity);
 
 }
