@@ -1,8 +1,10 @@
 package zhd.oa.middleware.controller;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 import java.util.List;
+import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -22,7 +24,9 @@ public class WorkflowController extends BaseController{
 	private LogisticsSbillInfoService logisticsSbillInfoService;
 	@Autowired
 	private LogisticsOutSbillService logisticsOutSbillService;
-	
+	@Autowired
+	private ExpenseWorkService expenseWorkService;
+
 	@Override
 	public void router() {
 
@@ -106,8 +110,18 @@ public class WorkflowController extends BaseController{
 			System.out.println("callback-->"+callback+"codes-->"+codes);
 			return callback + "(" + JSONObject.toJSON(logisticsOutSbillService.getListLogisticsOutSbill(codes)) + ")";
 		});
-        
-        
+
+		/**
+		 * 私车公用流程创建费用报销流程接口
+		 * @date 2020-09-18 clg
+		 */
+		post("/createExpenseByPrivateCarWork",(req,res) -> {
+			JSONObject dataJSONObject= JSONObject.parseObject(req.body());
+			log.info("私车公用流程创建费用报销流程接口---->"+dataJSONObject.toJSONString());
+			Map resultMap = expenseWorkService.createExpenseWork(dataJSONObject);
+			log.info(JSONObject.toJSONString(resultMap));
+			return JSONObject.toJSONString(resultMap);
+		});
         
 	}
 
