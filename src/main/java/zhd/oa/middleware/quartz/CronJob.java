@@ -16,8 +16,8 @@ public class CronJob implements Job {
         if(cronJobService == null){
             cronJobService = new CronJobService();
         }
-        boolean res = cronJobService.syncPerfJob();
-        log.info("CronJob:res ===> "+res);
+        cronJobService.cronJob("ErpPerfEmp");
+        log.info("执行定时任务CronJob: ===> ErpPerfEmp");
     }
 
     /**
