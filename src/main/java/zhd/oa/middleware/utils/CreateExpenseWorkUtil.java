@@ -38,7 +38,7 @@ public class CreateExpenseWorkUtil {
      */
     public String createExpenseWork(String creatorid,String applyDept,String belongDept,
                                    String paymethod ,String receiptBank,String receiptAccount,String receiptCompany,
-                                   String money ,String remark ,String payerCompany) throws Exception {
+                                   String money ,String remark ,String payerCompany,String flowid) throws Exception {
 
         String requestid = "";
         WorkflowRequestTableField[] properties = new WorkflowRequestTableField[13];
@@ -117,7 +117,7 @@ public class CreateExpenseWorkUtil {
 
         properties[12] = new WorkflowRequestTableField();
         properties[12].setFieldName("reqid");//来源流程
-        properties[12].setFieldValue(payerCompany);//
+        properties[12].setFieldValue(flowid);//
         properties[12].setView(true);//字段是否可见
         properties[12].setEdit(true);//字段是否可编辑
 

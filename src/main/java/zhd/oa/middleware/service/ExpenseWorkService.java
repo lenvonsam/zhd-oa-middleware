@@ -28,7 +28,7 @@ public class ExpenseWorkService extends BaseService {
             String receiptAccount = jsonObject.getString("receiptAccount");//收款账号
             String receiptCompany = jsonObject.getString("receiptCompany");// 收款单位
             String remark = jsonObject.getString("remark");// 备注
-            String payerCompany = "";//付款单位  暂时为空
+            String payerCompany = jsonObject.getString("userOrg");//付款单位  暂时为空
 
             String dateFrom = jsonObject.getString("dateFrom");//出发日期
             String placeStart = jsonObject.getString("placeStart");//出发地
@@ -45,7 +45,9 @@ public class ExpenseWorkService extends BaseService {
             //创建费用报销流程
             String requestid = CreateExpenseWorkUtil.shareInstance().createExpenseWork(creatorid, applyDept, belongDept,
                     paymethod, receiptBank, receiptAccount, receiptCompany,
-                    totalMoney, "【私车公用流程系统触发报销】" + remark, payerCompany);
+                    totalMoney, "【私车公用流程系统触发报销】" + remark, payerCompany,flowid);
+
+
 
             if(Integer.parseInt(requestid) > 0){
                 session = openSession();
@@ -69,7 +71,7 @@ public class ExpenseWorkService extends BaseService {
                     log.info("私车公用流程系统创建费用报销接口：插入明细过路费执行结果--->"+detail3);
                 }
                 code = 1;
-                msg = "私车公用流程系统创建费用报销接成功!";
+                msg = "私车公用流程系统已创建费用报销接成功!";
             }else{
                 msg = "系统创建流程异常!";
             }
