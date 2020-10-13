@@ -15,7 +15,7 @@
 		<spark-template.version>2.7.1</spark-template.version>
 		<quartz.version>2.2.1</quartz.version>
 		<axis.version>1.4</axis.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<oracle.version>12.0.0.2</oracle.version>
 		<commons.version>2.5.0</commons.version>
 		<fastjson.version>1.2.5</fastjson.version>
