@@ -55,7 +55,7 @@ public class CronJobService extends BaseService{
 			session = openSession();
 			cronJobMapper = session.getMapper(CronJobMapper.class);
 			CronJobChecker cronJobChecker = cronJobMapper.checkJob(identity);//1：提醒  2：同步
-			String cc = "<a href='http://oa.xingyun361.com/formmode/view/AddFormMode.jsp?customTreeDataId=null&mainid=0&modeId=2821&formId=-593&type=1' target='_blank' >【点击添加配置】</a>";
+			String cc = "<a href='http://oa.xingyun361.com:88/formmode/view/AddFormMode.jsp?customTreeDataId=null&mainid=0&modeId=2821&formId=-593&type=1' target='_blank' >【点击添加配置】</a>";
 			if("1".equals(cronJobChecker.getRes())){
 				log.info("创建绩效同步提醒流程！");
 				log.info(cronJobChecker.getEmps());
